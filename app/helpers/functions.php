@@ -93,8 +93,6 @@ function asset(string $path): string
 function is_active(string $path): string
 {
     $current = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
-    // Strip /public prefix para comparacion en desarrollo
-    $current = preg_replace('#^/public#', '', $current);
     $current = $current ?: '/';
 
     if ($path === '/') {

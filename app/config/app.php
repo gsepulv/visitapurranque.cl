@@ -17,7 +17,7 @@ define('SITE_NAME',        'Visita Purranque');
 define('SITE_DESCRIPTION', 'Guia turistica de Purranque — Naturaleza, cultura y tradiciones en la Region de Los Lagos, Chile.');
 define('SITE_URL', $isProduction
     ? 'https://visitapurranque.cl'
-    : 'http://visitapurranque.cl.test/public'
+    : 'http://visitapurranque.cl.test'
 );
 
 // Version

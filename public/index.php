@@ -43,9 +43,6 @@ if (session_status() === PHP_SESSION_NONE) {
 
 $uri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 
-// Quitar prefijo /public en desarrollo (Laragon sirve desde raiz del proyecto)
-$uri = preg_replace('#^/public#', '', $uri);
-
 // Normalizar: asegurar que empiece con / y quitar trailing slash (excepto root)
 $uri = '/' . trim($uri, '/');
 if ($uri !== '/') {
