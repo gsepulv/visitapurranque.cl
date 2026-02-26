@@ -37,7 +37,7 @@ function texto(string $clave, string $default = ''): string
         global $pdo;
         if (!$pdo) return $default;
 
-        $stmt = $pdo->prepare('SELECT valor FROM textos_editables WHERE clave = ? AND activo = 1 LIMIT 1');
+        $stmt = $pdo->prepare('SELECT valor FROM textos_editables WHERE clave = ? LIMIT 1');
         $stmt->execute([$clave]);
         $row = $stmt->fetch();
         $cache[$clave] = $row ? $row['valor'] : $default;
@@ -138,4 +138,10 @@ function formatDate(?string $date, string $format = 'd/m/Y'): string
 
     $ts = strtotime($date);
     return $ts ? date($format, $ts) : $date;
+}
+
+function strftime_es(int $timestamp): string
+{
+    $meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+    return $meses[(int)date('n', $timestamp) - 1];
 }
