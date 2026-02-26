@@ -1,0 +1,556 @@
+/* ── Proyecto Dashboard — visitapurranque.cl ─────────── */
+
+:root {
+    --bg: #0f1117;
+    --bg-card: #1a1d27;
+    --bg-card-hover: #1f2330;
+    --border: #2a2e3a;
+    --border-light: #353a48;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --text-dim: #64748b;
+    --green: #22c55e;
+    --green-dim: rgba(34,197,94,0.15);
+    --blue: #3b82f6;
+    --blue-dim: rgba(59,130,246,0.15);
+    --orange: #f59e0b;
+    --orange-dim: rgba(245,158,11,0.15);
+    --purple: #a855f7;
+    --purple-dim: rgba(168,85,247,0.15);
+    --cyan: #06b6d4;
+    --cyan-dim: rgba(6,182,212,0.15);
+    --red: #ef4444;
+    --red-dim: rgba(239,68,68,0.15);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ── Header ──────────────────────────────────────────── */
+
+.proy-header {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.proy-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.proy-header-left h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+}
+
+.proy-badge {
+    background: var(--purple-dim);
+    color: var(--purple);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.proy-header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.proy-header-right a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.proy-header-right a:hover { color: var(--text); }
+
+/* ── Container ───────────────────────────────────────── */
+
+.proy-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+}
+
+/* ── Section titles ──────────────────────────────────── */
+
+.proy-section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin: 40px 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.proy-section-title:first-child { margin-top: 0; }
+
+/* ── KPI Grid ────────────────────────────────────────── */
+
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.kpi-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.kpi-card.green  { border-left-color: var(--green); }
+.kpi-card.blue   { border-left-color: var(--blue); }
+.kpi-card.orange { border-left-color: var(--orange); }
+.kpi-card.purple { border-left-color: var(--purple); }
+.kpi-card.cyan   { border-left-color: var(--cyan); }
+
+.kpi-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+}
+
+.kpi-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.kpi-card.green .kpi-value  { color: var(--green); }
+.kpi-card.blue .kpi-value   { color: var(--blue); }
+.kpi-card.orange .kpi-value { color: var(--orange); }
+.kpi-card.purple .kpi-value { color: var(--purple); }
+.kpi-card.cyan .kpi-value   { color: var(--cyan); }
+
+.kpi-sub {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-top: 4px;
+}
+
+.kpi-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 4px;
+    margin-top: 12px;
+    overflow: hidden;
+}
+
+.kpi-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s ease;
+}
+
+.kpi-card.green .kpi-bar-fill  { background: var(--green); }
+.kpi-card.blue .kpi-bar-fill   { background: var(--blue); }
+.kpi-card.orange .kpi-bar-fill { background: var(--orange); }
+.kpi-card.purple .kpi-bar-fill { background: var(--purple); }
+
+/* ── Gantt ───────────────────────────────────────────── */
+
+.gantt-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 16px;
+}
+
+.gantt-table {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+}
+
+.gantt-table th,
+.gantt-table td {
+    padding: 6px 4px;
+    text-align: center;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.gantt-table thead th {
+    background: var(--bg-card);
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    position: sticky;
+    top: 60px;
+    z-index: 10;
+}
+
+.gantt-table .gantt-label {
+    text-align: left;
+    padding-left: 12px;
+    min-width: 180px;
+    font-weight: 500;
+    position: sticky;
+    left: 0;
+    background: var(--bg);
+    z-index: 5;
+}
+
+.gantt-table thead .gantt-label {
+    background: var(--bg-card);
+    z-index: 15;
+}
+
+.gantt-fase {
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.gantt-tarea {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    padding-left: 24px !important;
+}
+
+.gantt-cell-active {
+    border-radius: 4px;
+}
+
+.gantt-current-week {
+    position: relative;
+}
+
+.gantt-current-week::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: var(--cyan);
+    transform: translateX(-50%);
+    opacity: 0.6;
+}
+
+.gantt-hito {
+    color: var(--orange);
+    font-size: 0.9rem;
+}
+
+.gantt-completada { opacity: 0.5; }
+
+th.gantt-current-week {
+    background: var(--cyan-dim) !important;
+    color: var(--cyan) !important;
+    font-weight: 700;
+}
+
+/* ── Semana Detail ───────────────────────────────────── */
+
+.semana-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.semana-dates {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.tarea-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tarea-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: border-color 0.2s;
+}
+
+.tarea-card:hover { border-color: var(--border-light); }
+
+.tarea-card.completada {
+    opacity: 0.6;
+}
+
+.tarea-check {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.tarea-check input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-light);
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.tarea-check input[type="checkbox"]:checked {
+    background: var(--green);
+    border-color: var(--green);
+}
+
+.tarea-check input[type="checkbox"]:checked::after {
+    content: '✓';
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.tarea-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.tarea-title {
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+}
+
+.tarea-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.tarea-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.tarea-badge {
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.tarea-badge.pendiente   { background: var(--blue-dim); color: var(--blue); }
+.tarea-badge.en_progreso { background: var(--orange-dim); color: var(--orange); }
+.tarea-badge.completada  { background: var(--green-dim); color: var(--green); }
+.tarea-badge.bloqueada   { background: var(--red-dim); color: var(--red); }
+.tarea-badge.saltada     { background: rgba(100,116,139,0.15); color: var(--text-dim); }
+
+.tarea-badge.alta  { background: var(--red-dim); color: var(--red); }
+.tarea-badge.media { background: var(--orange-dim); color: var(--orange); }
+.tarea-badge.baja  { background: rgba(100,116,139,0.15); color: var(--text-dim); }
+
+.tarea-horas {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+}
+
+.tarea-horas input {
+    width: 50px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    text-align: center;
+}
+
+.tarea-horas input:focus {
+    outline: none;
+    border-color: var(--blue);
+}
+
+.tarea-prompt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* ── Monthly View ────────────────────────────────────── */
+
+.month-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.month-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.month-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-bottom: 12px;
+}
+
+.month-info {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+.month-info span {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text);
+}
+
+.month-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 6px;
+    margin-top: 12px;
+    overflow: hidden;
+}
+
+.month-bar-fill {
+    height: 100%;
+    background: var(--green);
+    border-radius: 6px;
+    transition: width 0.6s ease;
+}
+
+.month-hito {
+    margin-top: 10px;
+    font-size: 0.75rem;
+    color: var(--orange);
+}
+
+.month-hito::before { content: '◆ '; }
+
+/* ── Rules section ───────────────────────────────────── */
+
+.rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+.rule-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.rule-card h4 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--blue);
+}
+
+.rule-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.rule-card li {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+}
+
+.rule-card li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--text-dim);
+}
+
+/* ── Empty state ─────────────────────────────────────── */
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+}
+
+/* ── Responsive ──────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .proy-header {
+        padding: 12px 16px;
+    }
+    .proy-container {
+        padding: 16px 12px 40px;
+    }
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .kpi-value {
+        font-size: 1.5rem;
+    }
+    .tarea-card {
+        padding: 12px 14px;
+    }
+    .proy-section-title {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .kpi-grid {
+        grid-template-columns: 1fr;
+    }
+}

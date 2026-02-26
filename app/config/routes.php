@@ -35,6 +35,13 @@ return [
     // FAQ
     ['GET', '/faq',               'FaqController@index'],
 
+    // Dashboard proyecto
+    ['GET',  '/proyecto',                  'ProyectoController@index'],
+    ['POST', '/proyecto/login',            'ProyectoController@login'],
+    ['GET',  '/proyecto/logout',           'ProyectoController@logout'],
+    ['POST', '/proyecto/api/tarea-toggle', 'ProyectoController@tareaToggle'],
+    ['GET',  '/proyecto/api/stats',        'ProyectoController@apiStats'],
+
     // Paginas estaticas (terminos, privacidad, etc.) — DEBE SER LA ULTIMA
     ['GET', '/{slug}',            'LegalController@show'],
 ];
