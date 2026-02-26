@@ -1,0 +1,31 @@
+# Credenciales y configuración local
+/app/config/database.php
+/.env
+*.env
+/config/google-credentials.json
+
+# Uploads de usuarios
+/public/uploads/*
+!/public/uploads/.gitkeep
+
+# Storage local
+/storage/logs/*
+!/storage/logs/.gitkeep
+/storage/cache/*
+!/storage/cache/.gitkeep
+/storage/backups/*
+!/storage/backups/.gitkeep
+
+# IDE y sistema
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+*.swp
+
+# Node (si se usa para build)
+node_modules/
+package-lock.json
+
+# Docs locales (propuestas, SQL originales)
+/docs/
