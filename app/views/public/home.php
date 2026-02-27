@@ -1,351 +1,420 @@
+<?php
+/**
+ * Página En Construcción — visitapurranque.cl
+ * Standalone (sin header/footer del layout)
+ */
+?>
 <!DOCTYPE html>
-<html lang="es-CL">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visita Purranque — Guia del Visitante de Purranque</title>
-    <meta name="description" content="La guia turistica mas completa de Purranque, Region de Los Lagos, Chile. Naturaleza, cultura, gastronomia y tradiciones del sur de Chile.">
-    <meta name="robots" content="index, follow">
-
-    <!-- Open Graph -->
+    <title>Visita Purranque — Próximamente</title>
+    <meta name="description" content="La guía turística más completa de Purranque. Naturaleza, cultura y tradiciones en la Región de Los Lagos, Chile.">
+    <meta property="og:title" content="Visita Purranque — Próximamente">
+    <meta property="og:description" content="La guía turística más completa de Purranque. Naturaleza, cultura y tradiciones en la Región de Los Lagos, Chile.">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Visita Purranque — Guia del Visitante">
-    <meta property="og:description" content="La guia turistica mas completa de Purranque, Region de Los Lagos, Chile.">
     <meta property="og:url" content="https://visitapurranque.cl">
-    <meta property="og:site_name" content="Visita Purranque">
-    <meta property="og:locale" content="es_CL">
-
-    <!-- Favicon -->
-    <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
-
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --green: #1a5632;
-            --green-light: #22c55e;
-            --blue: #0ea5e9;
-            --blue-dark: #0369a1;
+            --verde-bosque: #0f3d1e;
+            --verde-medio: #1a5632;
+            --verde-claro: #2d8a56;
+            --azul-lago: #0c7bb3;
+            --azul-cielo: #7ec8e3;
+            --dorado: #c9a84c;
+            --crema: #f5f0e8;
+            --blanco: #ffffff;
+            --gris: #94a3b8;
         }
 
-        html, body {
-            height: 100%;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(145deg, var(--green) 0%, #0f4a2a 40%, var(--blue-dark) 75%, var(--blue) 100%);
-            color: #fff;
+            font-family: 'Outfit', sans-serif;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--verde-bosque);
+            color: var(--crema);
+            overflow-x: hidden;
+        }
+
+        /* ═══ FONDO ATMOSFÉRICO ═══ */
+        .atmosphere {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% 80%, rgba(26,86,50,0.6) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 80% 20%, rgba(12,123,179,0.3) 0%, transparent 60%),
+                radial-gradient(ellipse 100% 60% at 50% 100%, rgba(15,61,30,0.8) 0%, transparent 50%),
+                linear-gradient(175deg, #0a2614 0%, #0f3d1e 30%, #122f1e 60%, #0c2a3d 100%);
+        }
+
+        .atmosphere::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            opacity: 0.4;
+        }
+
+        /* ═══ NIEBLA ANIMADA ═══ */
+        .mist {
+            position: fixed;
+            bottom: 0;
+            left: -10%;
+            width: 120%;
+            height: 35%;
+            z-index: 1;
+            opacity: 0.15;
+            background:
+                radial-gradient(ellipse 70% 100% at 30% 100%, rgba(255,255,255,0.3) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 80% at 70% 100%, rgba(126,200,227,0.2) 0%, transparent 60%);
+            animation: mistFloat 20s ease-in-out infinite;
+        }
+
+        @keyframes mistFloat {
+            0%, 100% { transform: translateX(0); opacity: 0.15; }
+            50% { transform: translateX(3%); opacity: 0.22; }
+        }
+
+        /* ═══ CONTENIDO PRINCIPAL ═══ */
+        .page {
+            position: relative;
+            z-index: 2;
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Textura sutil de fondo */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background:
-                radial-gradient(ellipse at 20% 50%, rgba(34, 197, 94, .08) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, rgba(14, 165, 233, .1) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, .15) 0%, transparent 60%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .page {
-            position: relative;
-            z-index: 1;
-            width: 100%;
-            max-width: 680px;
-            padding: 40px 24px;
+            padding: 2rem 1.5rem;
+            min-height: 100vh;
             text-align: center;
         }
 
-        /* Icono principal */
-        .hero-icon {
-            font-size: 4rem;
-            line-height: 1;
-            margin-bottom: 16px;
+        /* ═══ BADGE SUPERIOR ═══ */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid rgba(201,168,76,0.3);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--dorado);
+            background: rgba(201,168,76,0.08);
+            backdrop-filter: blur(10px);
+            margin-bottom: 2.5rem;
+            animation: fadeDown 1s ease-out;
+        }
+
+        .badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--dorado);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        /* ═══ MONTAÑAS SVG ═══ */
+        .mountains {
+            width: 120px;
+            height: auto;
+            margin-bottom: 2rem;
+            opacity: 0.6;
+            animation: fadeDown 1.2s ease-out;
+        }
+
+        /* ═══ TÍTULO ═══ */
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 7vw, 5rem);
+            font-weight: 700;
+            line-height: 1.05;
+            color: var(--blanco);
+            margin-bottom: 0.3rem;
+            animation: fadeUp 1s ease-out 0.2s both;
+        }
+
+        .title span {
             display: block;
-            animation: float 4s ease-in-out infinite;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 300;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--azul-cielo);
+            margin-bottom: 0.5rem;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+        /* ═══ LÍNEA DECORATIVA ═══ */
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--dorado), transparent);
+            margin: 2rem auto;
+            animation: fadeUp 1s ease-out 0.4s both;
         }
 
-        /* Logo / Titulo */
-        .site-title {
-            font-family: 'DM Serif Display', Georgia, serif;
-            font-size: 3rem;
-            font-weight: 400;
-            line-height: 1.1;
-            color: #fff;
-            margin-bottom: 8px;
-            letter-spacing: -0.5px;
-        }
-
-        .site-subtitle {
+        /* ═══ DESCRIPCIÓN ═══ */
+        .description {
+            max-width: 520px;
             font-size: 1.05rem;
             font-weight: 300;
-            color: rgba(255, 255, 255, .7);
-            letter-spacing: 2px;
+            line-height: 1.7;
+            color: rgba(245,240,232,0.7);
+            margin-bottom: 2.5rem;
+            animation: fadeUp 1s ease-out 0.5s both;
+        }
+
+        .description strong {
+            color: var(--crema);
+            font-weight: 500;
+        }
+
+        /* ═══ BARRA DE PROGRESO ═══ */
+        .progress-container {
+            width: 100%;
+            max-width: 320px;
+            margin-bottom: 2.5rem;
+            animation: fadeUp 1s ease-out 0.6s both;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            margin-bottom: 40px;
-        }
-
-        /* Separador */
-        .divider {
-            width: 48px;
-            height: 3px;
-            background: var(--green-light);
-            border-radius: 2px;
-            margin: 0 auto 40px;
-            opacity: .6;
-        }
-
-        /* Texto principal */
-        .main-text {
-            font-family: 'DM Serif Display', Georgia, serif;
-            font-size: 1.5rem;
-            font-weight: 400;
-            line-height: 1.4;
-            color: #fff;
-            margin-bottom: 12px;
-        }
-
-        .secondary-text {
-            font-size: 0.95rem;
-            font-weight: 300;
-            color: rgba(255, 255, 255, .65);
-            line-height: 1.6;
-            max-width: 480px;
-            margin: 0 auto 40px;
-        }
-
-        /* Barra de progreso */
-        .progress-wrap {
-            margin-bottom: 12px;
+            color: var(--gris);
+            margin-bottom: 0.6rem;
         }
 
         .progress-bar {
-            width: 100%;
-            max-width: 360px;
-            height: 6px;
-            background: rgba(255, 255, 255, .12);
+            height: 3px;
             border-radius: 3px;
-            margin: 0 auto;
+            background: rgba(255,255,255,0.08);
             overflow: hidden;
-            position: relative;
         }
 
         .progress-fill {
             height: 100%;
-            width: 30%;
+            width: 8%;
             border-radius: 3px;
-            background: linear-gradient(90deg, var(--green-light), #4ade80);
+            background: linear-gradient(90deg, var(--verde-claro), var(--azul-lago));
             position: relative;
-            animation: pulse-glow 2.5s ease-in-out infinite;
+            animation: progressGrow 2s ease-out 1s both;
         }
 
         .progress-fill::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,.3), transparent);
-            animation: shimmer 2s ease-in-out infinite;
+            inset: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+            animation: shimmer 2.5s ease-in-out infinite;
         }
 
-        @keyframes pulse-glow {
-            0%, 100% { opacity: .85; }
-            50% { opacity: 1; }
+        @keyframes progressGrow {
+            from { width: 0%; }
+            to { width: 8%; }
         }
 
         @keyframes shimmer {
             0% { transform: translateX(-100%); }
-            100% { transform: translateX(200%); }
+            100% { transform: translateX(300%); }
         }
 
-        .progress-label {
-            font-size: 0.78rem;
-            color: rgba(255, 255, 255, .4);
-            margin-top: 10px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+        /* ═══ FEATURES ═══ */
+        .features {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            animation: fadeUp 1s ease-out 0.7s both;
         }
 
-        /* Proximamente badge */
-        .coming-badge {
-            display: inline-block;
-            margin: 36px auto 40px;
-            padding: 8px 24px;
-            border: 1.5px solid rgba(255, 255, 255, .2);
-            border-radius: 50px;
-            font-size: 0.88rem;
-            font-weight: 500;
-            color: rgba(255, 255, 255, .8);
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            backdrop-filter: blur(4px);
-            background: rgba(255, 255, 255, .04);
-        }
-
-        /* Links de contacto */
-        .contact-links {
+        .feature {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 0.5rem;
         }
 
-        .contact-link {
-            color: rgba(255, 255, 255, .55);
-            text-decoration: none;
-            font-size: 0.88rem;
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .feature-text {
+            font-size: 0.7rem;
             font-weight: 400;
-            transition: color .2s;
+            color: var(--gris);
+            letter-spacing: 0.05em;
         }
 
-        .contact-link:hover {
-            color: #fff;
+        /* ═══ CONTACTO ═══ */
+        .contact {
+            animation: fadeUp 1s ease-out 0.8s both;
         }
 
-        .contact-link--email {
-            color: rgba(255, 255, 255, .75);
-            font-weight: 500;
-            padding: 6px 16px;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, .06);
-            transition: background .2s, color .2s;
+        .contact a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(245,240,232,0.5);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 400;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
         }
 
-        .contact-link--email:hover {
-            background: rgba(255, 255, 255, .12);
-            color: #fff;
+        .contact a:hover {
+            color: var(--dorado);
         }
 
-        .contact-sep {
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, .2);
+        .contact-divider {
+            color: rgba(255,255,255,0.15);
+            margin: 0 0.8rem;
         }
 
-        /* Footer */
+        /* ═══ FOOTER ═══ */
         .page-footer {
-            margin-top: 48px;
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, .25);
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.7rem;
+            color: rgba(245,240,232,0.25);
+            letter-spacing: 0.05em;
         }
 
-        /* ── Responsive ── */
-        @media (max-width: 480px) {
-            .page {
-                padding: 32px 20px;
-            }
-
-            .hero-icon {
-                font-size: 3rem;
-            }
-
-            .site-title {
-                font-size: 2.2rem;
-            }
-
-            .site-subtitle {
-                font-size: 0.88rem;
-                letter-spacing: 1.5px;
-                margin-bottom: 32px;
-            }
-
-            .main-text {
-                font-size: 1.25rem;
-            }
-
-            .secondary-text {
-                font-size: 0.88rem;
-                margin-bottom: 32px;
-            }
-
-            .coming-badge {
-                margin: 28px auto 32px;
-                font-size: 0.8rem;
-            }
+        .page-footer a {
+            color: rgba(245,240,232,0.35);
+            text-decoration: none;
+            transition: color 0.3s;
         }
 
-        @media (min-width: 768px) {
-            .site-title {
-                font-size: 3.5rem;
-            }
+        .page-footer a:hover {
+            color: var(--dorado);
+        }
 
-            .main-text {
-                font-size: 1.65rem;
-            }
+        /* ═══ ANIMACIONES ═══ */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-            .contact-links {
-                flex-direction: row;
-                justify-content: center;
-                gap: 16px;
-            }
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ═══ RESPONSIVE ═══ */
+        @media (max-width: 640px) {
+            .page { padding: 2rem 1.2rem; }
+            .features { gap: 1.2rem; }
+            .feature-text { font-size: 0.65rem; }
+            .contact a { font-size: 0.78rem; }
+            .contact-divider { margin: 0 0.4rem; }
+            .mountains { width: 90px; }
+        }
+
+        @media (max-width: 380px) {
+            .features { flex-wrap: wrap; justify-content: center; }
         }
     </style>
 </head>
 <body>
 
-<main class="page">
-    <span class="hero-icon" aria-hidden="true">&#9968;</span>
+<div class="atmosphere"></div>
+<div class="mist"></div>
 
-    <h1 class="site-title">Visita Purranque</h1>
-    <p class="site-subtitle">Guia del Visitante de Purranque</p>
+<main class="page">
+
+    <div class="badge">En desarrollo</div>
+
+    <svg class="mountains" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 60 L25 18 L40 35 L55 8 L70 35 L85 20 L120 60Z" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>
+        <path d="M10 60 L45 25 L60 38 L75 15 L110 60Z" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+        <circle cx="95" cy="12" r="6" fill="rgba(201,168,76,0.15)" stroke="rgba(201,168,76,0.3)" stroke-width="0.5"/>
+    </svg>
+
+    <h1 class="title">
+        <span>Guía del Visitante</span>
+        Visita Purranque
+    </h1>
 
     <div class="divider"></div>
 
-    <p class="main-text">Estamos construyendo algo increible para ti</p>
-    <p class="secondary-text">
-        La guia turistica mas completa de Purranque, Region de Los Lagos, Chile.
-        Naturaleza, cultura, gastronomia y tradiciones del sur de Chile.
+    <p class="description">
+        Estamos creando la <strong>guía turística más completa</strong> de Purranque.
+        Naturaleza, cultura y tradiciones de la <strong>Región de Los Lagos</strong>, Chile.
     </p>
 
-    <div class="progress-wrap">
+    <div class="progress-container">
+        <div class="progress-label">
+            <span>Progreso</span>
+            <span>2026</span>
+        </div>
         <div class="progress-bar">
             <div class="progress-fill"></div>
         </div>
-        <p class="progress-label">En desarrollo</p>
     </div>
 
-    <span class="coming-badge">Proximamente &mdash; 2026</span>
-
-    <div class="contact-links">
-        <a href="mailto:contacto@purranque.info" class="contact-link contact-link--email">
-            contacto@purranque.info
-        </a>
-        <span class="contact-sep"></span>
-        <a href="https://purranque.info" target="_blank" rel="noopener" class="contact-link">
-            PurranQUE.INFO
-        </a>
+    <div class="features">
+        <div class="feature">
+            <div class="feature-icon">🏔</div>
+            <span class="feature-text">Atractivos</span>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🗺</div>
+            <span class="feature-text">Mapa</span>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🎭</div>
+            <span class="feature-text">Eventos</span>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">📝</div>
+            <span class="feature-text">Blog</span>
+        </div>
     </div>
 
-    <p class="page-footer">&copy; 2026 Visita Purranque</p>
+    <div class="contact">
+        <a href="mailto:contacto@purranque.info">contacto@purranque.info</a>
+        <span class="contact-divider">·</span>
+        <a href="https://purranque.info" target="_blank">PurranQUE.INFO</a>
+    </div>
+
 </main>
+
+<footer class="page-footer">
+    © 2026 Visita Purranque — Un proyecto de <a href="https://purranque.info" target="_blank">PurranQUE.INFO</a>
+</footer>
 
 </body>
 </html>
