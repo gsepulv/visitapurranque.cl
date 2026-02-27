@@ -12,409 +12,446 @@
     <title>Visita Purranque — Próximamente</title>
     <meta name="description" content="La guía turística más completa de Purranque. Naturaleza, cultura y tradiciones en la Región de Los Lagos, Chile.">
     <meta property="og:title" content="Visita Purranque — Próximamente">
-    <meta property="og:description" content="La guía turística más completa de Purranque. Naturaleza, cultura y tradiciones en la Región de Los Lagos, Chile.">
+    <meta property="og:description" content="Descubre Purranque: volcanes, bosques nativos, ríos y la mejor gastronomía del sur de Chile.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://visitapurranque.cl">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --verde-bosque: #0f3d1e;
-            --verde-medio: #1a5632;
-            --verde-claro: #2d8a56;
-            --azul-lago: #0c7bb3;
-            --azul-cielo: #7ec8e3;
-            --dorado: #c9a84c;
-            --crema: #f5f0e8;
-            --blanco: #ffffff;
-            --gris: #94a3b8;
+            --bosque: #0b1f0e;
+            --musgo: #1c3a20;
+            --helecho: #3a7d44;
+            --agua: #4da8c4;
+            --niebla: #c8d5d0;
+            --leche: #f7f4ef;
+            --ceniza: #8a9490;
+            --madera: #b5875a;
+            --fuego: #d4763a;
         }
 
-        html { scroll-behavior: smooth; }
+        html { font-size: 16px; }
 
         body {
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Figtree', sans-serif;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background: var(--verde-bosque);
-            color: var(--crema);
+            background: var(--bosque);
+            color: var(--leche);
             overflow-x: hidden;
         }
 
-        /* ═══ FONDO ATMOSFÉRICO ═══ */
-        .atmosphere {
+        .scene {
+            min-height: 100vh;
+            display: grid;
+            grid-template-rows: 1fr auto;
+            position: relative;
+        }
+
+        .sky {
             position: fixed;
             inset: 0;
             z-index: 0;
-            background:
-                radial-gradient(ellipse 80% 50% at 20% 80%, rgba(26,86,50,0.6) 0%, transparent 70%),
-                radial-gradient(ellipse 60% 40% at 80% 20%, rgba(12,123,179,0.3) 0%, transparent 60%),
-                radial-gradient(ellipse 100% 60% at 50% 100%, rgba(15,61,30,0.8) 0%, transparent 50%),
-                linear-gradient(175deg, #0a2614 0%, #0f3d1e 30%, #122f1e 60%, #0c2a3d 100%);
+            background: linear-gradient(
+                180deg,
+                #0b1a2e 0%,
+                #122840 15%,
+                #1a3f5c 30%,
+                #2d6b5e 55%,
+                #1c3a20 75%,
+                #0b1f0e 100%
+            );
         }
 
-        .atmosphere::before {
+        .sky::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-            opacity: 0.4;
+            background-image:
+                radial-gradient(1px 1px at 10% 8%, rgba(255,255,255,0.8) 0%, transparent 100%),
+                radial-gradient(1px 1px at 25% 15%, rgba(255,255,255,0.5) 0%, transparent 100%),
+                radial-gradient(1.5px 1.5px at 45% 5%, rgba(255,255,255,0.9) 0%, transparent 100%),
+                radial-gradient(1px 1px at 60% 12%, rgba(255,255,255,0.6) 0%, transparent 100%),
+                radial-gradient(1px 1px at 75% 3%, rgba(255,255,255,0.7) 0%, transparent 100%),
+                radial-gradient(1.5px 1.5px at 88% 10%, rgba(255,255,255,0.8) 0%, transparent 100%),
+                radial-gradient(1px 1px at 15% 20%, rgba(255,255,255,0.4) 0%, transparent 100%),
+                radial-gradient(1px 1px at 35% 18%, rgba(255,255,255,0.5) 0%, transparent 100%),
+                radial-gradient(1px 1px at 55% 22%, rgba(255,255,255,0.6) 0%, transparent 100%),
+                radial-gradient(1px 1px at 70% 7%, rgba(255,255,255,0.4) 0%, transparent 100%),
+                radial-gradient(1px 1px at 92% 18%, rgba(255,255,255,0.5) 0%, transparent 100%),
+                radial-gradient(1px 1px at 5% 25%, rgba(255,255,255,0.3) 0%, transparent 100%);
+            animation: twinkle 4s ease-in-out infinite alternate;
         }
 
-        /* ═══ NIEBLA ANIMADA ═══ */
-        .mist {
+        @keyframes twinkle {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        .volcano {
+            position: fixed;
+            bottom: 18%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .volcano svg {
+            width: min(800px, 100vw);
+            height: auto;
+            display: block;
+        }
+
+        .forest {
             position: fixed;
             bottom: 0;
-            left: -10%;
-            width: 120%;
-            height: 35%;
-            z-index: 1;
-            opacity: 0.15;
-            background:
-                radial-gradient(ellipse 70% 100% at 30% 100%, rgba(255,255,255,0.3) 0%, transparent 70%),
-                radial-gradient(ellipse 50% 80% at 70% 100%, rgba(126,200,227,0.2) 0%, transparent 60%);
-            animation: mistFloat 20s ease-in-out infinite;
-        }
-
-        @keyframes mistFloat {
-            0%, 100% { transform: translateX(0); opacity: 0.15; }
-            50% { transform: translateX(3%); opacity: 0.22; }
-        }
-
-        /* ═══ CONTENIDO PRINCIPAL ═══ */
-        .page {
-            position: relative;
+            left: 0;
+            right: 0;
             z-index: 2;
-            flex: 1;
+            height: 25%;
+        }
+
+        .forest svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .fog {
+            position: fixed;
+            bottom: 15%;
+            left: -5%;
+            right: -5%;
+            height: 20%;
+            z-index: 3;
+            background: linear-gradient(
+                180deg,
+                transparent 0%,
+                rgba(200,213,208,0.04) 30%,
+                rgba(200,213,208,0.08) 60%,
+                rgba(200,213,208,0.03) 100%
+            );
+            animation: fogDrift 25s ease-in-out infinite;
+        }
+
+        @keyframes fogDrift {
+            0%, 100% { transform: translateX(0) scaleY(1); opacity: 1; }
+            33% { transform: translateX(2%) scaleY(1.1); opacity: 0.8; }
+            66% { transform: translateX(-1.5%) scaleY(0.95); opacity: 0.9; }
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 2rem 1.5rem;
             min-height: 100vh;
+            padding: 3rem 1.5rem 6rem;
             text-align: center;
         }
 
-        /* ═══ BADGE SUPERIOR ═══ */
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1.2rem;
-            border: 1px solid rgba(201,168,76,0.3);
-            border-radius: 50px;
-            font-size: 0.75rem;
+        .tag {
+            font-size: 0.65rem;
             font-weight: 500;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.3em;
             text-transform: uppercase;
-            color: var(--dorado);
-            background: rgba(201,168,76,0.08);
-            backdrop-filter: blur(10px);
-            margin-bottom: 2.5rem;
-            animation: fadeDown 1s ease-out;
+            color: var(--agua);
+            margin-bottom: 3rem;
+            position: relative;
+            padding: 0 2rem;
+            animation: appear 1.2s ease-out;
         }
 
-        .badge::before {
+        .tag::before, .tag::after {
             content: '';
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--dorado);
-            animation: pulse 2s ease-in-out infinite;
+            position: absolute;
+            top: 50%;
+            width: 30px;
+            height: 1px;
+            background: var(--agua);
+            opacity: 0.3;
         }
+        .tag::before { left: -15px; }
+        .tag::after { right: -15px; }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.8); }
-        }
-
-        /* ═══ MONTAÑAS SVG ═══ */
-        .mountains {
-            width: 120px;
-            height: auto;
+        .icon {
             margin-bottom: 2rem;
-            opacity: 0.6;
-            animation: fadeDown 1.2s ease-out;
+            animation: appear 1.2s ease-out 0.15s both;
         }
 
-        /* ═══ TÍTULO ═══ */
-        .title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.8rem, 7vw, 5rem);
-            font-weight: 700;
-            line-height: 1.05;
-            color: var(--blanco);
-            margin-bottom: 0.3rem;
-            animation: fadeUp 1s ease-out 0.2s both;
+        .icon svg {
+            width: 48px;
+            height: 48px;
         }
 
-        .title span {
-            display: block;
-            font-size: clamp(1rem, 2.5vw, 1.3rem);
-            font-family: 'Outfit', sans-serif;
+        .heading {
+            font-family: 'Cormorant Garamond', serif;
             font-weight: 300;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            color: var(--azul-cielo);
-            margin-bottom: 0.5rem;
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 0.95;
+            color: var(--leche);
+            margin-bottom: 0.4rem;
+            animation: appear 1.2s ease-out 0.3s both;
         }
 
-        /* ═══ LÍNEA DECORATIVA ═══ */
-        .divider {
-            width: 60px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--dorado), transparent);
-            margin: 2rem auto;
-            animation: fadeUp 1s ease-out 0.4s both;
-        }
-
-        /* ═══ DESCRIPCIÓN ═══ */
-        .description {
-            max-width: 520px;
-            font-size: 1.05rem;
+        .heading em {
+            font-style: italic;
+            color: var(--agua);
             font-weight: 300;
-            line-height: 1.7;
-            color: rgba(245,240,232,0.7);
-            margin-bottom: 2.5rem;
-            animation: fadeUp 1s ease-out 0.5s both;
         }
 
-        .description strong {
-            color: var(--crema);
+        .subheading {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            font-style: italic;
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            color: var(--ceniza);
+            margin-bottom: 3rem;
+            animation: appear 1.2s ease-out 0.45s both;
+        }
+
+        .line {
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(180deg, var(--helecho), transparent);
+            margin: 0 auto 2.5rem;
+            animation: growDown 1.5s ease-out 0.6s both;
+        }
+
+        @keyframes growDown {
+            from { height: 0; opacity: 0; }
+            to { height: 50px; opacity: 1; }
+        }
+
+        .text {
+            max-width: 440px;
+            font-size: 0.95rem;
+            font-weight: 300;
+            line-height: 1.8;
+            color: rgba(247,244,239,0.55);
+            margin-bottom: 3rem;
+            animation: appear 1.2s ease-out 0.7s both;
+        }
+
+        .text strong {
             font-weight: 500;
+            color: rgba(247,244,239,0.8);
         }
 
-        /* ═══ BARRA DE PROGRESO ═══ */
-        .progress-container {
-            width: 100%;
-            max-width: 320px;
-            margin-bottom: 2.5rem;
-            animation: fadeUp 1s ease-out 0.6s both;
-        }
-
-        .progress-label {
+        .pills {
             display: flex;
-            justify-content: space-between;
-            font-size: 0.7rem;
-            font-weight: 500;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--gris);
-            margin-bottom: 0.6rem;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 3rem;
+            animation: appear 1.2s ease-out 0.85s both;
         }
 
-        .progress-bar {
-            height: 3px;
-            border-radius: 3px;
-            background: rgba(255,255,255,0.08);
+        .pill {
+            padding: 0.45rem 1rem;
+            border-radius: 100px;
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: var(--ceniza);
+            transition: all 0.4s;
+        }
+
+        .pill:hover {
+            background: rgba(77,168,196,0.1);
+            border-color: rgba(77,168,196,0.25);
+            color: var(--agua);
+        }
+
+        .pill-icon {
+            margin-right: 0.3rem;
+        }
+
+        .progress {
+            width: 200px;
+            margin-bottom: 3rem;
+            animation: appear 1.2s ease-out 1s both;
+        }
+
+        .progress-track {
+            height: 2px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 2px;
             overflow: hidden;
         }
 
-        .progress-fill {
+        .progress-bar {
             height: 100%;
-            width: 8%;
-            border-radius: 3px;
-            background: linear-gradient(90deg, var(--verde-claro), var(--azul-lago));
-            position: relative;
-            animation: progressGrow 2s ease-out 1s both;
+            width: 0%;
+            background: linear-gradient(90deg, var(--helecho), var(--agua));
+            border-radius: 2px;
+            animation: fillBar 2.5s ease-out 1.5s forwards;
         }
 
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
-            animation: shimmer 2.5s ease-in-out infinite;
+        @keyframes fillBar {
+            to { width: 10%; }
         }
 
-        @keyframes progressGrow {
-            from { width: 0%; }
-            to { width: 8%; }
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(300%); }
-        }
-
-        /* ═══ FEATURES ═══ */
-        .features {
+        .progress-text {
             display: flex;
-            gap: 2rem;
-            margin-bottom: 3rem;
-            animation: fadeUp 1s ease-out 0.7s both;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.6rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(247,244,239,0.25);
         }
 
-        .feature {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .feature-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.08);
+        .links {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
+            gap: 1.5rem;
+            animation: appear 1.2s ease-out 1.1s both;
         }
 
-        .feature-text {
-            font-size: 0.7rem;
+        .links a {
+            font-size: 0.78rem;
             font-weight: 400;
-            color: var(--gris);
-            letter-spacing: 0.05em;
-        }
-
-        /* ═══ CONTACTO ═══ */
-        .contact {
-            animation: fadeUp 1s ease-out 0.8s both;
-        }
-
-        .contact a {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: rgba(245,240,232,0.5);
+            color: rgba(247,244,239,0.35);
             text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 400;
+            letter-spacing: 0.02em;
             transition: color 0.3s;
-            padding: 0.5rem 0;
         }
 
-        .contact a:hover {
-            color: var(--dorado);
+        .links a:hover { color: var(--madera); }
+
+        .links-dot {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: rgba(247,244,239,0.15);
         }
 
-        .contact-divider {
-            color: rgba(255,255,255,0.15);
-            margin: 0 0.8rem;
-        }
-
-        /* ═══ FOOTER ═══ */
-        .page-footer {
+        .foot {
             position: relative;
-            z-index: 2;
+            z-index: 10;
             text-align: center;
             padding: 1.5rem;
-            font-size: 0.7rem;
-            color: rgba(245,240,232,0.25);
-            letter-spacing: 0.05em;
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            color: rgba(247,244,239,0.15);
         }
 
-        .page-footer a {
-            color: rgba(245,240,232,0.35);
+        .foot a {
+            color: rgba(247,244,239,0.22);
             text-decoration: none;
             transition: color 0.3s;
         }
 
-        .page-footer a:hover {
-            color: var(--dorado);
-        }
+        .foot a:hover { color: var(--madera); }
 
-        /* ═══ ANIMACIONES ═══ */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
+        @keyframes appear {
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes fadeDown {
-            from { opacity: 0; transform: translateY(-15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ═══ RESPONSIVE ═══ */
         @media (max-width: 640px) {
-            .page { padding: 2rem 1.2rem; }
-            .features { gap: 1.2rem; }
-            .feature-text { font-size: 0.65rem; }
-            .contact a { font-size: 0.78rem; }
-            .contact-divider { margin: 0 0.4rem; }
-            .mountains { width: 90px; }
-        }
-
-        @media (max-width: 380px) {
-            .features { flex-wrap: wrap; justify-content: center; }
+            .content { padding: 2rem 1.2rem 5rem; }
+            .tag { margin-bottom: 2rem; }
+            .line { height: 35px; margin-bottom: 2rem; }
+            .pills { gap: 0.4rem; }
+            .pill { padding: 0.4rem 0.8rem; font-size: 0.68rem; }
+            .links { flex-direction: column; gap: 0.8rem; }
+            .links-dot { display: none; }
         }
     </style>
 </head>
 <body>
 
-<div class="atmosphere"></div>
-<div class="mist"></div>
+<div class="scene">
 
-<main class="page">
+    <div class="sky"></div>
 
-    <div class="badge">En desarrollo</div>
-
-    <svg class="mountains" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0 60 L25 18 L40 35 L55 8 L70 35 L85 20 L120 60Z" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>
-        <path d="M10 60 L45 25 L60 38 L75 15 L110 60Z" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
-        <circle cx="95" cy="12" r="6" fill="rgba(201,168,76,0.15)" stroke="rgba(201,168,76,0.3)" stroke-width="0.5"/>
-    </svg>
-
-    <h1 class="title">
-        <span>Guía del Visitante</span>
-        Visita Purranque
-    </h1>
-
-    <div class="divider"></div>
-
-    <p class="description">
-        Estamos creando la <strong>guía turística más completa</strong> de Purranque.
-        Naturaleza, cultura y tradiciones de la <strong>Región de Los Lagos</strong>, Chile.
-    </p>
-
-    <div class="progress-container">
-        <div class="progress-label">
-            <span>Progreso</span>
-            <span>2026</span>
-        </div>
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
-        </div>
+    <div class="volcano">
+        <svg viewBox="0 0 800 200" fill="none" preserveAspectRatio="xMidYMax meet">
+            <path d="M250 200 L370 45 C375 38 380 35 385 32 C390 28 395 26 400 25 C405 26 410 28 415 32 C420 35 425 38 430 45 L550 200Z"
+                  fill="rgba(28,58,32,0.5)" stroke="rgba(200,213,208,0.08)" stroke-width="0.5"/>
+            <path d="M370 45 C375 38 380 35 385 32 C390 28 395 26 400 25 C405 26 410 28 415 32 C420 35 425 38 430 45 L420 65 C410 55 390 55 380 65Z"
+                  fill="rgba(200,213,208,0.12)"/>
+            <path d="M0 200 L120 110 L200 140 L280 95 L350 160 L370 145 L250 200Z"
+                  fill="rgba(28,58,32,0.3)" stroke="rgba(200,213,208,0.04)" stroke-width="0.5"/>
+            <path d="M550 200 L450 155 L500 120 L600 100 L700 130 L800 200Z"
+                  fill="rgba(28,58,32,0.3)" stroke="rgba(200,213,208,0.04)" stroke-width="0.5"/>
+            <rect x="100" y="185" width="600" height="15" rx="2"
+                  fill="rgba(77,168,196,0.04)"/>
+        </svg>
     </div>
 
-    <div class="features">
-        <div class="feature">
-            <div class="feature-icon">🏔</div>
-            <span class="feature-text">Atractivos</span>
-        </div>
-        <div class="feature">
-            <div class="feature-icon">🗺</div>
-            <span class="feature-text">Mapa</span>
-        </div>
-        <div class="feature">
-            <div class="feature-icon">🎭</div>
-            <span class="feature-text">Eventos</span>
-        </div>
-        <div class="feature">
-            <div class="feature-icon">📝</div>
-            <span class="feature-text">Blog</span>
-        </div>
+    <div class="forest">
+        <svg viewBox="0 0 1200 200" preserveAspectRatio="none" fill="none">
+            <path d="M0 60 L20 30 L35 50 L50 15 L65 45 L80 20 L100 55 L115 25 L130 50 L150 10 L165 40 L180 22 L200 55 L215 18 L235 48 L250 25 L270 52 L285 12 L300 42 L320 28 L340 55 L355 15 L375 45 L390 20 L410 50 L425 8 L445 38 L460 25 L480 55 L495 18 L515 48 L530 30 L550 52 L565 12 L585 42 L600 22 L620 55 L635 15 L655 45 L670 28 L690 50 L705 10 L725 40 L740 25 L760 55 L775 18 L795 48 L810 30 L830 52 L845 12 L865 42 L880 22 L900 55 L920 20 L940 48 L955 8 L975 38 L990 28 L1010 52 L1025 15 L1045 45 L1060 25 L1080 55 L1095 12 L1115 42 L1130 30 L1150 50 L1170 18 L1190 45 L1200 35 L1200 200 L0 200Z"
+                  fill="rgba(11,31,14,0.95)"/>
+        </svg>
     </div>
 
-    <div class="contact">
-        <a href="mailto:contacto@purranque.info">contacto@purranque.info</a>
-        <span class="contact-divider">·</span>
-        <a href="https://purranque.info" target="_blank">PurranQUE.INFO</a>
-    </div>
+    <div class="fog"></div>
 
-</main>
+    <main class="content">
 
-<footer class="page-footer">
-    © 2026 Visita Purranque — Un proyecto de <a href="https://purranque.info" target="_blank">PurranQUE.INFO</a>
-</footer>
+        <div class="tag">Región de Los Lagos · Chile</div>
+
+        <div class="icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="rgba(77,168,196,0.5)" stroke-width="1" stroke-linecap="round">
+                <path d="M24 6 L24 4"/>
+                <path d="M24 6 L14 28 L34 28Z" fill="rgba(58,125,68,0.15)"/>
+                <path d="M20 28 L10 42 L38 42 L28 28" fill="rgba(58,125,68,0.1)"/>
+                <path d="M22 16 L24 6 L26 16" stroke="rgba(200,213,208,0.3)"/>
+                <line x1="6" y1="42" x2="42" y2="42" stroke="rgba(77,168,196,0.2)"/>
+            </svg>
+        </div>
+
+        <h1 class="heading">Visita <em>Purranque</em></h1>
+        <p class="subheading">Guía del visitante</p>
+
+        <div class="line"></div>
+
+        <p class="text">
+            Estamos creando la <strong>guía turística más completa</strong> de Purranque.
+            Volcanes, bosques milenarios, ríos cristalinos y la rica <strong>tradición gastronómica</strong> del sur de Chile, todo en un solo lugar.
+        </p>
+
+        <div class="pills">
+            <span class="pill"><span class="pill-icon">🌋</span>Volcanes</span>
+            <span class="pill"><span class="pill-icon">🌿</span>Bosques nativos</span>
+            <span class="pill"><span class="pill-icon">🐂</span>Tradiciones</span>
+            <span class="pill"><span class="pill-icon">🍲</span>Gastronomía</span>
+            <span class="pill"><span class="pill-icon">🗺</span>Rutas</span>
+        </div>
+
+        <div class="progress">
+            <div class="progress-track">
+                <div class="progress-bar"></div>
+            </div>
+            <div class="progress-text">
+                <span>En desarrollo</span>
+                <span>2026</span>
+            </div>
+        </div>
+
+        <div class="links">
+            <a href="mailto:contacto@purranque.info">contacto@purranque.info</a>
+            <div class="links-dot"></div>
+            <a href="https://purranque.info" target="_blank">PurranQUE.INFO</a>
+        </div>
+
+    </main>
+
+    <footer class="foot">
+        © 2026 Visita Purranque — Un proyecto de <a href="https://purranque.info" target="_blank">PurranQUE.INFO</a>
+    </footer>
+
+</div>
 
 </body>
 </html>
