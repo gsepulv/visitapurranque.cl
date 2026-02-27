@@ -1,11 +1,4 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/visitapurranque/visitapurranque.cl/
-    - /bin/cp -R public $DEPLOYPATH
-    - /bin/cp -R app $DEPLOYPATH
-    - /bin/cp -R cron $DEPLOYPATH
-    - /bin/cp -R database $DEPLOYPATH
-    - /bin/cp -R storage $DEPLOYPATH
-    - /bin/cp -R CLAUDE.md $DEPLOYPATH
-    - /bin/cp -R README.md $DEPLOYPATH
+    - /bin/echo "Deploy completado"
