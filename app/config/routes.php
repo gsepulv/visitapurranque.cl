@@ -42,6 +42,15 @@ return [
     ['GET',  '/admin/logout',             'AdminController@logout'],
     ['GET',  '/admin/dashboard',          'AdminController@dashboard'],
 
+    // Admin — Fichas
+    ['GET',  '/admin/fichas',                'AdminFichaController@index'],
+    ['GET',  '/admin/fichas/crear',          'AdminFichaController@create'],
+    ['POST', '/admin/fichas/crear',          'AdminFichaController@store'],
+    ['GET',  '/admin/fichas/{id}/editar',    'AdminFichaController@edit'],
+    ['POST', '/admin/fichas/{id}/editar',    'AdminFichaController@update'],
+    ['POST', '/admin/fichas/{id}/eliminar',  'AdminFichaController@delete'],
+    ['POST', '/admin/fichas/{id}/toggle',    'AdminFichaController@toggle'],
+
     // Dashboard proyecto
     ['GET',  '/proyecto',                  'ProyectoController@index'],
     ['POST', '/proyecto/login',            'ProyectoController@login'],
