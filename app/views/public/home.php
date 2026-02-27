@@ -1,336 +1,351 @@
-<?php
-/**
- * Home — visitapurranque.cl
- * Variables: $categorias, $destacados, $proximoEvento, $eventos, $posts
- */
-?>
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visita Purranque — Guia del Visitante de Purranque</title>
+    <meta name="description" content="La guia turistica mas completa de Purranque, Region de Los Lagos, Chile. Naturaleza, cultura, gastronomia y tradiciones del sur de Chile.">
+    <meta name="robots" content="index, follow">
 
-<!-- ═══════════════ SCHEMA.ORG ═══════════════ -->
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@graph": [
-        {
-            "@type": "WebSite",
-            "name": <?= json_encode(SITE_NAME, JSON_UNESCAPED_UNICODE) ?>,
-            "url": <?= json_encode(SITE_URL, JSON_UNESCAPED_UNICODE) ?>,
-            "description": <?= json_encode(SITE_DESCRIPTION, JSON_UNESCAPED_UNICODE) ?>,
-            "inLanguage": "es-CL",
-            "potentialAction": {
-                "@type": "SearchAction",
-                "target": {
-                    "@type": "EntryPoint",
-                    "urlTemplate": <?= json_encode(url('/buscar') . '?q={search_term_string}', JSON_UNESCAPED_UNICODE) ?>
-                },
-                "query-input": "required name=search_term_string"
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Visita Purranque — Guia del Visitante">
+    <meta property="og:description" content="La guia turistica mas completa de Purranque, Region de Los Lagos, Chile.">
+    <meta property="og:url" content="https://visitapurranque.cl">
+    <meta property="og:site_name" content="Visita Purranque">
+    <meta property="og:locale" content="es_CL">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --green: #1a5632;
+            --green-light: #22c55e;
+            --blue: #0ea5e9;
+            --blue-dark: #0369a1;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(145deg, var(--green) 0%, #0f4a2a 40%, var(--blue-dark) 75%, var(--blue) 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Textura sutil de fondo */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(34, 197, 94, .08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(14, 165, 233, .1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, .15) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .page {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 680px;
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        /* Icono principal */
+        .hero-icon {
+            font-size: 4rem;
+            line-height: 1;
+            margin-bottom: 16px;
+            display: block;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* Logo / Titulo */
+        .site-title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 3rem;
+            font-weight: 400;
+            line-height: 1.1;
+            color: #fff;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .site-subtitle {
+            font-size: 1.05rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, .7);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        /* Separador */
+        .divider {
+            width: 48px;
+            height: 3px;
+            background: var(--green-light);
+            border-radius: 2px;
+            margin: 0 auto 40px;
+            opacity: .6;
+        }
+
+        /* Texto principal */
+        .main-text {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            line-height: 1.4;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .secondary-text {
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, .65);
+            line-height: 1.6;
+            max-width: 480px;
+            margin: 0 auto 40px;
+        }
+
+        /* Barra de progreso */
+        .progress-wrap {
+            margin-bottom: 12px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            max-width: 360px;
+            height: 6px;
+            background: rgba(255, 255, 255, .12);
+            border-radius: 3px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 30%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, var(--green-light), #4ade80);
+            position: relative;
+            animation: pulse-glow 2.5s ease-in-out infinite;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.3), transparent);
+            animation: shimmer 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: .85; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(200%); }
+        }
+
+        .progress-label {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, .4);
+            margin-top: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Proximamente badge */
+        .coming-badge {
+            display: inline-block;
+            margin: 36px auto 40px;
+            padding: 8px 24px;
+            border: 1.5px solid rgba(255, 255, 255, .2);
+            border-radius: 50px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, .8);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            backdrop-filter: blur(4px);
+            background: rgba(255, 255, 255, .04);
+        }
+
+        /* Links de contacto */
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-link {
+            color: rgba(255, 255, 255, .55);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 400;
+            transition: color .2s;
+        }
+
+        .contact-link:hover {
+            color: #fff;
+        }
+
+        .contact-link--email {
+            color: rgba(255, 255, 255, .75);
+            font-weight: 500;
+            padding: 6px 16px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, .06);
+            transition: background .2s, color .2s;
+        }
+
+        .contact-link--email:hover {
+            background: rgba(255, 255, 255, .12);
+            color: #fff;
+        }
+
+        .contact-sep {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .2);
+        }
+
+        /* Footer */
+        .page-footer {
+            margin-top: 48px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, .25);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 480px) {
+            .page {
+                padding: 32px 20px;
             }
-        },
-        {
-            "@type": "TouristDestination",
-            "name": "Purranque",
-            "description": <?= json_encode(texto('hero_descripcion', SITE_DESCRIPTION), JSON_UNESCAPED_UNICODE) ?>,
-            "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": <?= CITY_LAT ?>,
-                "longitude": <?= CITY_LNG ?>
-            },
-            "containedInPlace": {
-                "@type": "AdministrativeArea",
-                "name": "Región de Los Lagos, Chile"
-            },
-            "touristType": ["naturaleza", "cultura", "gastronomía", "playas"]
+
+            .hero-icon {
+                font-size: 3rem;
+            }
+
+            .site-title {
+                font-size: 2.2rem;
+            }
+
+            .site-subtitle {
+                font-size: 0.88rem;
+                letter-spacing: 1.5px;
+                margin-bottom: 32px;
+            }
+
+            .main-text {
+                font-size: 1.25rem;
+            }
+
+            .secondary-text {
+                font-size: 0.88rem;
+                margin-bottom: 32px;
+            }
+
+            .coming-badge {
+                margin: 28px auto 32px;
+                font-size: 0.8rem;
+            }
         }
-    ]
-}
-</script>
 
-<!-- ═══════════════ 1. HERO SECTION ═══════════════ -->
-<section class="hero-home">
-    <div class="container hero-home-inner">
-        <h1><?= e(texto('hero_titulo', SITE_NAME)) ?></h1>
-        <p class="hero-home-badge"><?= e(texto('hero_subtitulo', 'Guía del Visitante')) ?></p>
-        <p class="hero-home-desc"><?= e(texto('hero_descripcion', SITE_DESCRIPTION)) ?></p>
+        @media (min-width: 768px) {
+            .site-title {
+                font-size: 3.5rem;
+            }
 
-        <!-- Buscador -->
-        <form class="hero-search" action="<?= url('/buscar') ?>" method="GET" role="search">
-            <label for="hero-q" class="sr-only">Buscar</label>
-            <span class="hero-search-icon" aria-hidden="true">&#128269;</span>
-            <input type="search"
-                   id="hero-q"
-                   name="q"
-                   class="hero-search-input"
-                   placeholder="<?= e(texto('buscar_placeholder', 'Busca playas, senderos, restaurantes...')) ?>"
-                   autocomplete="off">
-            <button type="submit" class="hero-search-btn">Buscar</button>
-        </form>
+            .main-text {
+                font-size: 1.65rem;
+            }
 
-        <a href="<?= url('/categorias') ?>" class="btn btn-lg hero-cta-btn">
-            <?= e(texto('hero_cta', 'Explorar atractivos')) ?> &rarr;
+            .contact-links {
+                flex-direction: row;
+                justify-content: center;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<main class="page">
+    <span class="hero-icon" aria-hidden="true">&#9968;</span>
+
+    <h1 class="site-title">Visita Purranque</h1>
+    <p class="site-subtitle">Guia del Visitante de Purranque</p>
+
+    <div class="divider"></div>
+
+    <p class="main-text">Estamos construyendo algo increible para ti</p>
+    <p class="secondary-text">
+        La guia turistica mas completa de Purranque, Region de Los Lagos, Chile.
+        Naturaleza, cultura, gastronomia y tradiciones del sur de Chile.
+    </p>
+
+    <div class="progress-wrap">
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        <p class="progress-label">En desarrollo</p>
+    </div>
+
+    <span class="coming-badge">Proximamente &mdash; 2026</span>
+
+    <div class="contact-links">
+        <a href="mailto:contacto@purranque.info" class="contact-link contact-link--email">
+            contacto@purranque.info
         </a>
-
-        <?php if ($proximoEvento): ?>
-        <!-- Countdown al próximo evento -->
-        <div class="hero-countdown" data-fecha="<?= e($proximoEvento['fecha_inicio']) ?>">
-            <p class="hero-countdown-label">
-                Próximo evento: <strong><?= e($proximoEvento['titulo']) ?></strong>
-                <?php if ($proximoEvento['lugar']): ?>
-                    &mdash; <?= e($proximoEvento['lugar']) ?>
-                <?php endif; ?>
-            </p>
-            <div class="countdown-timer">
-                <div class="countdown-unit">
-                    <span class="countdown-number" id="cd-days">--</span>
-                    <span class="countdown-text">días</span>
-                </div>
-                <div class="countdown-unit">
-                    <span class="countdown-number" id="cd-hours">--</span>
-                    <span class="countdown-text">hrs</span>
-                </div>
-                <div class="countdown-unit">
-                    <span class="countdown-number" id="cd-mins">--</span>
-                    <span class="countdown-text">min</span>
-                </div>
-                <div class="countdown-unit">
-                    <span class="countdown-number" id="cd-secs">--</span>
-                    <span class="countdown-text">seg</span>
-                </div>
-            </div>
-        </div>
-        <?php endif; ?>
+        <span class="contact-sep"></span>
+        <a href="https://purranque.info" target="_blank" rel="noopener" class="contact-link">
+            PurranQUE.INFO
+        </a>
     </div>
-</section>
 
-<!-- ═══════════════ 2. GRID DE CATEGORÍAS ═══════════════ -->
-<section class="home-section">
-    <div class="container">
-        <h2 class="section-title">Explora Purranque</h2>
+    <p class="page-footer">&copy; 2026 Visita Purranque</p>
+</main>
 
-        <div class="categorias-grid">
-            <?php foreach ($categorias as $cat): ?>
-            <?php $tieneFichas = (int)$cat['total_fichas'] > 0; ?>
-            <a href="<?= $tieneFichas ? url('/categoria/' . e($cat['slug'])) : '#' ?>"
-               class="categoria-card<?= $tieneFichas ? '' : ' categoria-card--empty' ?>"
-               style="--cat-color: <?= e($cat['color']) ?>"
-               <?= $tieneFichas ? '' : 'aria-disabled="true"' ?>>
-                <span class="categoria-emoji"><?= $cat['emoji'] ?></span>
-                <h3 class="categoria-nombre"><?= e($cat['nombre']) ?></h3>
-                <?php
-                    $desc = $cat['descripcion'] ?? '';
-                    if (mb_strlen($desc) > 80) {
-                        $desc = mb_substr($desc, 0, 80) . '...';
-                    }
-                ?>
-                <?php if ($desc): ?>
-                    <p class="categoria-desc"><?= e($desc) ?></p>
-                <?php endif; ?>
-                <?php if ($tieneFichas): ?>
-                    <span class="categoria-count"><?= (int)$cat['total_fichas'] ?> lugar<?= (int)$cat['total_fichas'] !== 1 ? 'es' : '' ?></span>
-                <?php else: ?>
-                    <span class="categoria-count categoria-count--soon">Próximamente</span>
-                <?php endif; ?>
-            </a>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</section>
-
-<!-- ═══════════════ 3. ATRACTIVOS DESTACADOS ═══════════════ -->
-<section class="home-section bg-alt">
-    <div class="container">
-        <h2 class="section-title">Imperdibles de Purranque</h2>
-
-        <?php if (!empty($destacados)): ?>
-        <div class="destacados-grid">
-            <?php foreach ($destacados as $ficha): ?>
-            <a href="<?= url('/atractivo/' . e($ficha['slug'])) ?>" class="card destacado-card">
-                <?php if ($ficha['imagen_portada']): ?>
-                    <img src="<?= e($ficha['imagen_portada']) ?>"
-                         alt="<?= e($ficha['nombre']) ?>"
-                         class="card-img"
-                         loading="lazy">
-                <?php else: ?>
-                    <div class="card-img card-img-placeholder">
-                        <span><?= $ficha['categoria_emoji'] ?? '📍' ?></span>
-                    </div>
-                <?php endif; ?>
-                <div class="card-body">
-                    <span class="badge badge-green" style="background: <?= e($ficha['categoria_color'] ?? '#f0fdf4') ?>20; color: <?= e($ficha['categoria_color'] ?? 'var(--green)') ?>">
-                        <?= $ficha['categoria_emoji'] ?? '' ?> <?= e($ficha['categoria_nombre'] ?? '') ?>
-                    </span>
-                    <h3 class="card-title"><?= e($ficha['nombre']) ?></h3>
-                    <?php if ((float)$ficha['promedio_rating'] > 0): ?>
-                    <div class="rating-stars">
-                        <?php
-                        $rating = (float)$ficha['promedio_rating'];
-                        for ($i = 1; $i <= 5; $i++):
-                            if ($i <= floor($rating)):
-                                echo '<span class="star star--full">&#9733;</span>';
-                            elseif ($i - $rating < 1):
-                                echo '<span class="star star--half">&#9733;</span>';
-                            else:
-                                echo '<span class="star star--empty">&#9734;</span>';
-                            endif;
-                        endfor;
-                        ?>
-                        <span class="rating-value"><?= number_format($rating, 1) ?></span>
-                    </div>
-                    <?php endif; ?>
-                    <?php if ($ficha['descripcion_corta']): ?>
-                        <p class="card-text"><?= e($ficha['descripcion_corta']) ?></p>
-                    <?php endif; ?>
-                </div>
-            </a>
-            <?php endforeach; ?>
-        </div>
-        <?php else: ?>
-        <div class="empty-state">
-            <span class="empty-state-icon">&#127967;</span>
-            <p>Pronto agregaremos los mejores atractivos de Purranque</p>
-        </div>
-        <?php endif; ?>
-    </div>
-</section>
-
-<!-- ═══════════════ 4. PRÓXIMOS EVENTOS ═══════════════ -->
-<section class="home-section">
-    <div class="container">
-        <h2 class="section-title">Próximos Eventos</h2>
-
-        <?php if (!empty($eventos)): ?>
-        <div class="eventos-grid">
-            <?php foreach ($eventos as $ev): ?>
-            <div class="card evento-card">
-                <?php if ($ev['imagen']): ?>
-                    <img src="<?= e($ev['imagen']) ?>"
-                         alt="<?= e($ev['titulo']) ?>"
-                         class="card-img"
-                         loading="lazy">
-                <?php else: ?>
-                    <div class="card-img card-img-placeholder card-img-placeholder--evento">
-                        <span>&#127881;</span>
-                    </div>
-                <?php endif; ?>
-                <div class="card-body">
-                    <div class="evento-fecha-badge">
-                        <span class="evento-dia"><?= date('d', strtotime($ev['fecha_inicio'])) ?></span>
-                        <span class="evento-mes"><?= strftime_es(strtotime($ev['fecha_inicio'])) ?></span>
-                    </div>
-                    <h3 class="card-title"><?= e($ev['titulo']) ?></h3>
-                    <?php if ($ev['lugar']): ?>
-                        <p class="evento-lugar">&#128205; <?= e($ev['lugar']) ?></p>
-                    <?php endif; ?>
-                    <?php if ($ev['descripcion_corta']): ?>
-                        <p class="card-text"><?= e($ev['descripcion_corta']) ?></p>
-                    <?php endif; ?>
-                </div>
-            </div>
-            <?php endforeach; ?>
-        </div>
-        <div class="section-footer">
-            <a href="<?= url('/eventos') ?>" class="btn btn-secondary">Ver todos los eventos &rarr;</a>
-        </div>
-        <?php else: ?>
-        <div class="empty-state">
-            <span class="empty-state-icon">&#127879;</span>
-            <p>Pronto publicaremos eventos en Purranque</p>
-        </div>
-        <?php endif; ?>
-    </div>
-</section>
-
-<!-- ═══════════════ 5. BLOG RECIENTE ═══════════════ -->
-<section class="home-section bg-alt">
-    <div class="container">
-        <h2 class="section-title">Últimas Noticias</h2>
-
-        <?php if (!empty($posts)): ?>
-        <div class="blog-grid">
-            <?php foreach ($posts as $post): ?>
-            <a href="<?= url('/blog/' . e($post['slug'])) ?>" class="card blog-card">
-                <?php if ($post['imagen_portada']): ?>
-                    <img src="<?= e($post['imagen_portada']) ?>"
-                         alt="<?= e($post['titulo']) ?>"
-                         class="card-img"
-                         loading="lazy">
-                <?php else: ?>
-                    <div class="card-img card-img-placeholder card-img-placeholder--blog">
-                        <span>&#128240;</span>
-                    </div>
-                <?php endif; ?>
-                <div class="card-body">
-                    <?php if (!empty($post['categoria_nombre'])): ?>
-                        <span class="badge badge-blue">
-                            <?= $post['categoria_emoji'] ?? '' ?> <?= e($post['categoria_nombre']) ?>
-                        </span>
-                    <?php endif; ?>
-                    <h3 class="card-title"><?= e($post['titulo']) ?></h3>
-                    <?php if ($post['extracto']): ?>
-                        <p class="card-text"><?= e($post['extracto']) ?></p>
-                    <?php endif; ?>
-                    <div class="blog-meta">
-                        <span><?= formatDate($post['publicado_at']) ?></span>
-                        <?php if ($post['tiempo_lectura']): ?>
-                            <span>&middot; <?= (int)$post['tiempo_lectura'] ?> min lectura</span>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            </a>
-            <?php endforeach; ?>
-        </div>
-        <div class="section-footer">
-            <a href="<?= url('/blog') ?>" class="btn btn-secondary">Ver todas las noticias &rarr;</a>
-        </div>
-        <?php else: ?>
-        <div class="empty-state">
-            <span class="empty-state-icon">&#128221;</span>
-            <p>Pronto publicaremos noticias sobre Purranque</p>
-        </div>
-        <?php endif; ?>
-    </div>
-</section>
-
-<!-- ═══════════════ 6. CTA FINAL ═══════════════ -->
-<section class="cta-section">
-    <div class="container cta-inner">
-        <h2>¿Tienes un servicio turístico en Purranque?</h2>
-        <p>Registra tu negocio en nuestra guía y aumenta tu visibilidad</p>
-        <a href="<?= url('/contacto') ?>" class="btn btn-lg btn-accent">Contáctanos</a>
-    </div>
-</section>
-
-<!-- ═══════════════ COUNTDOWN JS ═══════════════ -->
-<?php if ($proximoEvento): ?>
-<script>
-(function() {
-    var el = document.querySelector('.hero-countdown');
-    if (!el) return;
-
-    var target = new Date(el.dataset.fecha).getTime();
-    var days = document.getElementById('cd-days');
-    var hours = document.getElementById('cd-hours');
-    var mins = document.getElementById('cd-mins');
-    var secs = document.getElementById('cd-secs');
-
-    function pad(n) { return n < 10 ? '0' + n : n; }
-
-    function tick() {
-        var diff = target - Date.now();
-        if (diff <= 0) {
-            el.style.display = 'none';
-            return;
-        }
-        var d = Math.floor(diff / 86400000);
-        var h = Math.floor((diff % 86400000) / 3600000);
-        var m = Math.floor((diff % 3600000) / 60000);
-        var s = Math.floor((diff % 60000) / 1000);
-        days.textContent = d;
-        hours.textContent = pad(h);
-        mins.textContent = pad(m);
-        secs.textContent = pad(s);
-    }
-
-    tick();
-    setInterval(tick, 1000);
-})();
-</script>
-<?php endif; ?>
+</body>
+</html>

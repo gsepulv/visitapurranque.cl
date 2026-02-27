@@ -4,7 +4,13 @@ class HomeController extends Controller
 {
     public function index(): void
     {
-        // ── Categorías activas con conteo de fichas ──
+        // Página "en construcción" — standalone, sin queries
+        $this->renderStandalone('public/home');
+    }
+
+    /* ── Home completo (restaurar cuando el sitio esté listo) ──
+    public function indexFull(): void
+    {
         $categorias = $this->db->query(
             "SELECT c.*,
                     (SELECT COUNT(*) FROM fichas f
@@ -14,7 +20,6 @@ class HomeController extends Controller
              ORDER BY c.orden ASC"
         )->fetchAll();
 
-        // ── Fichas destacadas ──
         $destacados = $this->db->query(
             "SELECT f.*, c.nombre AS categoria_nombre, c.emoji AS categoria_emoji, c.color AS categoria_color
              FROM fichas f
@@ -24,7 +29,6 @@ class HomeController extends Controller
              LIMIT 6"
         )->fetchAll();
 
-        // ── Próximo evento (para countdown del hero) ──
         $proximoEvento = $this->db->query(
             "SELECT id, titulo, slug, fecha_inicio, lugar
              FROM eventos
@@ -33,7 +37,6 @@ class HomeController extends Controller
              LIMIT 1"
         )->fetch();
 
-        // ── Próximos 3 eventos ──
         $eventos = $this->db->query(
             "SELECT *
              FROM eventos
@@ -42,7 +45,6 @@ class HomeController extends Controller
              LIMIT 3"
         )->fetchAll();
 
-        // ── Blog reciente ──
         $posts = $this->db->query(
             "SELECT p.*, bc.nombre AS categoria_nombre, bc.emoji AS categoria_emoji
              FROM blog_posts p
@@ -61,4 +63,5 @@ class HomeController extends Controller
             'posts'          => $posts,
         ]);
     }
+    */
 }
