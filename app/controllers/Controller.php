@@ -31,6 +31,37 @@ class Controller
     }
 
     /**
+     * Renderizar vista con layout admin (sidebar + header + view + footer)
+     */
+    protected function renderAdmin(string $view, array $data = []): void
+    {
+        extract($data);
+
+        $csrf = csrf_token();
+        $flash = $_SESSION['flash'] ?? [];
+        unset($_SESSION['flash']);
+
+        require BASE_PATH . '/app/views/layouts/admin-header.php';
+        require BASE_PATH . '/app/views/layouts/admin-sidebar.php';
+        require BASE_PATH . '/app/views/' . $view . '.php';
+        require BASE_PATH . '/app/views/layouts/admin-footer.php';
+    }
+
+    /**
+     * Renderizar vista standalone (sin layout)
+     */
+    protected function renderStandalone(string $view, array $data = []): void
+    {
+        extract($data);
+
+        $csrf = csrf_token();
+        $flash = $_SESSION['flash'] ?? [];
+        unset($_SESSION['flash']);
+
+        require BASE_PATH . '/app/views/' . $view . '.php';
+    }
+
+    /**
      * Redireccionar con flash messages opcionales
      */
     protected function redirect(string $path, array $flash = []): void

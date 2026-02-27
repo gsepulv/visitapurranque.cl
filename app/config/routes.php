@@ -35,6 +35,13 @@ return [
     // FAQ
     ['GET', '/faq',               'FaqController@index'],
 
+    // Admin
+    ['GET',  '/admin',                     'AdminController@index'],
+    ['GET',  '/admin/login',              'AdminController@loginForm'],
+    ['POST', '/admin/login',              'AdminController@login'],
+    ['GET',  '/admin/logout',             'AdminController@logout'],
+    ['GET',  '/admin/dashboard',          'AdminController@dashboard'],
+
     // Dashboard proyecto
     ['GET',  '/proyecto',                  'ProyectoController@index'],
     ['POST', '/proyecto/login',            'ProyectoController@login'],
