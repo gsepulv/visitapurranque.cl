@@ -1242,3 +1242,84 @@ h1, h2, h3 {
     gap: 6px;
     flex-wrap: wrap;
 }
+
+/* ── Reportes / Estadísticas ────────────────────────── */
+
+.report-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.report-kpi {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+}
+
+.report-kpi__value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--admin-green);
+    line-height: 1.1;
+}
+
+.report-kpi__label {
+    display: block;
+    font-size: .82rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.report-kpi__sub {
+    display: block;
+    font-size: .75rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.csv-export-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.report-charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.report-chart-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    min-height: 200px;
+}
+
+.report-chart-card--full {
+    grid-column: 1 / -1;
+}
+
+.report-chart-title {
+    font-size: .95rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text);
+}
+
+.text-right {
+    text-align: right;
+}
+
+.admin-page-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

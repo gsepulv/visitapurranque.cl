@@ -111,6 +111,10 @@ return [
     ['POST', '/admin/blog/{id}/editar',    'AdminBlogController@update'],
     ['POST', '/admin/blog/{id}/eliminar',  'AdminBlogController@delete'],
 
+    // Admin — Estadísticas / Reportes
+    ['GET',  '/admin/estadisticas',       'AdminReporteController@index'],
+    ['GET',  '/admin/estadisticas/csv',   'AdminReporteController@csv'],
+
     // Admin — Fichas
     ['GET',  '/admin/fichas',                'AdminFichaController@index'],
     ['GET',  '/admin/fichas/crear',          'AdminFichaController@create'],
