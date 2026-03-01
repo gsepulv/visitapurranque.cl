@@ -126,55 +126,18 @@ $currentUrl = url('/evento/' . e($evento['slug']));
                 <?php if (!empty($evento['direccion'])): ?>
                     <p class="text-sm text-muted mb-2">&#128205; <?= e($evento['direccion']) ?></p>
                 <?php endif; ?>
-                <div class="map-wrap">
-                    <div class="ficha-mapa" id="evento-map"></div>
-                    <div class="map-scroll-hint" id="evento-map-hint"></div>
-                </div>
+                <div class="ficha-mapa" id="evento-map"></div>
                 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
                 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
                 <script>
                 (function(){
                     var lat = <?= $evento['latitud'] ?>, lng = <?= $evento['longitud'] ?>;
-                    var mapEl = document.getElementById('evento-map');
-                    var hint = document.getElementById('evento-map-hint');
                     var map = L.map('evento-map', { scrollWheelZoom: false }).setView([lat, lng], 14);
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         attribution: '&copy; OpenStreetMap',
                         maxZoom: 18
                     }).addTo(map);
                     L.marker([lat, lng]).addTo(map).bindPopup(<?= json_encode(e($evento['titulo']), JSON_UNESCAPED_UNICODE) ?>).openPopup();
-
-                    var hintTimer;
-                    mapEl.addEventListener('wheel', function(e) {
-                        if (e.ctrlKey || e.metaKey) {
-                            e.preventDefault();
-                            map.scrollWheelZoom.enable();
-                            clearTimeout(hintTimer);
-                            hint.classList.remove('map-scroll-hint--visible');
-                            hintTimer = setTimeout(function(){ map.scrollWheelZoom.disable(); }, 1500);
-                        } else {
-                            hint.textContent = 'Usa Ctrl + scroll para hacer zoom en el mapa';
-                            hint.classList.add('map-scroll-hint--visible');
-                            clearTimeout(hintTimer);
-                            hintTimer = setTimeout(function(){ hint.classList.remove('map-scroll-hint--visible'); }, 1800);
-                        }
-                    }, { passive: false });
-
-                    if (L.Browser.mobile) {
-                        map.dragging.disable();
-                        mapEl.addEventListener('touchstart', function(e) {
-                            if (e.touches.length >= 2) { map.dragging.enable(); hint.classList.remove('map-scroll-hint--visible'); }
-                        }, { passive: true });
-                        mapEl.addEventListener('touchend', function() { map.dragging.disable(); }, { passive: true });
-                        mapEl.addEventListener('touchmove', function(e) {
-                            if (e.touches.length < 2) {
-                                hint.textContent = 'Usa dos dedos para mover el mapa';
-                                hint.classList.add('map-scroll-hint--visible');
-                                clearTimeout(hintTimer);
-                                hintTimer = setTimeout(function(){ hint.classList.remove('map-scroll-hint--visible'); }, 1800);
-                            }
-                        }, { passive: true });
-                    }
                 })();
                 </script>
             </div>

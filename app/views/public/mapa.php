@@ -18,10 +18,7 @@ $fichasJson = json_encode($fichas, JSON_UNESCAPED_UNICODE);
 </section>
 
 <section class="mapa-section">
-    <div class="map-wrap">
-        <div class="mapa-fullwidth" id="mapa-principal"></div>
-        <div class="map-scroll-hint" id="mapa-hint"></div>
-    </div>
+    <div class="mapa-fullwidth" id="mapa-principal"></div>
 </section>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
@@ -29,56 +26,12 @@ $fichasJson = json_encode($fichas, JSON_UNESCAPED_UNICODE);
 <script>
 (function(){
     var fichas = <?= $fichasJson ?>;
-    var mapEl = document.getElementById('mapa-principal');
-    var hint = document.getElementById('mapa-hint');
     var map = L.map('mapa-principal', { scrollWheelZoom: false }).setView([-40.91, -73.13], 10);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         maxZoom: 18
     }).addTo(map);
-
-    // Ctrl+scroll para zoom (patrón Google Maps)
-    var hintTimer;
-    mapEl.addEventListener('wheel', function(e) {
-        if (e.ctrlKey || e.metaKey) {
-            e.preventDefault();
-            map.scrollWheelZoom.enable();
-            clearTimeout(hintTimer);
-            hint.classList.remove('map-scroll-hint--visible');
-            hintTimer = setTimeout(function(){ map.scrollWheelZoom.disable(); }, 1500);
-        } else {
-            hint.textContent = 'Usa Ctrl + scroll para hacer zoom en el mapa';
-            hint.classList.add('map-scroll-hint--visible');
-            clearTimeout(hintTimer);
-            hintTimer = setTimeout(function(){ hint.classList.remove('map-scroll-hint--visible'); }, 1800);
-        }
-    }, { passive: false });
-
-    // Mobile: dos dedos para mover
-    if (L.Browser.mobile) {
-        map.dragging.disable();
-        var touching = 0;
-        mapEl.addEventListener('touchstart', function(e) {
-            touching = e.touches.length;
-            if (touching >= 2) {
-                map.dragging.enable();
-                hint.classList.remove('map-scroll-hint--visible');
-            }
-        }, { passive: true });
-        mapEl.addEventListener('touchend', function() {
-            touching = 0;
-            map.dragging.disable();
-        }, { passive: true });
-        mapEl.addEventListener('touchmove', function(e) {
-            if (e.touches.length < 2) {
-                hint.textContent = 'Usa dos dedos para mover el mapa';
-                hint.classList.add('map-scroll-hint--visible');
-                clearTimeout(hintTimer);
-                hintTimer = setTimeout(function(){ hint.classList.remove('map-scroll-hint--visible'); }, 1800);
-            }
-        }, { passive: true });
-    }
 
     if (fichas.length === 0) return;
 
