@@ -111,6 +111,18 @@ return [
     ['POST', '/admin/blog/{id}/editar',    'AdminBlogController@update'],
     ['POST', '/admin/blog/{id}/eliminar',  'AdminBlogController@delete'],
 
+    // Admin — Cambios Pendientes
+    ['GET',  '/admin/cambios',                'AdminCambioController@index'],
+    ['GET',  '/admin/cambios/{id}',           'AdminCambioController@show'],
+    ['POST', '/admin/cambios/{id}/aprobar',   'AdminCambioController@aprobar'],
+    ['POST', '/admin/cambios/{id}/rechazar',  'AdminCambioController@rechazar'],
+    ['POST', '/admin/cambios/{id}/eliminar',  'AdminCambioController@delete'],
+
+    // Admin — Renovaciones
+    ['GET',  '/admin/renovaciones',               'AdminCambioController@renovaciones'],
+    ['POST', '/admin/renovaciones/{id}/renovar',  'AdminCambioController@renovar'],
+    ['POST', '/admin/renovaciones/{id}/expirar',  'AdminCambioController@expirar'],
+
     // Admin — Estadísticas / Reportes
     ['GET',  '/admin/estadisticas',       'AdminReporteController@index'],
     ['GET',  '/admin/estadisticas/csv',   'AdminReporteController@csv'],

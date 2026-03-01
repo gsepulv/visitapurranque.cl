@@ -1323,3 +1323,71 @@ h1, h2, h3 {
     align-items: center;
     gap: 10px;
 }
+
+/* ── Cambios Pendientes / Renovaciones ──────────────── */
+
+.cambio-diff-table td {
+    vertical-align: top;
+    max-width: 350px;
+    word-wrap: break-word;
+}
+
+.cambio-diff--changed {
+    background: #fefce8;
+}
+
+.cambio-diff__old {
+    color: var(--text-muted);
+}
+
+.cambio-diff__new {
+    color: var(--admin-green);
+    font-weight: 600;
+}
+
+.cambio-review-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.cambio-review-form {
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.badge--blue {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.renov-kpi--warning {
+    color: var(--admin-yellow);
+}
+
+.renov-kpi--danger {
+    color: var(--admin-red);
+}
+
+.renov-section--danger {
+    border-color: #fca5a5;
+    background: #fef2f2;
+}
+
+.renov-section--warning {
+    border-color: #fde68a;
+    background: #fffbeb;
+}
+
+.renov-form {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.form-select--mini {
+    padding: 4px 8px;
+    font-size: .8rem;
+    min-width: 80px;
+}
