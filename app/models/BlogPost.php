@@ -259,4 +259,60 @@ class BlogPost
         $stmt->execute([$limit]);
         return $stmt->fetchAll();
     }
+
+    public function getAllPublicados(int $limit = 12, int $offset = 0): array
+    {
+        $stmt = $this->db->prepare(
+            "SELECT p.*, c.nombre AS categoria_nombre, a.nombre AS autor_nombre
+             FROM blog_posts p
+             LEFT JOIN blog_categorias c ON c.id = p.categoria_id
+             LEFT JOIN blog_autores a ON a.id = p.autor_id
+             WHERE p.estado = 'publicado' AND p.eliminado = 0
+             ORDER BY p.publicado_at DESC, p.created_at DESC
+             LIMIT ? OFFSET ?"
+        );
+        $stmt->execute([$limit, $offset]);
+        return $stmt->fetchAll();
+    }
+
+    public function getBySlugPublico(string $slug): ?array
+    {
+        $stmt = $this->db->prepare(
+            "SELECT p.*, c.nombre AS categoria_nombre, c.slug AS categoria_slug,
+                    a.nombre AS autor_nombre, a.bio AS autor_bio, a.avatar AS autor_avatar
+             FROM blog_posts p
+             LEFT JOIN blog_categorias c ON c.id = p.categoria_id
+             LEFT JOIN blog_autores a ON a.id = p.autor_id
+             WHERE p.slug = ? AND p.estado = 'publicado' AND p.eliminado = 0
+             LIMIT 1"
+        );
+        $stmt->execute([$slug]);
+        $row = $stmt->fetch();
+        return $row ?: null;
+    }
+
+    public function getRelacionados(int $postId, ?int $categoriaId, int $limit = 3): array
+    {
+        $sql = "SELECT id, titulo, slug, extracto, imagen_portada, publicado_at, tiempo_lectura
+                FROM blog_posts
+                WHERE estado = 'publicado' AND eliminado = 0 AND id != ?";
+        $params = [$postId];
+
+        if ($categoriaId) {
+            $sql .= " AND categoria_id = ?";
+            $params[] = $categoriaId;
+        }
+
+        $sql .= " ORDER BY publicado_at DESC LIMIT ?";
+        $params[] = $limit;
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
+    }
+
+    public function registrarVista(int $id): void
+    {
+        $this->db->prepare("UPDATE blog_posts SET vistas = vistas + 1 WHERE id = ?")->execute([$id]);
+    }
 }
