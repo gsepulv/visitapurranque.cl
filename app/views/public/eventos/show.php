@@ -132,12 +132,32 @@ $currentUrl = url('/evento/' . e($evento['slug']));
                 <script>
                 (function(){
                     var lat = <?= $evento['latitud'] ?>, lng = <?= $evento['longitud'] ?>;
-                    var map = L.map('evento-map').setView([lat, lng], 14);
+                    var mapEl = document.getElementById('evento-map');
+                    var map = L.map('evento-map', { scrollWheelZoom: false }).setView([lat, lng], 14);
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         attribution: '&copy; OpenStreetMap',
                         maxZoom: 18
                     }).addTo(map);
                     L.marker([lat, lng]).addTo(map).bindPopup(<?= json_encode(e($evento['titulo']), JSON_UNESCAPED_UNICODE) ?>).openPopup();
+
+                    var overlay = document.createElement('div');
+                    overlay.className = 'map-interaction-overlay';
+                    overlay.innerHTML = '<span>Haz clic para interactuar con el mapa</span>';
+                    mapEl.style.position = 'relative';
+                    mapEl.appendChild(overlay);
+
+                    map.on('click', function() {
+                        map.scrollWheelZoom.enable();
+                        overlay.classList.add('map-interaction-overlay--hidden');
+                    });
+                    map.on('mouseout', function() {
+                        map.scrollWheelZoom.disable();
+                        overlay.classList.remove('map-interaction-overlay--hidden');
+                    });
+                    if (L.Browser.mobile) {
+                        map.dragging.disable();
+                        map.on('click', function() { map.dragging.enable(); });
+                    }
                 })();
                 </script>
             </div>

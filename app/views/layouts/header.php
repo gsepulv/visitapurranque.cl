@@ -11,7 +11,7 @@ try {
     $stmt = $pdo->prepare(
         "SELECT titulo, url, icono, target
          FROM menu_items
-         WHERE ubicacion = 'principal' AND activo = 1
+         WHERE menu = 'principal' AND activo = 1 AND parent_id IS NULL
          ORDER BY orden ASC"
     );
     $stmt->execute();

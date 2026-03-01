@@ -56,3 +56,16 @@ INSERT INTO faq (pregunta, respuesta, categoria, orden, activo) VALUES
 ('Como puedo agregar mi negocio al directorio?', 'Puedes contactarnos a traves del formulario de contacto o escribirnos directamente. Evaluaremos tu solicitud y te informaremos sobre los planes disponibles para aparecer en nuestro directorio de atractivos turisticos.', 'servicios', 6, 1),
 ('El sitio es gratuito para los visitantes?', 'Si, el acceso a toda la informacion del sitio es completamente gratuito para los visitantes. Nuestro objetivo es promover el turismo en Purranque y facilitar la planificacion de tu viaje.', 'general', 7, 1),
 ('Puedo dejar una resena de un lugar que visite?', 'Si, en cada ficha de atractivo turistico encontraras un formulario para dejar tu resena. Tu opinion es muy valiosa para otros viajeros y para los emprendedores locales. Las resenas son moderadas antes de publicarse.', 'general', 8, 1);
+
+-- Menu items (principal + footer_legal)
+INSERT INTO menu_items (menu, parent_id, titulo, url, tipo, referencia_id, target, icono, orden, activo) VALUES
+('principal', NULL, 'Inicio',      '/',            'enlace', NULL, '_self', '🏠', 0, 1),
+('principal', NULL, 'Categorías',  '/categorias',  'enlace', NULL, '_self', '📂', 1, 1),
+('principal', NULL, 'Eventos',     '/eventos',     'enlace', NULL, '_self', '📅', 2, 1),
+('principal', NULL, 'Blog',        '/blog',        'enlace', NULL, '_self', '📝', 3, 1),
+('principal', NULL, 'Mapa',        '/mapa',        'enlace', NULL, '_self', '🗺️', 4, 1),
+('principal', NULL, 'Contacto',    '/contacto',    'enlace', NULL, '_self', '✉️', 5, 1),
+('footer_legal', NULL, 'Contacto',             '/contacto',   'enlace', NULL, '_self', NULL, 0, 1),
+('footer_legal', NULL, 'Preguntas frecuentes', '/faq',        'enlace', NULL, '_self', NULL, 1, 1),
+('footer_legal', NULL, 'Términos de uso',      '/terminos',   'enlace', NULL, '_self', NULL, 2, 1),
+('footer_legal', NULL, 'Privacidad',           '/privacidad', 'enlace', NULL, '_self', NULL, 3, 1);

@@ -2015,3 +2015,27 @@ ul, ol { list-style: none; }
         grid-template-columns: repeat(4, 1fr);
     }
 }
+
+/* ── Map interaction overlay ─────────────────────────── */
+.map-interaction-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 800;
+    pointer-events: none;
+    transition: opacity .25s;
+}
+.map-interaction-overlay span {
+    background: rgba(0, 0, 0, .55);
+    color: #fff;
+    padding: .4rem .9rem;
+    border-radius: var(--radius-lg, 8px);
+    font-size: .85rem;
+    font-weight: 500;
+}
+.map-interaction-overlay--hidden {
+    opacity: 0;
+}

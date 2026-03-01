@@ -146,6 +146,16 @@ return [
     ['GET',  '/admin/paginas/{id}/version/{versionId}',         'AdminPaginaController@version'],
     ['POST', '/admin/paginas/{id}/restaurar/{versionId}',       'AdminPaginaController@restaurar'],
 
+    // Admin — Menú
+    ['GET',  '/admin/menu',                 'AdminMenuController@index'],
+    ['GET',  '/admin/menu/crear',           'AdminMenuController@create'],
+    ['POST', '/admin/menu/crear',           'AdminMenuController@store'],
+    ['GET',  '/admin/menu/{id}/editar',     'AdminMenuController@edit'],
+    ['POST', '/admin/menu/{id}/editar',     'AdminMenuController@update'],
+    ['POST', '/admin/menu/{id}/eliminar',   'AdminMenuController@delete'],
+    ['POST', '/admin/menu/{id}/toggle',     'AdminMenuController@toggle'],
+    ['POST', '/admin/menu/reordenar',       'AdminMenuController@reorder'],
+
     // Admin — Textos Editables
     ['GET',  '/admin/textos',                'AdminTextoController@index'],
     ['POST', '/admin/textos/guardar',        'AdminTextoController@guardar'],

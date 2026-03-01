@@ -26,12 +26,33 @@ $fichasJson = json_encode($fichas, JSON_UNESCAPED_UNICODE);
 <script>
 (function(){
     var fichas = <?= $fichasJson ?>;
-    var map = L.map('mapa-principal').setView([-40.91, -73.13], 10);
+    var mapEl = document.getElementById('mapa-principal');
+    var map = L.map('mapa-principal', { scrollWheelZoom: false }).setView([-40.91, -73.13], 10);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         maxZoom: 18
     }).addTo(map);
+
+    // Overlay de interacción
+    var overlay = document.createElement('div');
+    overlay.className = 'map-interaction-overlay';
+    overlay.innerHTML = '<span>Haz clic para interactuar con el mapa</span>';
+    mapEl.style.position = 'relative';
+    mapEl.appendChild(overlay);
+
+    map.on('click', function() {
+        map.scrollWheelZoom.enable();
+        overlay.classList.add('map-interaction-overlay--hidden');
+    });
+    map.on('mouseout', function() {
+        map.scrollWheelZoom.disable();
+        overlay.classList.remove('map-interaction-overlay--hidden');
+    });
+    if (L.Browser.mobile) {
+        map.dragging.disable();
+        map.on('click', function() { map.dragging.enable(); });
+    }
 
     if (fichas.length === 0) return;
 
