@@ -19,6 +19,7 @@ $adminNav = [
     ['url' => '/admin/cambios',         'icon' => '&#128260;', 'label' => 'Cambios',         'count' => $counts['cambios'] ?? null],
     ['url' => '/admin/seo',             'icon' => '&#128269;', 'label' => 'SEO',             'count' => null],
     ['url' => '/admin/apariencia',      'icon' => '&#127912;', 'label' => 'Apariencia',      'count' => null],
+    ['url' => '/admin/textos',          'icon' => '&#128196;', 'label' => 'Textos',          'count' => null],
     ['url' => '/admin/usuarios',        'icon' => '&#128101;', 'label' => 'Usuarios',        'count' => null],
     ['url' => '/admin/configuracion',   'icon' => '&#9881;',   'label' => 'Configuración',   'count' => null],
 ];

@@ -1580,3 +1580,64 @@ h1, h2, h3 {
         grid-template-columns: 1fr;
     }
 }
+
+/* ── Textos Editables ───────────────────────── */
+
+.textos-grupo {
+    position: relative;
+}
+
+.textos-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 6px;
+}
+
+.textos-clave {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: .8rem;
+    font-family: var(--font-mono);
+    color: var(--admin-blue);
+}
+
+.textos-desc {
+    font-size: .85rem;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.textos-actions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.textos-modified {
+    color: var(--admin-yellow) !important;
+    font-style: italic;
+}
+
+.inline-form {
+    display: inline;
+}
+
+.btn--xs {
+    padding: 2px 8px;
+    font-size: .75rem;
+    line-height: 1.4;
+}
+
+.btn--red {
+    background: var(--admin-red);
+    color: #fff;
+    border: 1px solid var(--admin-red);
+}
+
+.btn--red:hover {
+    opacity: .85;
+}

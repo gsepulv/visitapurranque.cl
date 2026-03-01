@@ -132,6 +132,16 @@ return [
     ['GET',  '/admin/apariencia',          'AdminAparienciaController@index'],
     ['POST', '/admin/apariencia/guardar',  'AdminAparienciaController@guardar'],
 
+    // Admin — Textos Editables
+    ['GET',  '/admin/textos',                'AdminTextoController@index'],
+    ['POST', '/admin/textos/guardar',        'AdminTextoController@guardar'],
+    ['GET',  '/admin/textos/crear',          'AdminTextoController@create'],
+    ['POST', '/admin/textos/crear',          'AdminTextoController@store'],
+    ['GET',  '/admin/textos/{id}/editar',    'AdminTextoController@edit'],
+    ['POST', '/admin/textos/{id}/editar',    'AdminTextoController@update'],
+    ['POST', '/admin/textos/{id}/eliminar',  'AdminTextoController@delete'],
+    ['POST', '/admin/textos/{id}/restaurar', 'AdminTextoController@restaurar'],
+
     // Admin — Estadísticas / Reportes
     ['GET',  '/admin/estadisticas',       'AdminReporteController@index'],
     ['GET',  '/admin/estadisticas/csv',   'AdminReporteController@csv'],
