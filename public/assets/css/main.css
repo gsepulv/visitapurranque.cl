@@ -1616,6 +1616,42 @@ ul, ol { list-style: none; }
 
 
 /* ═══════════════════════════════════════════════════════
+   FILTER TABS
+   ═══════════════════════════════════════════════════════ */
+
+.filter-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filter-tab {
+    display: inline-block;
+    padding: 8px 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text-light);
+    text-decoration: none;
+    transition: all var(--transition);
+}
+
+.filter-tab:hover {
+    border-color: var(--green);
+    color: var(--green);
+}
+
+.filter-tab.active {
+    background: var(--green);
+    border-color: var(--green);
+    color: var(--white);
+}
+
+.opacity-60 { opacity: 0.6; }
+
+
+/* ═══════════════════════════════════════════════════════
    EVENTO DETALLE
    ═══════════════════════════════════════════════════════ */
 

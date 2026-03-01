@@ -22,6 +22,7 @@ return [
 
     // Eventos
     ['GET', '/eventos',           'EventoController@index'],
+    ['GET', '/evento/{slug}',     'EventoController@show'],
 
     // Blog
     ['GET', '/blog',              'BlogController@index'],

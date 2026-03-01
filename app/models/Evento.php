@@ -256,4 +256,39 @@ class Evento
         $stmt->execute([$limit]);
         return $stmt->fetchAll();
     }
+
+    public function getAllPublicos(string $tiempo = 'todos', int $limit = 20, int $offset = 0): array
+    {
+        $where = 'e.activo = 1 AND e.eliminado = 0';
+        if ($tiempo === 'proximos') $where .= ' AND e.fecha_fin >= NOW()';
+        elseif ($tiempo === 'pasados') $where .= ' AND e.fecha_fin < NOW()';
+
+        $stmt = $this->db->prepare(
+            "SELECT e.* FROM eventos e
+             WHERE {$where}
+             ORDER BY e.fecha_inicio " . ($tiempo === 'pasados' ? 'DESC' : 'ASC') . "
+             LIMIT ? OFFSET ?"
+        );
+        $stmt->execute([$limit, $offset]);
+        return $stmt->fetchAll();
+    }
+
+    public function countPublicos(string $tiempo = 'todos'): int
+    {
+        $where = 'activo = 1 AND eliminado = 0';
+        if ($tiempo === 'proximos') $where .= ' AND fecha_fin >= NOW()';
+        elseif ($tiempo === 'pasados') $where .= ' AND fecha_fin < NOW()';
+
+        return (int)$this->db->query("SELECT COUNT(*) FROM eventos WHERE {$where}")->fetchColumn();
+    }
+
+    public function getBySlugPublico(string $slug): ?array
+    {
+        $stmt = $this->db->prepare(
+            "SELECT * FROM eventos WHERE slug = ? AND activo = 1 AND eliminado = 0 LIMIT 1"
+        );
+        $stmt->execute([$slug]);
+        $row = $stmt->fetch();
+        return $row ?: null;
+    }
 }
