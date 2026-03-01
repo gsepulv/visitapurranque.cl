@@ -128,11 +128,13 @@ $currentUrl = url('/evento/' . e($evento['slug']));
                 <?php endif; ?>
                 <div class="ficha-mapa" id="evento-map"></div>
                 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+                <link rel="stylesheet" href="https://unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css" crossorigin="">
                 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+                <script src="https://unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.js" crossorigin=""></script>
                 <script>
                 (function(){
                     var lat = <?= $evento['latitud'] ?>, lng = <?= $evento['longitud'] ?>;
-                    var map = L.map('evento-map', { scrollWheelZoom: false }).setView([lat, lng], 14);
+                    var map = L.map('evento-map', { gestureHandling: true }).setView([lat, lng], 14);
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         attribution: '&copy; OpenStreetMap',
                         maxZoom: 18
