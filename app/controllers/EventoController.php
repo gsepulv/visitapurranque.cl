@@ -22,7 +22,7 @@ class EventoController extends Controller
 
         $this->render('public/eventos/index', [
             'pageTitle'       => 'Eventos y Actividades — ' . SITE_NAME,
-            'pageDescription' => 'Descubre los eventos, fiestas y actividades turisticas en Purranque y alrededores.',
+            'pageDescription' => 'Descubre los eventos, fiestas y actividades turísticas en Purranque y alrededores.',
             'eventos'         => $eventos,
             'tiempo'          => $tiempo,
             'pagina'          => $pagina,

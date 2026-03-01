@@ -52,7 +52,7 @@ class BuscadorController extends Controller
 
         $this->render('public/buscar', [
             'pageTitle'       => ($q ? e($q) . ' — Buscar en ' : 'Buscar — ') . SITE_NAME,
-            'pageDescription' => 'Busca atractivos turisticos, eventos y articulos en Purranque.',
+            'pageDescription' => 'Busca atractivos turísticos, eventos y artículos en Purranque.',
             'q'               => $q,
             'resultados'      => $resultados,
             'totalResultados' => $totalResultados,

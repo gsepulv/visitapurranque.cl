@@ -9,10 +9,10 @@
     <div class="container">
         <nav class="breadcrumb" aria-label="Migas de pan">
             <a href="<?= url('/') ?>">Inicio</a> <span class="breadcrumb-sep">/</span>
-            <span>Categorias</span>
+            <span>Categorías</span>
         </nav>
-        <h1>Categorias</h1>
-        <p class="hero-subtitle">Explora los atractivos turisticos de Purranque organizados por categoria.</p>
+        <h1>Categorías</h1>
+        <p class="hero-subtitle">Explora los atractivos turísticos de Purranque organizados por categoría.</p>
     </div>
 </section>
 
@@ -34,7 +34,7 @@
                         <?= (int)$cat['total_fichas'] ?> <?= $cat['total_fichas'] == 1 ? 'lugar' : 'lugares' ?>
                     </span>
                 <?php else: ?>
-                    <span class="categoria-count categoria-count--soon">Proximamente</span>
+                    <span class="categoria-count categoria-count--soon">Próximamente</span>
                 <?php endif; ?>
             </a>
             <?php endforeach; ?>
@@ -42,7 +42,7 @@
         <?php else: ?>
         <div class="empty-state">
             <span class="empty-state-icon">&#128204;</span>
-            <p>Aun no hay categorias disponibles.</p>
+            <p>Aún no hay categorías disponibles.</p>
         </div>
         <?php endif; ?>
     </div>

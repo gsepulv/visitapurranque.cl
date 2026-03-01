@@ -13,7 +13,7 @@ $fichasJson = json_encode($fichas, JSON_UNESCAPED_UNICODE);
             <span>Mapa</span>
         </nav>
         <h1>Mapa interactivo</h1>
-        <p class="hero-subtitle">Explora los atractivos turisticos de Purranque. Haz clic en un marcador para ver mas detalles.</p>
+        <p class="hero-subtitle">Explora los atractivos turísticos de Purranque. Haz clic en un marcador para ver más detalles.</p>
     </div>
 </section>
 

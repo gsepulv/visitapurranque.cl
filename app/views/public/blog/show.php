@@ -105,7 +105,7 @@ $currentUrl = url('/blog/' . e($post['slug']));
         <!-- Relacionados -->
         <?php if (!empty($relacionados)): ?>
         <div class="mt-4">
-            <h2>Articulos relacionados</h2>
+            <h2>Artículos relacionados</h2>
             <div class="blog-grid mt-2">
                 <?php foreach ($relacionados as $rel): ?>
                 <a href="<?= url('/blog/' . e($rel['slug'])) ?>" class="card">

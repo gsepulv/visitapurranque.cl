@@ -8,7 +8,7 @@ class MapaController extends Controller
 
         $this->render('public/mapa', [
             'pageTitle'       => 'Mapa interactivo — ' . SITE_NAME,
-            'pageDescription' => 'Explora todos los atractivos turisticos de Purranque en un mapa interactivo.',
+            'pageDescription' => 'Explora todos los atractivos turísticos de Purranque en un mapa interactivo.',
             'fichas'          => $fichaModel->getAllParaMapa(),
         ]);
     }

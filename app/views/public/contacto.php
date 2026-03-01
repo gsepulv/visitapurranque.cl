@@ -11,7 +11,7 @@
             <span>Contacto</span>
         </nav>
         <h1>Contacto</h1>
-        <p class="hero-subtitle">Tienes alguna consulta, sugerencia o quieres agregar tu negocio? Escribenos.</p>
+        <p class="hero-subtitle">¿Tienes alguna consulta, sugerencia o quieres agregar tu negocio? Escríbenos.</p>
     </div>
 </section>
 
@@ -21,7 +21,7 @@
 
             <!-- Formulario -->
             <div>
-                <h2>Envianos un mensaje</h2>
+                <h2>Envíanos un mensaje</h2>
                 <form method="post" action="<?= url('/contacto') ?>" class="mt-2">
                     <?= csrf_field() ?>
 
@@ -38,7 +38,7 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="c-telefono">Telefono (opcional)</label>
+                            <label for="c-telefono">Teléfono (opcional)</label>
                             <input type="tel" id="c-telefono" name="telefono" maxlength="20" placeholder="+56 9 1234 5678">
                         </div>
                         <div class="form-group">
@@ -59,12 +59,12 @@
             <!-- Info de contacto -->
             <div>
                 <div class="contacto-info">
-                    <h3>Informacion de contacto</h3>
+                    <h3>Información de contacto</h3>
                     <div class="contacto-info-item">
                         <span>&#128205;</span>
                         <div>
                             <strong>Purranque</strong><br>
-                            Region de Los Lagos, Chile
+                            Región de Los Lagos, Chile
                         </div>
                     </div>
                     <div class="contacto-info-item">
@@ -76,14 +76,14 @@
                     <div class="contacto-info-item">
                         <span>&#127760;</span>
                         <div>
-                            Siguenos en redes sociales para enterarte de novedades y eventos.
+                            Síguenos en redes sociales para enterarte de novedades y eventos.
                         </div>
                     </div>
                 </div>
 
                 <div class="mt-3">
                     <h3>Preguntas frecuentes</h3>
-                    <p class="text-sm text-muted">Antes de escribir, revisa si tu pregunta ya esta respondida en nuestra seccion de <a href="<?= url('/faq') ?>">Preguntas Frecuentes</a>.</p>
+                    <p class="text-sm text-muted">Antes de escribir, revisa si tu pregunta ya está respondida en nuestra sección de <a href="<?= url('/faq') ?>">Preguntas Frecuentes</a>.</p>
                 </div>
             </div>
 

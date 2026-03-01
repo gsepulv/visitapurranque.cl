@@ -12,7 +12,7 @@
             <span>Eventos</span>
         </nav>
         <h1>Eventos y Actividades</h1>
-        <p class="hero-subtitle">Fiestas, ferias, trekking y mas actividades en Purranque y sus alrededores.</p>
+        <p class="hero-subtitle">Fiestas, ferias, trekking y más actividades en Purranque y sus alrededores.</p>
     </div>
 </section>
 
@@ -21,13 +21,13 @@
 
         <!-- Filtros -->
         <div class="filter-tabs mb-3">
-            <a href="<?= url('/eventos?t=proximos') ?>" class="filter-tab <?= $tiempo === 'proximos' ? 'active' : '' ?>">Proximos</a>
+            <a href="<?= url('/eventos?t=proximos') ?>" class="filter-tab <?= $tiempo === 'proximos' ? 'active' : '' ?>">Próximos</a>
             <a href="<?= url('/eventos?t=pasados') ?>" class="filter-tab <?= $tiempo === 'pasados' ? 'active' : '' ?>">Pasados</a>
             <a href="<?= url('/eventos?t=todos') ?>" class="filter-tab <?= $tiempo === 'todos' ? 'active' : '' ?>">Todos</a>
         </div>
 
         <?php if (empty($eventos)): ?>
-            <p class="text-muted text-center" style="padding:40px 0">No hay eventos <?= $tiempo === 'proximos' ? 'proximos' : ($tiempo === 'pasados' ? 'pasados' : '') ?> por el momento.</p>
+            <p class="text-muted text-center" style="padding:40px 0">No hay eventos <?= $tiempo === 'proximos' ? 'próximos' : ($tiempo === 'pasados' ? 'pasados' : '') ?> por el momento.</p>
         <?php else: ?>
 
         <div class="eventos-list">
@@ -65,7 +65,7 @@
 
         <!-- Paginacion -->
         <?php if ($totalPaginas > 1): ?>
-        <nav class="pagination" aria-label="Paginacion de eventos">
+        <nav class="pagination" aria-label="Paginación de eventos">
             <?php if ($pagina > 1): ?>
                 <a href="<?= url('/eventos?t=' . e($tiempo) . '&p=' . ($pagina - 1)) ?>" class="pagination-link">&laquo; Anterior</a>
             <?php endif; ?>

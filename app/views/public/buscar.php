@@ -12,18 +12,18 @@
             <span>Buscar</span>
         </nav>
         <h1>Buscar</h1>
-        <p class="hero-subtitle">Encuentra atractivos turisticos, eventos y articulos en Purranque.</p>
+        <p class="hero-subtitle">Encuentra atractivos turísticos, eventos y artículos en Purranque.</p>
     </div>
 </section>
 
 <section class="page-section">
     <div class="container">
 
-        <!-- Formulario de busqueda -->
+        <!-- Formulario de búsqueda -->
         <div class="buscar-form">
             <form method="get" action="<?= url('/buscar') ?>">
                 <div class="buscar-input-group">
-                    <input type="text" name="q" value="<?= e($q) ?>" placeholder="Buscar atractivos, eventos, articulos..." autofocus>
+                    <input type="text" name="q" value="<?= e($q) ?>" placeholder="Buscar atractivos, eventos, artículos..." autofocus>
                     <button type="submit" class="btn btn-primary">Buscar</button>
                 </div>
             </form>
@@ -31,13 +31,13 @@
 
         <?php if ($q !== ''): ?>
             <?php if ($totalResultados === 0): ?>
-                <p class="text-muted text-center" style="padding:40px 0">No se encontraron resultados para "<?= e($q) ?>". Intenta con otros terminos.</p>
+                <p class="text-muted text-center" style="padding:40px 0">No se encontraron resultados para "<?= e($q) ?>". Intenta con otros términos.</p>
             <?php else: ?>
                 <p class="text-muted mb-3"><?= $totalResultados ?> resultado<?= $totalResultados !== 1 ? 's' : '' ?> para "<?= e($q) ?>"</p>
 
                 <div class="buscar-resultados">
                     <?php if (!empty($resultados['fichas'])): ?>
-                    <h3>&#128205; Atractivos turisticos (<?= count($resultados['fichas']) ?>)</h3>
+                    <h3>&#128205; Atractivos turísticos (<?= count($resultados['fichas']) ?>)</h3>
                     <?php foreach ($resultados['fichas'] as $r): ?>
                     <a href="<?= url('/atractivo/' . e($r['slug'])) ?>" class="buscar-item">
                         <h4><?= e($r['nombre']) ?></h4>

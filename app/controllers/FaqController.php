@@ -13,7 +13,7 @@ class FaqController extends Controller
         $stmt->execute();
         $faqs = $stmt->fetchAll();
 
-        // Agrupar por categoria
+        // Agrupar por categoría
         $grupos = [];
         foreach ($faqs as $faq) {
             $cat = $faq['categoria'] ?: 'general';
@@ -22,7 +22,7 @@ class FaqController extends Controller
 
         $this->render('public/faq', [
             'pageTitle'       => 'Preguntas Frecuentes — ' . SITE_NAME,
-            'pageDescription' => 'Respuestas a las preguntas mas comunes sobre turismo en Purranque.',
+            'pageDescription' => 'Respuestas a las preguntas más comunes sobre turismo en Purranque.',
             'grupos'          => $grupos,
             'totalFaqs'       => count($faqs),
         ]);

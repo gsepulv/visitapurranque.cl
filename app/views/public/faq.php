@@ -1,7 +1,7 @@
 <?php
 /**
  * Preguntas Frecuentes — visitapurranque.cl
- * Variables: $grupos (agrupadas por categoria), $totalFaqs
+ * Variables: $grupos (agrupadas por categoría), $totalFaqs
  */
 $catLabels = [
     'general'   => 'General',
@@ -38,7 +38,7 @@ $catLabels = [
             <span>Preguntas Frecuentes</span>
         </nav>
         <h1>Preguntas Frecuentes</h1>
-        <p class="hero-subtitle">Respuestas a las preguntas mas comunes sobre turismo en Purranque.</p>
+        <p class="hero-subtitle">Respuestas a las preguntas más comunes sobre turismo en Purranque.</p>
     </div>
 </section>
 
@@ -69,8 +69,8 @@ $catLabels = [
         <?php endif; ?>
 
         <div class="text-center mt-4">
-            <p class="text-muted">No encontraste lo que buscabas?</p>
-            <a href="<?= url('/contacto') ?>" class="btn btn-primary">Contactanos</a>
+            <p class="text-muted">¿No encontraste lo que buscabas?</p>
+            <a href="<?= url('/contacto') ?>" class="btn btn-primary">Contáctanos</a>
         </div>
 
     </div>

@@ -46,7 +46,7 @@ $currentUrl = url('/atractivo/' . e($ficha['slug']));
         <nav class="breadcrumb breadcrumb--light" aria-label="Migas de pan">
             <a href="<?= url('/') ?>">Inicio</a> <span class="breadcrumb-sep">/</span>
             <?php if (!empty($ficha['categoria_slug'])): ?>
-                <a href="<?= url('/categoria/' . e($ficha['categoria_slug'])) ?>"><?= e($ficha['categoria_nombre'] ?? 'Categoria') ?></a> <span class="breadcrumb-sep">/</span>
+                <a href="<?= url('/categoria/' . e($ficha['categoria_slug'])) ?>"><?= e($ficha['categoria_nombre'] ?? 'Categoría') ?></a> <span class="breadcrumb-sep">/</span>
             <?php endif; ?>
             <span><?= e($ficha['nombre']) ?></span>
         </nav>
@@ -72,7 +72,7 @@ $currentUrl = url('/atractivo/' . e($ficha['slug']));
                 <span class="badge badge-orange">&#9733; Destacado</span>
             <?php endif; ?>
             <?php if ($promedio > 0): ?>
-                <span class="badge badge-gray">&#9733; <?= $promedio ?> (<?= $totalRes ?> <?= $totalRes == 1 ? 'resena' : 'resenas' ?>)</span>
+                <span class="badge badge-gray">&#9733; <?= $promedio ?> (<?= $totalRes ?> <?= $totalRes == 1 ? 'reseña' : 'reseñas' ?>)</span>
             <?php endif; ?>
         </div>
 
@@ -86,7 +86,7 @@ $currentUrl = url('/atractivo/' . e($ficha['slug']));
             <!-- Mapa -->
             <?php if ($ficha['latitud'] && $ficha['longitud']): ?>
             <div>
-                <h2>Ubicacion</h2>
+                <h2>Ubicación</h2>
                 <?php if (!empty($ficha['direccion'])): ?>
                     <p class="text-sm text-muted mb-2">&#128205; <?= e($ficha['direccion']) ?></p>
                 <?php endif; ?>
@@ -137,14 +137,14 @@ $currentUrl = url('/atractivo/' . e($ficha['slug']));
 
                     <?php if ($ficha['latitud'] && $ficha['longitud']): ?>
                         <a href="https://www.google.com/maps/dir/?api=1&destination=<?= $ficha['latitud'] ?>,<?= $ficha['longitud'] ?>" target="_blank" rel="noopener" class="ficha-contacto-link ficha-contacto-link--map">
-                            &#128663; Como llegar
+                            &#128663; Cómo llegar
                         </a>
                     <?php endif; ?>
                 </div>
 
                 <?php if (!empty($ficha['info_practica'])): ?>
                     <div class="mt-3">
-                        <h3>Info practica</h3>
+                        <h3>Info práctica</h3>
                         <p class="text-sm"><?= nl2br(e($ficha['info_practica'])) ?></p>
                     </div>
                 <?php endif; ?>
@@ -177,7 +177,7 @@ $currentUrl = url('/atractivo/' . e($ficha['slug']));
                             <span class="star <?= $i <= round($promedio) ? 'star--full' : 'star--empty' ?>">&#9733;</span>
                         <?php endfor; ?>
                     </div>
-                    <span class="text-sm text-muted"><?= $totalRes ?> <?= $totalRes == 1 ? 'resena' : 'resenas' ?></span>
+                    <span class="text-sm text-muted"><?= $totalRes ?> <?= $totalRes == 1 ? 'reseña' : 'reseñas' ?></span>
                 </div>
             </div>
             <?php endif; ?>
@@ -203,12 +203,12 @@ $currentUrl = url('/atractivo/' . e($ficha['slug']));
                 <?php endforeach; ?>
             </div>
             <?php elseif ($totalRes === 0): ?>
-            <p class="text-muted mb-3">Aun no hay resenas. Se el primero en opinar.</p>
+            <p class="text-muted mb-3">Aún no hay reseñas. Sé el primero en opinar.</p>
             <?php endif; ?>
 
-            <!-- Formulario nueva resena -->
+            <!-- Formulario nueva reseña -->
             <div class="resena-form">
-                <h3>Deja tu resena</h3>
+                <h3>Deja tu reseña</h3>
                 <form method="post" action="<?= url('/atractivo/' . e($ficha['slug']) . '/resena') ?>">
                     <?= csrf_field() ?>
 
@@ -225,7 +225,7 @@ $currentUrl = url('/atractivo/' . e($ficha['slug']));
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Calificacion *</label>
+                            <label>Calificación *</label>
                             <input type="hidden" name="rating" id="r-rating" value="5" required>
                             <div class="star-rating-input" id="starRating">
                                 <?php for ($i = 1; $i <= 5; $i++): ?>
@@ -239,7 +239,7 @@ $currentUrl = url('/atractivo/' . e($ficha['slug']));
                                 <option value="otro">Otro</option>
                                 <option value="trekking">Trekking</option>
                                 <option value="visita_cultural">Visita cultural</option>
-                                <option value="gastronomia">Gastronomia</option>
+                                <option value="gastronomia">Gastronomía</option>
                                 <option value="playa">Playa</option>
                                 <option value="camping">Camping</option>
                                 <option value="tour_guiado">Tour guiado</option>
@@ -253,7 +253,8 @@ $currentUrl = url('/atractivo/' . e($ficha['slug']));
                         <textarea id="r-comentario" name="comentario" required maxlength="1000" rows="4" placeholder="Cuenta tu experiencia..."></textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Enviar resena</button>
+                    <button type="submit" class="btn btn-primary">Enviar reseña</button>
+
                 </form>
             </div>
         </div>

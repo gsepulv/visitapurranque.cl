@@ -6,7 +6,7 @@ class ContactoController extends Controller
     {
         $this->render('public/contacto', [
             'pageTitle'       => 'Contacto — ' . SITE_NAME,
-            'pageDescription' => 'Contactanos para consultas sobre turismo en Purranque, sugerencias o para agregar tu negocio al directorio.',
+            'pageDescription' => 'Contáctanos para consultas sobre turismo en Purranque, sugerencias o para agregar tu negocio al directorio.',
         ]);
     }
 
@@ -19,7 +19,7 @@ class ContactoController extends Controller
 
         // CSRF
         if (!isset($_POST['_token']) || $_POST['_token'] !== ($_SESSION['_token'] ?? '')) {
-            $_SESSION['flash_error'] = 'Token de seguridad invalido. Intenta de nuevo.';
+            $_SESSION['flash_error'] = 'Token de seguridad inválido. Intenta de nuevo.';
             $this->redirect('/contacto');
             return;
         }
@@ -30,10 +30,10 @@ class ContactoController extends Controller
         $asunto  = trim($_POST['asunto'] ?? '');
         $mensaje = trim($_POST['mensaje'] ?? '');
 
-        // Validacion
+        // Validación
         $errores = [];
         if (mb_strlen($nombre) < 2 || mb_strlen($nombre) > 100) $errores[] = 'El nombre es obligatorio (2-100 caracteres).';
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errores[] = 'Ingresa un email valido.';
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errores[] = 'Ingresa un email válido.';
         if (mb_strlen($mensaje) < 10 || mb_strlen($mensaje) > 2000) $errores[] = 'El mensaje debe tener entre 10 y 2000 caracteres.';
 
         if (!empty($errores)) {

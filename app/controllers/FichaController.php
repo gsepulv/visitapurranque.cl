@@ -49,7 +49,7 @@ class FichaController extends Controller
         // Validar CSRF
         $token = $_POST['_csrf'] ?? '';
         if ($token !== ($_SESSION['csrf_token'] ?? '')) {
-            $this->redirect('/atractivo/' . $slug, ['error' => 'Token invalido. Intenta de nuevo.']);
+            $this->redirect('/atractivo/' . $slug, ['error' => 'Token inválido. Intenta de nuevo.']);
             return;
         }
 
@@ -76,7 +76,7 @@ class FichaController extends Controller
         ]);
 
         $this->redirect('/atractivo/' . $slug, [
-            'success' => 'Gracias por tu resena. Sera publicada despues de revision.'
+            'success' => 'Gracias por tu reseña. Será publicada después de revisión.'
         ]);
     }
 

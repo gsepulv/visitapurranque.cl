@@ -70,7 +70,7 @@ $currentUrl = url('/evento/' . e($evento['slug']));
             <?php if ($isPasado): ?>
                 <span class="badge badge-gray">Finalizado</span>
             <?php else: ?>
-                <span class="badge badge-green">Proximo evento</span>
+                <span class="badge badge-green">Próximo evento</span>
             <?php endif; ?>
             <?php if ($evento['destacado']): ?>
                 <span class="badge badge-orange">&#9733; Destacado</span>
@@ -122,7 +122,7 @@ $currentUrl = url('/evento/' . e($evento['slug']));
         <div class="ficha-info-grid">
             <?php if ($evento['latitud'] && $evento['longitud']): ?>
             <div>
-                <h2>Ubicacion</h2>
+                <h2>Ubicación</h2>
                 <?php if (!empty($evento['direccion'])): ?>
                     <p class="text-sm text-muted mb-2">&#128205; <?= e($evento['direccion']) ?></p>
                 <?php endif; ?>
@@ -144,7 +144,7 @@ $currentUrl = url('/evento/' . e($evento['slug']));
             <?php endif; ?>
 
             <div>
-                <h2>Informacion</h2>
+                <h2>Información</h2>
                 <div class="ficha-contacto">
                     <?php if (!empty($evento['contacto'])): ?>
                         <p class="ficha-contacto-link">&#128222; <?= e($evento['contacto']) ?></p>
@@ -152,13 +152,13 @@ $currentUrl = url('/evento/' . e($evento['slug']));
 
                     <?php if (!empty($evento['url_externa'])): ?>
                         <a href="<?= e($evento['url_externa']) ?>" target="_blank" rel="noopener" class="ficha-contacto-link ficha-contacto-link--tel">
-                            &#127760; Mas informacion
+                            &#127760; Más información
                         </a>
                     <?php endif; ?>
 
                     <?php if ($evento['latitud'] && $evento['longitud']): ?>
                         <a href="https://www.google.com/maps/dir/?api=1&destination=<?= $evento['latitud'] ?>,<?= $evento['longitud'] ?>" target="_blank" rel="noopener" class="ficha-contacto-link ficha-contacto-link--map">
-                            &#128663; Como llegar
+                            &#128663; Cómo llegar
                         </a>
                     <?php endif; ?>
                 </div>

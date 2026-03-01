@@ -17,7 +17,7 @@ class BlogController extends Controller
 
         $this->render('public/blog/index', [
             'pageTitle'       => 'Blog — ' . SITE_NAME,
-            'pageDescription' => 'Noticias, guias y articulos sobre turismo, cultura y gastronomia en Purranque.',
+            'pageDescription' => 'Noticias, guías y artículos sobre turismo, cultura y gastronomía en Purranque.',
             'posts'           => $posts,
             'pagina'          => $pagina,
             'totalPaginas'    => $totalPaginas,
@@ -33,7 +33,7 @@ class BlogController extends Controller
         if (!$post) {
             http_response_code(404);
             $this->render('public/404', [
-                'pageTitle' => 'Articulo no encontrado — ' . SITE_NAME,
+                'pageTitle' => 'Artículo no encontrado — ' . SITE_NAME,
             ]);
             return;
         }

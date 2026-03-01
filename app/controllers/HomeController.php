@@ -19,8 +19,8 @@ class HomeController extends Controller
         )->fetch() ?: null;
 
         $this->render('public/home', [
-            'pageTitle'       => 'Descubre Purranque — Guia turistica',
-            'pageDescription' => 'Explora los atractivos naturales, culturales y gastronomicos de Purranque, Region de Los Lagos, Chile.',
+            'pageTitle'       => 'Descubre Purranque — Guía turística',
+            'pageDescription' => 'Explora los atractivos naturales, culturales y gastronómicos de Purranque, Región de Los Lagos, Chile.',
             'categorias'      => $categoriaModel->getAllConContador(),
             'destacados'      => $fichaModel->getDestacados(6),
             'proximoEvento'   => $proximoEvento,

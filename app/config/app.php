@@ -1,9 +1,9 @@
 <?php
 /**
- * Configuracion global — visitapurranque.cl
+ * Configuración global — visitapurranque.cl
  */
 
-// Deteccion de entorno
+// Detección de entorno
 $isProduction = isset($_SERVER['HTTP_HOST'])
     ? str_contains($_SERVER['HTTP_HOST'], 'visitapurranque.cl')
       && !str_contains($_SERVER['HTTP_HOST'], '.test')
@@ -14,13 +14,13 @@ define('APP_DEBUG', APP_ENV === 'development');
 
 // Sitio
 define('SITE_NAME',        'Visita Purranque');
-define('SITE_DESCRIPTION', 'Guia turistica de Purranque — Naturaleza, cultura y tradiciones en la Region de Los Lagos, Chile.');
+define('SITE_DESCRIPTION', 'Guía turística de Purranque — Naturaleza, cultura y tradiciones en la Región de Los Lagos, Chile.');
 define('SITE_URL', $isProduction
     ? 'https://visitapurranque.cl'
     : 'http://visitapurranque.cl.test'
 );
 
-// Version
+// Versión
 define('APP_VERSION', '0.1.0');
 
 // Zona horaria
@@ -41,7 +41,7 @@ define('CITY_LNG',  -73.15913);
 define('CITY_NAME', 'Purranque');
 define('CITY_ZOOM', 14);
 
-// Paginacion
+// Paginación
 define('PER_PAGE',       12);
 define('ADMIN_PER_PAGE', 20);
 

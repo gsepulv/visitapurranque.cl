@@ -1,19 +1,19 @@
 <?php
 /**
- * Definicion de rutas — visitapurranque.cl
- * Formato: [metodo, URI, 'Controller@metodo']
- * IMPORTANTE: /{slug} debe ser la ULTIMA ruta (catch-all)
+ * Definición de rutas — visitapurranque.cl
+ * Formato: [método, URI, 'Controller@método']
+ * IMPORTANTE: /{slug} debe ser la ÚLTIMA ruta (catch-all)
  */
 
 return [
-    // Pagina principal
+    // Página principal
     ['GET', '/',                  'HomeController@index'],
 
-    // Categorias
+    // Categorías
     ['GET', '/categorias',        'CategoriaController@index'],
     ['GET', '/categoria/{slug}',  'CategoriaController@show'],
 
-    // Atractivos turisticos
+    // Atractivos turísticos
     ['GET',  '/atractivo/{slug}',         'FichaController@show'],
     ['POST', '/atractivo/{slug}/resena',  'FichaController@resena'],
 
@@ -176,6 +176,6 @@ return [
     ['POST', '/proyecto/api/tarea-toggle', 'ProyectoController@tareaToggle'],
     ['GET',  '/proyecto/api/stats',        'ProyectoController@apiStats'],
 
-    // Paginas estaticas (terminos, privacidad, etc.) — DEBE SER LA ULTIMA
+    // Páginas estáticas (términos, privacidad, etc.) — DEBE SER LA ÚLTIMA
     ['GET', '/{slug}',            'LegalController@show'],
 ];

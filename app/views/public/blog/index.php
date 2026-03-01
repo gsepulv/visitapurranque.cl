@@ -12,7 +12,7 @@
             <span>Blog</span>
         </nav>
         <h1>Blog</h1>
-        <p class="hero-subtitle">Noticias, guias y articulos sobre turismo, cultura y gastronomia en Purranque.</p>
+        <p class="hero-subtitle">Noticias, guías y artículos sobre turismo, cultura y gastronomía en Purranque.</p>
     </div>
 </section>
 
@@ -20,7 +20,7 @@
     <div class="container">
 
         <?php if (empty($posts)): ?>
-            <p class="text-muted text-center" style="padding:40px 0">No hay articulos publicados por el momento.</p>
+            <p class="text-muted text-center" style="padding:40px 0">No hay artículos publicados por el momento.</p>
         <?php else: ?>
 
         <div class="blog-grid">
@@ -56,7 +56,7 @@
 
         <!-- Paginacion -->
         <?php if ($totalPaginas > 1): ?>
-        <nav class="pagination" aria-label="Paginacion del blog">
+        <nav class="pagination" aria-label="Paginación del blog">
             <?php if ($pagina > 1): ?>
                 <a href="<?= url('/blog?p=' . ($pagina - 1)) ?>" class="pagination-link">&laquo; Anterior</a>
             <?php endif; ?>

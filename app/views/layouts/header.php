@@ -56,13 +56,13 @@ try {
                 <span class="logo-text"><?= e(SITE_NAME) ?></span>
             </a>
 
-            <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
+            <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
 
-            <nav class="main-nav" id="mainNav" aria-label="Navegacion principal">
+            <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
                 <ul class="nav-list">
                     <?php foreach ($menuItems as $item): ?>
                     <li>

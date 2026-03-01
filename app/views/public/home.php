@@ -8,9 +8,9 @@
 <!-- Hero -->
 <section class="hero-home">
     <div class="container hero-home-inner">
-        <span class="hero-home-badge">Region de Los Lagos, Chile</span>
+        <span class="hero-home-badge">Región de Los Lagos, Chile</span>
         <h1>Descubre Purranque</h1>
-        <p class="hero-home-desc">Naturaleza, cultura y tradicion en el corazon de Los Lagos. Explora volcanes, bosques milenarios, caletas costeras y la mejor gastronomia del sur.</p>
+        <p class="hero-home-desc">Naturaleza, cultura y tradición en el corazón de Los Lagos. Explora volcanes, bosques milenarios, caletas costeras y la mejor gastronomía del sur.</p>
 
         <form class="hero-search" action="<?= url('/buscar') ?>" method="get">
             <span class="hero-search-icon">&#128269;</span>
@@ -18,13 +18,13 @@
             <button type="submit" class="hero-search-btn">Buscar</button>
         </form>
 
-        <a href="<?= url('/categorias') ?>" class="btn hero-cta-btn">Explorar categorias</a>
+        <a href="<?= url('/categorias') ?>" class="btn hero-cta-btn">Explorar categorías</a>
 
         <?php if ($proximoEvento): ?>
         <div class="hero-countdown">
-            <p class="hero-countdown-label">Proximo evento: <strong><?= e($proximoEvento['titulo']) ?></strong></p>
+            <p class="hero-countdown-label">Próximo evento: <strong><?= e($proximoEvento['titulo']) ?></strong></p>
             <div class="countdown-timer" data-target="<?= e($proximoEvento['fecha_inicio']) ?>">
-                <div class="countdown-unit"><span class="countdown-number" id="cd-days">--</span><span class="countdown-text">dias</span></div>
+                <div class="countdown-unit"><span class="countdown-number" id="cd-days">--</span><span class="countdown-text">días</span></div>
                 <div class="countdown-unit"><span class="countdown-number" id="cd-hours">--</span><span class="countdown-text">hrs</span></div>
                 <div class="countdown-unit"><span class="countdown-number" id="cd-mins">--</span><span class="countdown-text">min</span></div>
                 <div class="countdown-unit"><span class="countdown-number" id="cd-secs">--</span><span class="countdown-text">seg</span></div>
@@ -38,7 +38,7 @@
 <?php if (!empty($categorias)): ?>
 <section class="home-section">
     <div class="container">
-        <h2 class="section-title">Explora por categoria</h2>
+        <h2 class="section-title">Explora por categoría</h2>
         <div class="categorias-grid">
             <?php foreach ($categorias as $cat): ?>
             <a href="<?= url('/categoria/' . e($cat['slug'])) ?>"
@@ -51,7 +51,7 @@
                         <?= (int)$cat['total_fichas'] ?> <?= $cat['total_fichas'] == 1 ? 'lugar' : 'lugares' ?>
                     </span>
                 <?php else: ?>
-                    <span class="categoria-count categoria-count--soon">Proximamente</span>
+                    <span class="categoria-count categoria-count--soon">Próximamente</span>
                 <?php endif; ?>
             </a>
             <?php endforeach; ?>
@@ -72,7 +72,7 @@
                     <span><?= e($ficha['categoria_emoji'] ?? '📍') ?></span>
                 </div>
                 <div class="card-body">
-                    <span class="badge badge-green"><?= e($ficha['categoria_nombre'] ?? 'Sin categoria') ?></span>
+                    <span class="badge badge-green"><?= e($ficha['categoria_nombre'] ?? 'Sin categoría') ?></span>
                     <?php if ($ficha['verificado']): ?>
                         <span class="badge badge-blue">Verificado</span>
                     <?php endif; ?>
@@ -101,7 +101,7 @@
 <?php if (!empty($eventos)): ?>
 <section class="home-section">
     <div class="container">
-        <h2 class="section-title">Proximos eventos</h2>
+        <h2 class="section-title">Próximos eventos</h2>
         <div class="eventos-grid">
             <?php foreach ($eventos as $ev):
                 $ts = strtotime($ev['fecha_inicio']);
@@ -140,7 +140,7 @@
                     <span>&#128221;</span>
                 </div>
                 <div class="card-body">
-                    <span class="badge badge-green"><?= e(ucfirst($post['tipo'] ?? 'articulo')) ?></span>
+                    <span class="badge badge-green"><?= e(ucfirst($post['tipo'] ?? 'artículo')) ?></span>
                     <h3 class="card-title"><?= e($post['titulo']) ?></h3>
                     <p class="card-text"><?= e($post['extracto'] ?? '') ?></p>
                     <p class="blog-meta">
@@ -160,9 +160,9 @@
 <!-- CTA -->
 <section class="cta-section">
     <div class="container cta-inner">
-        <h2>Tienes un emprendimiento turistico?</h2>
-        <p>Publica tu ficha gratis en la guia turistica mas completa de Purranque.</p>
-        <a href="<?= url('/contacto') ?>" class="btn btn-lg btn-accent">Contactanos</a>
+        <h2>¿Tienes un emprendimiento turístico?</h2>
+        <p>Publica tu ficha gratis en la guía turística más completa de Purranque.</p>
+        <a href="<?= url('/contacto') ?>" class="btn btn-lg btn-accent">Contáctanos</a>
     </div>
 </section>
 

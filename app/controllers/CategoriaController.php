@@ -7,8 +7,8 @@ class CategoriaController extends Controller
         $categoriaModel = new Categoria($this->db);
 
         $this->render('public/categorias/index', [
-            'pageTitle'       => 'Categorias — ' . SITE_NAME,
-            'pageDescription' => 'Explora todas las categorias de atractivos turisticos de Purranque.',
+            'pageTitle'       => 'Categorías — ' . SITE_NAME,
+            'pageDescription' => 'Explora todas las categorías de atractivos turísticos de Purranque.',
             'categorias'      => $categoriaModel->getAllConContador(),
         ]);
     }
@@ -33,7 +33,7 @@ class CategoriaController extends Controller
 
         $this->render('public/categorias/show', [
             'pageTitle'       => e($categoria['nombre']) . ' — ' . SITE_NAME,
-            'pageDescription' => 'Atractivos turisticos en la categoria ' . $categoria['nombre'] . ' en Purranque.',
+            'pageDescription' => 'Atractivos turísticos en la categoría ' . $categoria['nombre'] . ' en Purranque.',
             'categoria'       => $categoria,
             'fichas'          => $fichaModel->getByCategoria($categoria['id'], $perPage, $offset),
             'page'            => $page,

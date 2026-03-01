@@ -9,7 +9,7 @@
     <div class="container">
         <nav class="breadcrumb breadcrumb--light" aria-label="Migas de pan">
             <a href="<?= url('/') ?>">Inicio</a> <span class="breadcrumb-sep">/</span>
-            <a href="<?= url('/categorias') ?>">Categorias</a> <span class="breadcrumb-sep">/</span>
+            <a href="<?= url('/categorias') ?>">Categorías</a> <span class="breadcrumb-sep">/</span>
             <span><?= e($categoria['nombre']) ?></span>
         </nav>
         <h1><?= e($categoria['emoji'] ?? '') ?> <?= e($categoria['nombre']) ?></h1>
@@ -58,7 +58,7 @@
 
         <!-- Paginacion -->
         <?php if ($totalPages > 1): ?>
-        <nav class="pagination" aria-label="Paginacion">
+        <nav class="pagination" aria-label="Paginación">
             <?php if ($page > 1): ?>
                 <a href="?page=<?= $page - 1 ?>" class="pagination-link">&laquo; Anterior</a>
             <?php endif; ?>
@@ -80,8 +80,8 @@
         <?php else: ?>
         <div class="empty-state">
             <span class="empty-state-icon"><?= e($categoria['emoji'] ?? '📍') ?></span>
-            <p>Aun no hay atractivos en esta categoria.</p>
-            <a href="<?= url('/categorias') ?>" class="btn btn-secondary mt-2">Ver otras categorias</a>
+            <p>Aún no hay atractivos en esta categoría.</p>
+            <a href="<?= url('/categorias') ?>" class="btn btn-secondary mt-2">Ver otras categorías</a>
         </div>
         <?php endif; ?>
     </div>

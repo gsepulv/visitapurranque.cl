@@ -1,7 +1,7 @@
 <?php
 /**
  * Modelo Ficha — visitapurranque.cl
- * Atractivos turisticos, comercios, servicios
+ * Atractivos turísticos, comercios, servicios
  */
 class Ficha
 {
