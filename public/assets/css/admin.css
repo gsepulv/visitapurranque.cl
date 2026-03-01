@@ -1126,3 +1126,94 @@ h1, h2, h3 {
     color: var(--text-muted);
     margin-top: 2px;
 }
+
+
+/* ═══════════════════════════════════════════════════════
+   PLANES — Cards
+   ═══════════════════════════════════════════════════════ */
+
+.planes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.plan-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.plan-card--inactive {
+    opacity: 0.55;
+}
+
+.plan-card__header {
+    padding: 20px 20px 12px;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+}
+
+.plan-card__nombre {
+    font-size: 1.15rem;
+    margin-bottom: 4px;
+}
+
+.plan-card__precio {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    color: var(--admin-green);
+}
+
+.plan-card__periodo {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.plan-card__body {
+    padding: 16px 20px;
+    flex: 1;
+}
+
+.plan-card__desc {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 12px;
+}
+
+.plan-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.plan-card__features {
+    margin: 8px 0;
+    padding-left: 18px;
+    list-style: disc;
+}
+
+.plan-card__features li {
+    font-size: 0.82rem;
+    color: var(--text-light);
+    margin-bottom: 4px;
+    list-style: disc;
+}
+
+.plan-card__anual {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+.plan-card__actions {
+    padding: 12px 20px 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}

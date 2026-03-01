@@ -62,6 +62,23 @@ return [
     ['POST', '/admin/eventos/{id}/eliminar',  'AdminEventoController@delete'],
     ['POST', '/admin/eventos/{id}/toggle',    'AdminEventoController@toggle'],
 
+    // Admin — Planes
+    ['GET',  '/admin/planes',                       'AdminPlanController@index'],
+    ['GET',  '/admin/planes/crear',                 'AdminPlanController@create'],
+    ['POST', '/admin/planes/crear',                 'AdminPlanController@store'],
+    ['GET',  '/admin/planes/{id}/editar',           'AdminPlanController@edit'],
+    ['POST', '/admin/planes/{id}/editar',           'AdminPlanController@update'],
+    ['POST', '/admin/planes/{id}/eliminar',         'AdminPlanController@deletePlan'],
+    ['POST', '/admin/planes/{id}/toggle',           'AdminPlanController@togglePlan'],
+
+    // Admin — Suscripciones
+    ['GET',  '/admin/suscripciones',                'AdminPlanController@suscripciones'],
+    ['GET',  '/admin/suscripciones/crear',          'AdminPlanController@createSuscripcion'],
+    ['POST', '/admin/suscripciones/crear',          'AdminPlanController@storeSuscripcion'],
+    ['GET',  '/admin/suscripciones/{id}/editar',    'AdminPlanController@editSuscripcion'],
+    ['POST', '/admin/suscripciones/{id}/editar',    'AdminPlanController@updateSuscripcion'],
+    ['POST', '/admin/suscripciones/{id}/eliminar',  'AdminPlanController@deleteSuscripcion'],
+
     // Admin — Banners
     ['GET',  '/admin/banners',                    'AdminBannerController@index'],
     ['GET',  '/admin/banners/crear',              'AdminBannerController@create'],
