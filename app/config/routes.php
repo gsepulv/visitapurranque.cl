@@ -132,6 +132,17 @@ return [
     ['GET',  '/admin/apariencia',          'AdminAparienciaController@index'],
     ['POST', '/admin/apariencia/guardar',  'AdminAparienciaController@guardar'],
 
+    // Admin — Páginas Estáticas
+    ['GET',  '/admin/paginas',                                  'AdminPaginaController@index'],
+    ['GET',  '/admin/paginas/crear',                            'AdminPaginaController@create'],
+    ['POST', '/admin/paginas/crear',                            'AdminPaginaController@store'],
+    ['GET',  '/admin/paginas/{id}/editar',                      'AdminPaginaController@edit'],
+    ['POST', '/admin/paginas/{id}/editar',                      'AdminPaginaController@update'],
+    ['POST', '/admin/paginas/{id}/eliminar',                    'AdminPaginaController@delete'],
+    ['POST', '/admin/paginas/{id}/toggle',                      'AdminPaginaController@toggle'],
+    ['GET',  '/admin/paginas/{id}/version/{versionId}',         'AdminPaginaController@version'],
+    ['POST', '/admin/paginas/{id}/restaurar/{versionId}',       'AdminPaginaController@restaurar'],
+
     // Admin — Textos Editables
     ['GET',  '/admin/textos',                'AdminTextoController@index'],
     ['POST', '/admin/textos/guardar',        'AdminTextoController@guardar'],
