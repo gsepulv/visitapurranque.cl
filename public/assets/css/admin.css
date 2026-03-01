@@ -662,6 +662,18 @@ h1, h2, h3 {
     color: var(--admin-green);
 }
 
+.btn--success {
+    background: #ecfdf5;
+    color: #065f46;
+    border-color: #a7f3d0;
+}
+
+.btn--success:hover {
+    background: #059669;
+    color: #fff;
+    border-color: #059669;
+}
+
 .btn--danger {
     background: #fef2f2;
     color: var(--admin-red);
@@ -995,4 +1007,91 @@ h1, h2, h3 {
     margin-top: 8px;
     padding-top: 20px;
     border-top: 1px solid var(--border);
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   RESEÑAS — Moderación
+   ═══════════════════════════════════════════════════════ */
+
+.resena-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.resena-stat {
+    padding: 6px 14px;
+    border-radius: var(--radius);
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.resena-stat--yellow { background: #fffbeb; color: #92400e; }
+.resena-stat--green  { background: #ecfdf5; color: #065f46; }
+.resena-stat--gray   { background: #f3f4f6; color: #6b7280; }
+.resena-stat--red    { background: #fef2f2; color: #991b1b; }
+
+.rating-stars {
+    color: #f59e0b;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.rating-stars--lg {
+    font-size: 1.2rem;
+}
+
+.resena-comentario-cell {
+    max-width: 280px;
+}
+
+.resena-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.resena-meta__label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.resena-meta__value {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text);
+}
+
+.resena-comentario {
+    margin-top: 8px;
+}
+
+.resena-comentario__text {
+    padding: 14px 16px;
+    background: #f8fafc;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--text);
+    margin-top: 6px;
+}
+
+.resena-actions-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.resena-respuesta-actual {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
 }

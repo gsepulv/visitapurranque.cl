@@ -62,6 +62,13 @@ return [
     ['POST', '/admin/eventos/{id}/eliminar',  'AdminEventoController@delete'],
     ['POST', '/admin/eventos/{id}/toggle',    'AdminEventoController@toggle'],
 
+    // Admin — Reseñas
+    ['GET',  '/admin/resenas',                'AdminResenaController@index'],
+    ['GET',  '/admin/resenas/{id}',           'AdminResenaController@show'],
+    ['POST', '/admin/resenas/{id}/estado',    'AdminResenaController@cambiarEstado'],
+    ['POST', '/admin/resenas/{id}/responder', 'AdminResenaController@responder'],
+    ['POST', '/admin/resenas/{id}/eliminar',  'AdminResenaController@delete'],
+
     // Admin — Blog
     ['GET',  '/admin/blog',                'AdminBlogController@index'],
     ['GET',  '/admin/blog/crear',          'AdminBlogController@create'],
