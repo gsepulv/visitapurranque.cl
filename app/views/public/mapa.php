@@ -20,9 +20,7 @@ $fichasJson = json_encode($fichas, JSON_UNESCAPED_UNICODE);
 <section class="mapa-section">
     <div class="map-wrap">
         <div class="mapa-fullwidth" id="mapa-principal"></div>
-        <div class="map-interaction-overlay" id="mapa-overlay">
-            <span>Haz clic en el mapa para interactuar</span>
-        </div>
+        <div class="map-scroll-hint" id="mapa-hint"></div>
     </div>
 </section>
 
@@ -31,8 +29,8 @@ $fichasJson = json_encode($fichas, JSON_UNESCAPED_UNICODE);
 <script>
 (function(){
     var fichas = <?= $fichasJson ?>;
-    var wrapper = document.getElementById('mapa-principal').parentElement;
-    var overlay = document.getElementById('mapa-overlay');
+    var mapEl = document.getElementById('mapa-principal');
+    var hint = document.getElementById('mapa-hint');
     var map = L.map('mapa-principal', { scrollWheelZoom: false }).setView([-40.91, -73.13], 10);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -40,23 +38,46 @@ $fichasJson = json_encode($fichas, JSON_UNESCAPED_UNICODE);
         maxZoom: 18
     }).addTo(map);
 
-    // Clic en overlay activa interacción
-    overlay.addEventListener('click', function() {
-        map.scrollWheelZoom.enable();
-        overlay.classList.add('map-interaction-overlay--hidden');
-    });
-    // Salir del wrapper desactiva
-    wrapper.addEventListener('mouseleave', function() {
-        map.scrollWheelZoom.disable();
-        overlay.classList.remove('map-interaction-overlay--hidden');
-    });
+    // Ctrl+scroll para zoom (patrón Google Maps)
+    var hintTimer;
+    mapEl.addEventListener('wheel', function(e) {
+        if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+            map.scrollWheelZoom.enable();
+            clearTimeout(hintTimer);
+            hint.classList.remove('map-scroll-hint--visible');
+            hintTimer = setTimeout(function(){ map.scrollWheelZoom.disable(); }, 1500);
+        } else {
+            hint.textContent = 'Usa Ctrl + scroll para hacer zoom en el mapa';
+            hint.classList.add('map-scroll-hint--visible');
+            clearTimeout(hintTimer);
+            hintTimer = setTimeout(function(){ hint.classList.remove('map-scroll-hint--visible'); }, 1800);
+        }
+    }, { passive: false });
+
+    // Mobile: dos dedos para mover
     if (L.Browser.mobile) {
         map.dragging.disable();
-        overlay.addEventListener('touchstart', function() {
-            map.dragging.enable();
-            map.scrollWheelZoom.enable();
-            overlay.classList.add('map-interaction-overlay--hidden');
-        });
+        var touching = 0;
+        mapEl.addEventListener('touchstart', function(e) {
+            touching = e.touches.length;
+            if (touching >= 2) {
+                map.dragging.enable();
+                hint.classList.remove('map-scroll-hint--visible');
+            }
+        }, { passive: true });
+        mapEl.addEventListener('touchend', function() {
+            touching = 0;
+            map.dragging.disable();
+        }, { passive: true });
+        mapEl.addEventListener('touchmove', function(e) {
+            if (e.touches.length < 2) {
+                hint.textContent = 'Usa dos dedos para mover el mapa';
+                hint.classList.add('map-scroll-hint--visible');
+                clearTimeout(hintTimer);
+                hintTimer = setTimeout(function(){ hint.classList.remove('map-scroll-hint--visible'); }, 1800);
+            }
+        }, { passive: true });
     }
 
     if (fichas.length === 0) return;
