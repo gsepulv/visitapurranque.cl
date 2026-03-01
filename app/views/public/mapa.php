@@ -22,13 +22,15 @@ $fichasJson = json_encode($fichas, JSON_UNESCAPED_UNICODE);
 </section>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
-<link rel="stylesheet" href="https://unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css" crossorigin="">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-<script src="https://unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.js" crossorigin=""></script>
 <script>
 (function(){
     var fichas = <?= $fichasJson ?>;
-    var map = L.map('mapa-principal', { gestureHandling: true }).setView([-40.91, -73.13], 10);
+    var mapEl = document.getElementById('mapa-principal');
+    var map = L.map('mapa-principal', { scrollWheelZoom: false }).setView([-40.91, -73.13], 10);
+
+    map.on('click', function() { map.scrollWheelZoom.enable(); });
+    mapEl.addEventListener('mouseleave', function() { map.scrollWheelZoom.disable(); });
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
