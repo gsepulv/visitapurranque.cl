@@ -529,6 +529,50 @@ h1, h2, h3 {
 }
 
 
+/* ── Utilidades extra ── */
+
+.text-center { text-align: center; }
+
+.text-muted { color: var(--text-muted); }
+
+.table-color-dot {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.table-emoji {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.form-group--small {
+    flex: 0 0 100px;
+    min-width: 80px;
+}
+
+.form-input--color {
+    padding: 4px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.admin-section {
+    border-top: 2px solid var(--border);
+    padding-top: 1.5rem;
+}
+
+.row--muted {
+    opacity: 0.55;
+}
+
+.badge--purple {
+    background: #f3e8ff;
+    color: #7c3aed;
+}
+
 /* ═══════════════════════════════════════════════════════
    RESPONSIVE
    ═══════════════════════════════════════════════════════ */

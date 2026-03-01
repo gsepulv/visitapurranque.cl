@@ -42,6 +42,26 @@ return [
     ['GET',  '/admin/logout',             'AdminController@logout'],
     ['GET',  '/admin/dashboard',          'AdminController@dashboard'],
 
+    // Admin — Categorías
+    ['GET',  '/admin/categorias',                              'AdminCategoriaController@index'],
+    ['GET',  '/admin/categorias/crear',                        'AdminCategoriaController@create'],
+    ['POST', '/admin/categorias/crear',                        'AdminCategoriaController@store'],
+    ['GET',  '/admin/categorias/{id}/editar',                  'AdminCategoriaController@edit'],
+    ['POST', '/admin/categorias/{id}/editar',                  'AdminCategoriaController@update'],
+    ['POST', '/admin/categorias/{id}/eliminar',                'AdminCategoriaController@delete'],
+    ['POST', '/admin/categorias/{id}/toggle',                  'AdminCategoriaController@toggle'],
+    ['POST', '/admin/categorias/{id}/subcategorias/crear',     'AdminCategoriaController@storeSub'],
+    ['POST', '/admin/categorias/{catId}/subcategorias/{subId}/eliminar', 'AdminCategoriaController@deleteSub'],
+
+    // Admin — Eventos
+    ['GET',  '/admin/eventos',                'AdminEventoController@index'],
+    ['GET',  '/admin/eventos/crear',          'AdminEventoController@create'],
+    ['POST', '/admin/eventos/crear',          'AdminEventoController@store'],
+    ['GET',  '/admin/eventos/{id}/editar',    'AdminEventoController@edit'],
+    ['POST', '/admin/eventos/{id}/editar',    'AdminEventoController@update'],
+    ['POST', '/admin/eventos/{id}/eliminar',  'AdminEventoController@delete'],
+    ['POST', '/admin/eventos/{id}/toggle',    'AdminEventoController@toggle'],
+
     // Admin — Fichas
     ['GET',  '/admin/fichas',                'AdminFichaController@index'],
     ['GET',  '/admin/fichas/crear',          'AdminFichaController@create'],

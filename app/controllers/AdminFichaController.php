@@ -352,19 +352,23 @@ class AdminFichaController extends Controller
             'fichas' => (int)$this->db->query(
                 "SELECT COUNT(*) FROM fichas WHERE activo = 1 AND eliminado = 0"
             )->fetchColumn(),
+            'categorias' => (int)$this->db->query(
+                "SELECT COUNT(*) FROM categorias WHERE activo = 1"
+            )->fetchColumn(),
         ];
     }
 
-    private function audit(int $usuarioId, string $accion, string $detalle): void
+    private function audit(int $usuarioId, string $accion, string $detalle, ?int $registroId = null): void
     {
         $stmt = $this->db->prepare(
-            "INSERT INTO audit_log (usuario_id, accion, modulo, detalle, ip, user_agent)
-             VALUES (?, ?, 'fichas', ?, ?, ?)"
+            "INSERT INTO audit_log (usuario_id, accion, modulo, registro_id, registro_tipo, datos_despues, ip, user_agent)
+             VALUES (?, ?, 'fichas', ?, 'ficha', ?, ?, ?)"
         );
         $stmt->execute([
             $usuarioId,
             $accion,
-            $detalle,
+            $registroId,
+            json_encode(['detalle' => $detalle], JSON_UNESCAPED_UNICODE),
             $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0',
             $_SERVER['HTTP_USER_AGENT'] ?? '',
         ]);

@@ -8,7 +8,7 @@ $counts = $sidebarCounts ?? [];
 $adminNav = [
     ['url' => '/admin/dashboard',       'icon' => '&#128202;', 'label' => 'Dashboard',       'count' => null],
     ['url' => '/admin/fichas',          'icon' => '&#128205;', 'label' => 'Fichas',          'count' => $counts['fichas'] ?? null],
-    ['url' => '/admin/categorias',      'icon' => '&#128194;', 'label' => 'Categorías',      'count' => null],
+    ['url' => '/admin/categorias',      'icon' => '&#128194;', 'label' => 'Categorías',      'count' => $counts['categorias'] ?? null],
     ['url' => '/admin/eventos',         'icon' => '&#128197;', 'label' => 'Eventos',         'count' => null],
     ['url' => '/admin/blog',            'icon' => '&#128221;', 'label' => 'Blog',            'count' => null],
     ['url' => '/admin/resenas',         'icon' => '&#11088;',  'label' => 'Reseñas',         'count' => $counts['resenas'] ?? null],

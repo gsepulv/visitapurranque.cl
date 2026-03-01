@@ -167,9 +167,10 @@ class AdminController extends Controller
 
         // ── Contadores para sidebar ──
         $sidebarCounts = [
-            'fichas'   => $kpis['fichas'],
-            'resenas'  => $kpis['resenas'],
-            'mensajes' => $kpis['mensajes'],
+            'fichas'     => $kpis['fichas'],
+            'categorias' => (int)$this->db->query("SELECT COUNT(*) FROM categorias WHERE activo = 1")->fetchColumn(),
+            'resenas'    => $kpis['resenas'],
+            'mensajes'   => $kpis['mensajes'],
         ];
 
         $this->renderAdmin('admin/dashboard', [
