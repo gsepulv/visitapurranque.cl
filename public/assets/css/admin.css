@@ -703,6 +703,11 @@ h1, h2, h3 {
 .badge--blue   { background: #eff6ff; color: #1d4ed8; }
 .badge--yellow { background: #fffbeb; color: #92400e; }
 .badge--red    { background: #fef2f2; color: #991b1b; }
+.badge--outline {
+    background: transparent;
+    color: var(--text-light);
+    border: 1.5px solid var(--border);
+}
 
 
 /* ═══════════════════════════════════════════════════════
@@ -935,6 +940,10 @@ h1, h2, h3 {
 .form-textarea {
     resize: vertical;
     min-height: 80px;
+}
+
+.form-textarea--tall {
+    min-height: 300px;
 }
 
 .form-help {

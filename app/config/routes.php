@@ -62,6 +62,14 @@ return [
     ['POST', '/admin/eventos/{id}/eliminar',  'AdminEventoController@delete'],
     ['POST', '/admin/eventos/{id}/toggle',    'AdminEventoController@toggle'],
 
+    // Admin — Blog
+    ['GET',  '/admin/blog',                'AdminBlogController@index'],
+    ['GET',  '/admin/blog/crear',          'AdminBlogController@create'],
+    ['POST', '/admin/blog/crear',          'AdminBlogController@store'],
+    ['GET',  '/admin/blog/{id}/editar',    'AdminBlogController@edit'],
+    ['POST', '/admin/blog/{id}/editar',    'AdminBlogController@update'],
+    ['POST', '/admin/blog/{id}/eliminar',  'AdminBlogController@delete'],
+
     // Admin — Fichas
     ['GET',  '/admin/fichas',                'AdminFichaController@index'],
     ['GET',  '/admin/fichas/crear',          'AdminFichaController@create'],
