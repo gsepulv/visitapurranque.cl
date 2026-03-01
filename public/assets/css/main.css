@@ -2017,25 +2017,30 @@ ul, ol { list-style: none; }
 }
 
 /* ── Map interaction overlay ─────────────────────────── */
+.map-wrap {
+    position: relative;
+}
 .map-interaction-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, .15);
+    background: rgba(0, 0, 0, .12);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 800;
-    pointer-events: none;
-    transition: opacity .25s;
+    cursor: pointer;
+    transition: opacity .3s;
 }
 .map-interaction-overlay span {
-    background: rgba(0, 0, 0, .55);
+    background: rgba(0, 0, 0, .6);
     color: #fff;
-    padding: .4rem .9rem;
+    padding: .45rem 1rem;
     border-radius: var(--radius-lg, 8px);
     font-size: .85rem;
     font-weight: 500;
+    pointer-events: none;
 }
 .map-interaction-overlay--hidden {
     opacity: 0;
+    pointer-events: none;
 }

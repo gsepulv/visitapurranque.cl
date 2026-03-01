@@ -126,13 +126,19 @@ $currentUrl = url('/evento/' . e($evento['slug']));
                 <?php if (!empty($evento['direccion'])): ?>
                     <p class="text-sm text-muted mb-2">&#128205; <?= e($evento['direccion']) ?></p>
                 <?php endif; ?>
-                <div class="ficha-mapa" id="evento-map"></div>
+                <div class="map-wrap">
+                    <div class="ficha-mapa" id="evento-map"></div>
+                    <div class="map-interaction-overlay" id="evento-map-overlay">
+                        <span>Haz clic para interactuar con el mapa</span>
+                    </div>
+                </div>
                 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
                 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
                 <script>
                 (function(){
                     var lat = <?= $evento['latitud'] ?>, lng = <?= $evento['longitud'] ?>;
-                    var mapEl = document.getElementById('evento-map');
+                    var wrapper = document.getElementById('evento-map').parentElement;
+                    var overlay = document.getElementById('evento-map-overlay');
                     var map = L.map('evento-map', { scrollWheelZoom: false }).setView([lat, lng], 14);
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         attribution: '&copy; OpenStreetMap',
@@ -140,23 +146,21 @@ $currentUrl = url('/evento/' . e($evento['slug']));
                     }).addTo(map);
                     L.marker([lat, lng]).addTo(map).bindPopup(<?= json_encode(e($evento['titulo']), JSON_UNESCAPED_UNICODE) ?>).openPopup();
 
-                    var overlay = document.createElement('div');
-                    overlay.className = 'map-interaction-overlay';
-                    overlay.innerHTML = '<span>Haz clic para interactuar con el mapa</span>';
-                    mapEl.style.position = 'relative';
-                    mapEl.appendChild(overlay);
-
-                    map.on('click', function() {
+                    overlay.addEventListener('click', function() {
                         map.scrollWheelZoom.enable();
                         overlay.classList.add('map-interaction-overlay--hidden');
                     });
-                    map.on('mouseout', function() {
+                    wrapper.addEventListener('mouseleave', function() {
                         map.scrollWheelZoom.disable();
                         overlay.classList.remove('map-interaction-overlay--hidden');
                     });
                     if (L.Browser.mobile) {
                         map.dragging.disable();
-                        map.on('click', function() { map.dragging.enable(); });
+                        overlay.addEventListener('touchstart', function() {
+                            map.dragging.enable();
+                            map.scrollWheelZoom.enable();
+                            overlay.classList.add('map-interaction-overlay--hidden');
+                        });
                     }
                 })();
                 </script>
