@@ -1,7 +1,10 @@
 -- =============================================
 -- DATOS DE PRUEBA — visitapurranque.cl
 -- Columnas ajustadas al schema real de la BD
+-- IMPORTANTE: Ejecutar con --default-character-set=utf8mb4
+--   mysql -u root visitapurranque --default-character-set=utf8mb4 < seeds.sql
 -- =============================================
+SET NAMES utf8mb4;
 
 -- Fichas de atractivos turísticos reales
 -- Nota: tabla fichas usa latitud/longitud, descripcion, activo/eliminado (no estado)

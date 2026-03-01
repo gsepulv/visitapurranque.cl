@@ -4,6 +4,9 @@
  * Unico punto de entrada de la aplicacion
  */
 
+// Forzar UTF-8 en toda la respuesta
+header('Content-Type: text/html; charset=UTF-8');
+
 // Base path del proyecto (un nivel arriba de public/)
 define('BASE_PATH', dirname(__DIR__));
 
