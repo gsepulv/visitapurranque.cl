@@ -36,13 +36,13 @@ $adminNav = [
     </div>
 
     <nav class="sidebar-nav">
-        <?php foreach ($adminNav as $item): ?>
-        <a href="<?= url($item['url']) ?>"
-           class="sidebar-link<?= is_active($item['url']) ? ' active' : '' ?>">
-            <span class="sidebar-icon"><?= $item['icon'] ?></span>
-            <span class="sidebar-label"><?= e($item['label']) ?></span>
-            <?php if ($item['count'] !== null && (int)$item['count'] > 0): ?>
-                <span class="sidebar-badge"><?= (int)$item['count'] ?></span>
+        <?php foreach ($adminNav as $navItem): ?>
+        <a href="<?= url($navItem['url']) ?>"
+           class="sidebar-link<?= is_active($navItem['url']) ? ' active' : '' ?>">
+            <span class="sidebar-icon"><?= $navItem['icon'] ?></span>
+            <span class="sidebar-label"><?= e($navItem['label']) ?></span>
+            <?php if ($navItem['count'] !== null && (int)$navItem['count'] > 0): ?>
+                <span class="sidebar-badge"><?= (int)$navItem['count'] ?></span>
             <?php endif; ?>
         </a>
         <?php endforeach; ?>
