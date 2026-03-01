@@ -295,7 +295,7 @@ class Ficha
     {
         return $this->db->query(
             "SELECT f.id, f.nombre, f.slug, f.descripcion_corta, f.latitud, f.longitud, f.categoria_id,
-                    c.nombre AS categoria_nombre, c.emoji AS categoria_emoji
+                    c.nombre AS categoria_nombre, c.emoji AS categoria_emoji, c.color AS categoria_color
              FROM fichas f
              LEFT JOIN categorias c ON c.id = f.categoria_id
              WHERE f.activo = 1 AND f.eliminado = 0 AND f.latitud IS NOT NULL AND f.longitud IS NOT NULL"
