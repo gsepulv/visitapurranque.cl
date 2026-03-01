@@ -62,6 +62,13 @@ return [
     ['POST', '/admin/eventos/{id}/eliminar',  'AdminEventoController@delete'],
     ['POST', '/admin/eventos/{id}/toggle',    'AdminEventoController@toggle'],
 
+    // Admin — Mensajes (Contacto)
+    ['GET',  '/admin/mensajes',                    'AdminContactoController@index'],
+    ['GET',  '/admin/mensajes/{id}',               'AdminContactoController@show'],
+    ['POST', '/admin/mensajes/{id}/responder',     'AdminContactoController@responder'],
+    ['POST', '/admin/mensajes/{id}/toggle-leido',  'AdminContactoController@toggleLeido'],
+    ['POST', '/admin/mensajes/{id}/eliminar',      'AdminContactoController@delete'],
+
     // Admin — Planes
     ['GET',  '/admin/planes',                       'AdminPlanController@index'],
     ['GET',  '/admin/planes/crear',                 'AdminPlanController@create'],

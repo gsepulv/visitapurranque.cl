@@ -1210,6 +1210,31 @@ h1, h2, h3 {
     margin-top: 8px;
 }
 
+/* ═══════════════════════════════════════════════════════
+   MENSAJES — Bandeja
+   ═══════════════════════════════════════════════════════ */
+
+.msg-row--unread {
+    background: #fffbeb;
+}
+
+.msg-row--unread:hover {
+    background: #fef3c7;
+}
+
+.msg-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--admin-blue);
+}
+
+.msg-asunto {
+    margin: 12px 0 8px;
+}
+
+
 .plan-card__actions {
     padding: 12px 20px 16px;
     border-top: 1px solid var(--border);
