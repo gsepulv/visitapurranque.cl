@@ -14,7 +14,8 @@ return [
     ['GET', '/categoria/{slug}',  'CategoriaController@show'],
 
     // Atractivos turisticos
-    ['GET', '/atractivo/{slug}',  'FichaController@show'],
+    ['GET',  '/atractivo/{slug}',         'FichaController@show'],
+    ['POST', '/atractivo/{slug}/resena',  'FichaController@resena'],
 
     // Mapa interactivo
     ['GET', '/mapa',              'MapaController@index'],
