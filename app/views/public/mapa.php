@@ -26,11 +26,7 @@ $fichasJson = json_encode($fichas, JSON_UNESCAPED_UNICODE);
 <script>
 (function(){
     var fichas = <?= $fichasJson ?>;
-    var mapEl = document.getElementById('mapa-principal');
-    var map = L.map('mapa-principal', { scrollWheelZoom: false }).setView([-40.91, -73.13], 10);
-
-    map.on('click', function() { map.scrollWheelZoom.enable(); });
-    mapEl.addEventListener('mouseleave', function() { map.scrollWheelZoom.disable(); });
+    var map = L.map('mapa-principal').setView([-40.91, -73.13], 10);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',

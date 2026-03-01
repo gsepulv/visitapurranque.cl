@@ -96,11 +96,7 @@ $currentUrl = url('/atractivo/' . e($ficha['slug']));
                 <script>
                 (function(){
                     var lat = <?= $ficha['latitud'] ?>, lng = <?= $ficha['longitud'] ?>;
-                    var mapEl = document.getElementById('ficha-map');
-                    var map = L.map('ficha-map', { scrollWheelZoom: false }).setView([lat, lng], 14);
-
-                    map.on('click', function() { map.scrollWheelZoom.enable(); });
-                    mapEl.addEventListener('mouseleave', function() { map.scrollWheelZoom.disable(); });
+                    var map = L.map('ficha-map').setView([lat, lng], 14);
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         attribution: '&copy; OpenStreetMap',
                         maxZoom: 18

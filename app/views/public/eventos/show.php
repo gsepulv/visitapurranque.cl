@@ -132,11 +132,7 @@ $currentUrl = url('/evento/' . e($evento['slug']));
                 <script>
                 (function(){
                     var lat = <?= $evento['latitud'] ?>, lng = <?= $evento['longitud'] ?>;
-                    var mapEl = document.getElementById('evento-map');
-                    var map = L.map('evento-map', { scrollWheelZoom: false }).setView([lat, lng], 14);
-
-                    map.on('click', function() { map.scrollWheelZoom.enable(); });
-                    mapEl.addEventListener('mouseleave', function() { map.scrollWheelZoom.disable(); });
+                    var map = L.map('evento-map').setView([lat, lng], 14);
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         attribution: '&copy; OpenStreetMap',
                         maxZoom: 18
