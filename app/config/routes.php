@@ -29,7 +29,8 @@ return [
     ['GET', '/blog/{slug}',       'BlogController@show'],
 
     // Contacto
-    ['GET', '/contacto',          'ContactoController@index'],
+    ['GET',  '/contacto',         'ContactoController@index'],
+    ['POST', '/contacto',         'ContactoController@send'],
 
     // Buscador
     ['GET', '/buscar',            'BuscadorController@index'],

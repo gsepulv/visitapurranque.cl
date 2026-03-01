@@ -133,6 +133,25 @@ class ContactoMensaje
         return $stmt->execute([$id]);
     }
 
+    // ── Métodos frontend público ─────────────────────────
+
+    public function crear(array $data): int
+    {
+        $stmt = $this->db->prepare(
+            "INSERT INTO contacto_mensajes (nombre, email, telefono, asunto, mensaje, ip)
+             VALUES (?, ?, ?, ?, ?, ?)"
+        );
+        $stmt->execute([
+            $data['nombre'],
+            $data['email'],
+            $data['telefono'] ?: null,
+            $data['asunto'] ?: null,
+            $data['mensaje'],
+            $data['ip'] ?? null,
+        ]);
+        return (int)$this->db->lastInsertId();
+    }
+
     /**
      * Contar no leídos
      */
