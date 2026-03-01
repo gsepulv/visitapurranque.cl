@@ -1095,3 +1095,34 @@ h1, h2, h3 {
     padding-bottom: 16px;
     border-bottom: 1px solid var(--border);
 }
+
+
+/* ═══════════════════════════════════════════════════════
+   BANNERS — Stats
+   ═══════════════════════════════════════════════════════ */
+
+.banner-stats-grid {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.banner-stat {
+    text-align: center;
+    min-width: 100px;
+}
+
+.banner-stat__value {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--text);
+    line-height: 1.2;
+}
+
+.banner-stat__label {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}

@@ -62,6 +62,16 @@ return [
     ['POST', '/admin/eventos/{id}/eliminar',  'AdminEventoController@delete'],
     ['POST', '/admin/eventos/{id}/toggle',    'AdminEventoController@toggle'],
 
+    // Admin — Banners
+    ['GET',  '/admin/banners',                    'AdminBannerController@index'],
+    ['GET',  '/admin/banners/crear',              'AdminBannerController@create'],
+    ['POST', '/admin/banners/crear',              'AdminBannerController@store'],
+    ['GET',  '/admin/banners/{id}/editar',        'AdminBannerController@edit'],
+    ['POST', '/admin/banners/{id}/editar',        'AdminBannerController@update'],
+    ['POST', '/admin/banners/{id}/eliminar',      'AdminBannerController@delete'],
+    ['POST', '/admin/banners/{id}/toggle',        'AdminBannerController@toggle'],
+    ['POST', '/admin/banners/{id}/reset-stats',   'AdminBannerController@resetStats'],
+
     // Admin — Reseñas
     ['GET',  '/admin/resenas',                'AdminResenaController@index'],
     ['GET',  '/admin/resenas/{id}',           'AdminResenaController@show'],
