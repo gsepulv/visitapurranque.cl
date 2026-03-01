@@ -1462,3 +1462,121 @@ h1, h2, h3 {
 .text-center {
     text-align: center;
 }
+
+/* ── Apariencia ─────────────────────────────── */
+
+.apariencia-colors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.apariencia-color-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.apariencia-color-picker {
+    width: 48px;
+    height: 38px;
+    padding: 2px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    background: none;
+}
+
+.apariencia-color-hex {
+    flex: 1;
+    max-width: 120px;
+    font-family: var(--font-mono);
+    font-size: .85rem;
+}
+
+.apariencia-preview {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.apariencia-preview-img {
+    max-height: 60px;
+    max-width: 200px;
+    object-fit: contain;
+}
+
+.apariencia-preview-img--small {
+    max-height: 32px;
+    max-width: 32px;
+}
+
+.apariencia-preview-path {
+    font-size: .8rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    word-break: break-all;
+}
+
+.form-textarea--code {
+    font-family: var(--font-mono);
+    font-size: .85rem;
+    tab-size: 2;
+    white-space: pre;
+}
+
+.form-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: .95rem;
+}
+
+.form-toggle {
+    width: 18px;
+    height: 18px;
+}
+
+.form-toggle-text {
+    user-select: none;
+}
+
+.apariencia-preview-bar {
+    display: flex;
+    gap: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    height: 60px;
+}
+
+.apariencia-preview-swatch {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: .8rem;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,.4);
+}
+
+.form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 700px) {
+    .form-row-2 {
+        grid-template-columns: 1fr;
+    }
+    .apariencia-colors-grid {
+        grid-template-columns: 1fr;
+    }
+}

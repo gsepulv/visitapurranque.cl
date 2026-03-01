@@ -128,6 +128,10 @@ return [
     ['POST', '/admin/seo/guardar',        'AdminSeoController@guardar'],
     ['GET',  '/admin/seo/compartidos',    'AdminSeoController@compartidos'],
 
+    // Admin — Apariencia
+    ['GET',  '/admin/apariencia',          'AdminAparienciaController@index'],
+    ['POST', '/admin/apariencia/guardar',  'AdminAparienciaController@guardar'],
+
     // Admin — Estadísticas / Reportes
     ['GET',  '/admin/estadisticas',       'AdminReporteController@index'],
     ['GET',  '/admin/estadisticas/csv',   'AdminReporteController@csv'],
