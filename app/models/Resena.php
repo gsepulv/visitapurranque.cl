@@ -177,4 +177,44 @@ class Resena
         }
         return $stats;
     }
+
+    // ── Métodos frontend público ─────────────────────────
+
+    public function getAprobadasByFicha(int $fichaId): array
+    {
+        $stmt = $this->db->prepare(
+            "SELECT * FROM resenas WHERE ficha_id = ? AND estado = 'aprobada' ORDER BY created_at DESC"
+        );
+        $stmt->execute([$fichaId]);
+        return $stmt->fetchAll();
+    }
+
+    public function getPromedioByFicha(int $fichaId): array
+    {
+        $stmt = $this->db->prepare(
+            "SELECT AVG(rating) AS promedio, COUNT(*) AS total
+             FROM resenas WHERE ficha_id = ? AND estado = 'aprobada'"
+        );
+        $stmt->execute([$fichaId]);
+        return $stmt->fetch();
+    }
+
+    public function create(array $data): int
+    {
+        $stmt = $this->db->prepare(
+            "INSERT INTO resenas (ficha_id, nombre, email, rating, tipo_experiencia, comentario, estado, ip)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+        );
+        $stmt->execute([
+            (int)$data['ficha_id'],
+            $data['nombre'],
+            $data['email'] ?: null,
+            (int)$data['rating'],
+            $data['tipo_experiencia'] ?? 'otro',
+            $data['comentario'],
+            $data['estado'] ?? 'pendiente',
+            $_SERVER['REMOTE_ADDR'] ?? null,
+        ]);
+        return (int)$this->db->lastInsertId();
+    }
 }

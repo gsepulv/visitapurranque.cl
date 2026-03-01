@@ -245,4 +245,18 @@ class BlogPost
         $palabras = str_word_count(strip_tags($contenido));
         return max(1, (int)ceil($palabras / 200));
     }
+
+    // ── Métodos frontend público ─────────────────────────
+
+    public function getPublicados(int $limit = 6): array
+    {
+        $stmt = $this->db->prepare(
+            "SELECT * FROM blog_posts
+             WHERE estado = 'publicado' AND eliminado = 0
+             ORDER BY publicado_at DESC, created_at DESC
+             LIMIT ?"
+        );
+        $stmt->execute([$limit]);
+        return $stmt->fetchAll();
+    }
 }

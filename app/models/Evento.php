@@ -242,4 +242,18 @@ class Evento
             "SELECT COUNT(*) FROM eventos WHERE fecha_inicio >= NOW() AND activo = 1 AND eliminado = 0"
         )->fetchColumn();
     }
+
+    // ── Métodos frontend público ─────────────────────────
+
+    public function getProximos(int $limit = 6): array
+    {
+        $stmt = $this->db->prepare(
+            "SELECT * FROM eventos
+             WHERE activo = 1 AND eliminado = 0 AND fecha_fin >= NOW()
+             ORDER BY fecha_inicio ASC
+             LIMIT ?"
+        );
+        $stmt->execute([$limit]);
+        return $stmt->fetchAll();
+    }
 }

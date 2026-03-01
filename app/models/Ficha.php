@@ -212,4 +212,93 @@ class Ficha
         $stmt->execute($params);
         return (int)$stmt->fetchColumn() > 0;
     }
+
+    // ── Métodos frontend público ─────────────────────────
+
+    public function getActivos(?int $limit = null): array
+    {
+        $sql = "SELECT f.*, c.nombre AS categoria_nombre, c.slug AS categoria_slug, c.emoji AS categoria_emoji
+                FROM fichas f
+                LEFT JOIN categorias c ON c.id = f.categoria_id
+                WHERE f.activo = 1 AND f.eliminado = 0
+                ORDER BY f.destacado DESC, f.created_at DESC";
+        if ($limit) $sql .= " LIMIT " . (int)$limit;
+        return $this->db->query($sql)->fetchAll();
+    }
+
+    public function getDestacados(int $limit = 6): array
+    {
+        $stmt = $this->db->prepare(
+            "SELECT f.*, c.nombre AS categoria_nombre, c.slug AS categoria_slug, c.emoji AS categoria_emoji
+             FROM fichas f
+             LEFT JOIN categorias c ON c.id = f.categoria_id
+             WHERE f.activo = 1 AND f.eliminado = 0 AND f.destacado = 1
+             ORDER BY f.created_at DESC
+             LIMIT ?"
+        );
+        $stmt->execute([$limit]);
+        return $stmt->fetchAll();
+    }
+
+    public function getBySlugPublico(string $slug): ?array
+    {
+        $stmt = $this->db->prepare(
+            "SELECT f.*, c.nombre AS categoria_nombre, c.slug AS categoria_slug, c.emoji AS categoria_emoji
+             FROM fichas f
+             LEFT JOIN categorias c ON c.id = f.categoria_id
+             WHERE f.slug = ? AND f.activo = 1 AND f.eliminado = 0
+             LIMIT 1"
+        );
+        $stmt->execute([$slug]);
+        $row = $stmt->fetch();
+        return $row ?: null;
+    }
+
+    public function getByCategoria(int $categoriaId, int $limit = 12, int $offset = 0): array
+    {
+        $stmt = $this->db->prepare(
+            "SELECT f.*, c.nombre AS categoria_nombre, c.slug AS categoria_slug, c.emoji AS categoria_emoji
+             FROM fichas f
+             LEFT JOIN categorias c ON c.id = f.categoria_id
+             WHERE f.activo = 1 AND f.eliminado = 0 AND f.categoria_id = ?
+             ORDER BY f.destacado DESC, f.nombre ASC
+             LIMIT ? OFFSET ?"
+        );
+        $stmt->execute([$categoriaId, $limit, $offset]);
+        return $stmt->fetchAll();
+    }
+
+    public function countByCategoria(int $categoriaId): int
+    {
+        $stmt = $this->db->prepare(
+            "SELECT COUNT(*) FROM fichas WHERE activo = 1 AND eliminado = 0 AND categoria_id = ?"
+        );
+        $stmt->execute([$categoriaId]);
+        return (int)$stmt->fetchColumn();
+    }
+
+    public function getRelacionadas(int $fichaId, int $categoriaId, int $limit = 4): array
+    {
+        $stmt = $this->db->prepare(
+            "SELECT f.*, c.nombre AS categoria_nombre, c.slug AS categoria_slug
+             FROM fichas f
+             LEFT JOIN categorias c ON c.id = f.categoria_id
+             WHERE f.activo = 1 AND f.eliminado = 0 AND f.categoria_id = ? AND f.id != ?
+             ORDER BY RAND()
+             LIMIT ?"
+        );
+        $stmt->execute([$categoriaId, $fichaId, $limit]);
+        return $stmt->fetchAll();
+    }
+
+    public function getAllParaMapa(): array
+    {
+        return $this->db->query(
+            "SELECT f.id, f.nombre, f.slug, f.descripcion_corta, f.latitud, f.longitud, f.categoria_id,
+                    c.nombre AS categoria_nombre, c.emoji AS categoria_emoji
+             FROM fichas f
+             LEFT JOIN categorias c ON c.id = f.categoria_id
+             WHERE f.activo = 1 AND f.eliminado = 0 AND f.latitud IS NOT NULL AND f.longitud IS NOT NULL"
+        )->fetchAll();
+    }
 }

@@ -278,4 +278,28 @@ class Categoria
     {
         return (int)$this->db->query("SELECT COUNT(*) FROM categorias WHERE activo = 1")->fetchColumn();
     }
+
+    // ── Métodos frontend público ─────────────────────────
+
+    public function getAllConContador(): array
+    {
+        return $this->db->query(
+            "SELECT c.*, COUNT(f.id) AS total_fichas
+             FROM categorias c
+             LEFT JOIN fichas f ON f.categoria_id = c.id AND f.activo = 1 AND f.eliminado = 0
+             WHERE c.activo = 1
+             GROUP BY c.id
+             ORDER BY c.orden ASC, c.nombre ASC"
+        )->fetchAll();
+    }
+
+    public function getBySlugPublico(string $slug): ?array
+    {
+        $stmt = $this->db->prepare(
+            "SELECT * FROM categorias WHERE slug = ? AND activo = 1 LIMIT 1"
+        );
+        $stmt->execute([$slug]);
+        $row = $stmt->fetch();
+        return $row ?: null;
+    }
 }
