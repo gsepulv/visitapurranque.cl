@@ -123,6 +123,11 @@ return [
     ['POST', '/admin/renovaciones/{id}/renovar',  'AdminCambioController@renovar'],
     ['POST', '/admin/renovaciones/{id}/expirar',  'AdminCambioController@expirar'],
 
+    // Admin — SEO + Redes Sociales + Compartidos
+    ['GET',  '/admin/seo',                'AdminSeoController@index'],
+    ['POST', '/admin/seo/guardar',        'AdminSeoController@guardar'],
+    ['GET',  '/admin/seo/compartidos',    'AdminSeoController@compartidos'],
+
     // Admin — Estadísticas / Reportes
     ['GET',  '/admin/estadisticas',       'AdminReporteController@index'],
     ['GET',  '/admin/estadisticas/csv',   'AdminReporteController@csv'],
