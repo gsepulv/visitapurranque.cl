@@ -16,6 +16,21 @@ require BASE_PATH . '/app/config/database.php';
 // Helpers (usa global $pdo para texto() y config())
 require BASE_PATH . '/app/helpers/functions.php';
 
+// Autoload de clases (models y controllers)
+spl_autoload_register(function (string $class): void {
+    $dirs = [
+        BASE_PATH . '/app/models/',
+        BASE_PATH . '/app/controllers/',
+    ];
+    foreach ($dirs as $dir) {
+        $file = $dir . $class . '.php';
+        if (file_exists($file)) {
+            require_once $file;
+            return;
+        }
+    }
+});
+
 // Manejo de errores segun entorno
 if (APP_DEBUG) {
     error_reporting(E_ALL);
