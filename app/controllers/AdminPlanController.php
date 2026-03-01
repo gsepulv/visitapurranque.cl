@@ -79,7 +79,7 @@ class AdminPlanController extends Controller
         $data['tiene_badge'] = isset($_POST['tiene_badge']) ? 1 : 0;
 
         $id = $this->plan->create($data);
-        $this->audit($usuario['id'], 'crear', "Plan #{$id}: {$data['nombre']}", $id);
+        $this->audit($usuario['id'], 'crear', 'planes', "Plan #{$id}: {$data['nombre']}", $id);
 
         $this->redirect('/admin/planes', ['success' => 'Plan creado correctamente']);
     }
@@ -136,7 +136,7 @@ class AdminPlanController extends Controller
         $data['tiene_badge'] = isset($_POST['tiene_badge']) ? 1 : 0;
 
         $this->plan->update((int)$id, $data);
-        $this->audit($usuario['id'], 'editar', "Plan #{$id}: {$data['nombre']}", (int)$id);
+        $this->audit($usuario['id'], 'editar', 'planes', "Plan #{$id}: {$data['nombre']}", (int)$id);
 
         $this->redirect('/admin/planes', ['success' => 'Plan actualizado correctamente']);
     }
@@ -160,7 +160,7 @@ class AdminPlanController extends Controller
         }
 
         $this->plan->delete((int)$id);
-        $this->audit($usuario['id'], 'eliminar', "Plan #{$id}: {$plan['nombre']}", (int)$id);
+        $this->audit($usuario['id'], 'eliminar', 'planes', "Plan #{$id}: {$plan['nombre']}", (int)$id);
 
         $this->redirect('/admin/planes', ['success' => 'Plan eliminado correctamente']);
     }
@@ -181,7 +181,7 @@ class AdminPlanController extends Controller
 
         $this->plan->toggleActivo((int)$id);
         $nuevoEstado = $plan['activo'] ? 'desactivado' : 'activado';
-        $this->audit($usuario['id'], 'toggle', "Plan #{$id} {$nuevoEstado}", (int)$id);
+        $this->audit($usuario['id'], 'toggle', 'planes', "Plan #{$id} {$nuevoEstado}", (int)$id);
 
         $this->redirect('/admin/planes', ['success' => "Plan {$nuevoEstado}"]);
     }
@@ -255,7 +255,7 @@ class AdminPlanController extends Controller
         }
 
         $id = $this->suscripcion->create($data);
-        $this->audit($usuario['id'], 'crear', "Suscripción #{$id}", $id);
+        $this->audit($usuario['id'], 'crear', 'planes', "Suscripción #{$id}", $id);
 
         $this->redirect('/admin/suscripciones', ['success' => 'Suscripción creada correctamente']);
     }
@@ -302,7 +302,7 @@ class AdminPlanController extends Controller
         }
 
         $this->suscripcion->update((int)$id, $data);
-        $this->audit($usuario['id'], 'editar', "Suscripción #{$id}", (int)$id);
+        $this->audit($usuario['id'], 'editar', 'planes', "Suscripción #{$id}", (int)$id);
 
         $this->redirect('/admin/suscripciones', ['success' => 'Suscripción actualizada correctamente']);
     }
@@ -322,7 +322,7 @@ class AdminPlanController extends Controller
         }
 
         $this->suscripcion->delete((int)$id);
-        $this->audit($usuario['id'], 'eliminar', "Suscripción #{$id}", (int)$id);
+        $this->audit($usuario['id'], 'eliminar', 'planes', "Suscripción #{$id}", (int)$id);
 
         $this->redirect('/admin/suscripciones', ['success' => 'Suscripción eliminada']);
     }
@@ -418,19 +418,4 @@ class AdminPlanController extends Controller
         ];
     }
 
-    private function audit(int $usuarioId, string $accion, string $detalle, ?int $registroId = null): void
-    {
-        $stmt = $this->db->prepare(
-            "INSERT INTO audit_log (usuario_id, accion, modulo, registro_id, registro_tipo, datos_despues, ip, user_agent)
-             VALUES (?, ?, 'planes', ?, 'plan', ?, ?, ?)"
-        );
-        $stmt->execute([
-            $usuarioId,
-            $accion,
-            $registroId,
-            json_encode(['detalle' => $detalle], JSON_UNESCAPED_UNICODE),
-            $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0',
-            $_SERVER['HTTP_USER_AGENT'] ?? '',
-        ]);
-    }
 }

@@ -95,7 +95,7 @@ class AdminBlogController extends Controller
         if (empty($data['autor_id'])) $data['autor_id'] = null;
 
         $id = $this->post->create($data);
-        $this->audit($usuario['id'], 'crear', "Post #{$id}: {$data['titulo']}", $id);
+        $this->audit($usuario['id'], 'crear', 'blog', "Post #{$id}: {$data['titulo']}", $id);
 
         $this->redirect('/admin/blog', ['success' => 'Post creado correctamente']);
     }
@@ -168,7 +168,7 @@ class AdminBlogController extends Controller
         if (empty($data['autor_id'])) $data['autor_id'] = null;
 
         $this->post->update((int)$id, $data);
-        $this->audit($usuario['id'], 'editar', "Post #{$id}: {$data['titulo']}", (int)$id);
+        $this->audit($usuario['id'], 'editar', 'blog', "Post #{$id}: {$data['titulo']}", (int)$id);
 
         $this->redirect('/admin/blog', ['success' => 'Post actualizado correctamente']);
     }
@@ -188,7 +188,7 @@ class AdminBlogController extends Controller
         }
 
         $this->post->softDelete((int)$id);
-        $this->audit($usuario['id'], 'eliminar', "Post #{$id}: {$post['titulo']}", (int)$id);
+        $this->audit($usuario['id'], 'eliminar', 'blog', "Post #{$id}: {$post['titulo']}", (int)$id);
 
         $this->redirect('/admin/blog', ['success' => 'Post eliminado correctamente']);
     }
@@ -297,19 +297,4 @@ class AdminBlogController extends Controller
         ];
     }
 
-    private function audit(int $usuarioId, string $accion, string $detalle, ?int $registroId = null): void
-    {
-        $stmt = $this->db->prepare(
-            "INSERT INTO audit_log (usuario_id, accion, modulo, registro_id, registro_tipo, datos_despues, ip, user_agent)
-             VALUES (?, ?, 'blog', ?, 'blog_post', ?, ?, ?)"
-        );
-        $stmt->execute([
-            $usuarioId,
-            $accion,
-            $registroId,
-            json_encode(['detalle' => $detalle], JSON_UNESCAPED_UNICODE),
-            $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0',
-            $_SERVER['HTTP_USER_AGENT'] ?? '',
-        ]);
-    }
 }

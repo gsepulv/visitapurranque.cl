@@ -91,7 +91,7 @@ class AdminContactoController extends Controller
         }
 
         $this->mensaje->responder((int)$id, $respuesta);
-        $this->audit($usuario['id'], 'responder', "Mensaje #{$id} de {$msg['nombre']}", (int)$id);
+        $this->audit($usuario['id'], 'responder', 'contacto', "Mensaje #{$id} de {$msg['nombre']}", (int)$id);
 
         $this->redirect("/admin/mensajes/{$id}", ['success' => 'Respuesta guardada']);
     }
@@ -131,7 +131,7 @@ class AdminContactoController extends Controller
         }
 
         $this->mensaje->delete((int)$id);
-        $this->audit($usuario['id'], 'eliminar', "Mensaje #{$id} de {$msg['nombre']}", (int)$id);
+        $this->audit($usuario['id'], 'eliminar', 'contacto', "Mensaje #{$id} de {$msg['nombre']}", (int)$id);
 
         $this->redirect('/admin/mensajes', ['success' => 'Mensaje eliminado']);
     }
@@ -150,19 +150,4 @@ class AdminContactoController extends Controller
         ];
     }
 
-    private function audit(int $usuarioId, string $accion, string $detalle, ?int $registroId = null): void
-    {
-        $stmt = $this->db->prepare(
-            "INSERT INTO audit_log (usuario_id, accion, modulo, registro_id, registro_tipo, datos_despues, ip, user_agent)
-             VALUES (?, ?, 'contacto', ?, 'contacto_mensaje', ?, ?, ?)"
-        );
-        $stmt->execute([
-            $usuarioId,
-            $accion,
-            $registroId,
-            json_encode(['detalle' => $detalle], JSON_UNESCAPED_UNICODE),
-            $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0',
-            $_SERVER['HTTP_USER_AGENT'] ?? '',
-        ]);
-    }
 }

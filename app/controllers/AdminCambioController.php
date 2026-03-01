@@ -109,7 +109,7 @@ class AdminCambioController extends Controller
         $ok = $this->cambio->aprobar((int)$id, $usuario['id'], $nota ?: null);
 
         if ($ok) {
-            $this->audit($usuario['id'], 'aprobar_cambio', "Cambio #{$id} aprobado — Ficha: {$cambio['ficha_nombre']}", (int)$id);
+            $this->audit($usuario['id'], 'aprobar_cambio', 'cambios', "Cambio #{$id} aprobado — Ficha: {$cambio['ficha_nombre']}", (int)$id);
             $this->redirect('/admin/cambios', ['success' => 'Cambio aprobado y aplicado a la ficha']);
         } else {
             $this->redirect("/admin/cambios/{$id}", ['error' => 'No se pudo aprobar el cambio']);
@@ -140,7 +140,7 @@ class AdminCambioController extends Controller
         }
 
         $this->cambio->rechazar((int)$id, $usuario['id'], $nota);
-        $this->audit($usuario['id'], 'rechazar_cambio', "Cambio #{$id} rechazado — Ficha: {$cambio['ficha_nombre']}", (int)$id);
+        $this->audit($usuario['id'], 'rechazar_cambio', 'cambios', "Cambio #{$id} rechazado — Ficha: {$cambio['ficha_nombre']}", (int)$id);
 
         $this->redirect('/admin/cambios', ['success' => 'Cambio rechazado']);
     }
@@ -160,7 +160,7 @@ class AdminCambioController extends Controller
         }
 
         $this->cambio->delete((int)$id);
-        $this->audit($usuario['id'], 'eliminar_cambio', "Cambio #{$id} eliminado — Ficha: {$cambio['ficha_nombre']}", (int)$id);
+        $this->audit($usuario['id'], 'eliminar_cambio', 'cambios', "Cambio #{$id} eliminado — Ficha: {$cambio['ficha_nombre']}", (int)$id);
 
         $this->redirect('/admin/cambios', ['success' => 'Cambio eliminado']);
     }
@@ -251,7 +251,7 @@ class AdminCambioController extends Controller
         $stmt = $this->db->prepare("UPDATE fichas SET plan_expira = ? WHERE id = ?");
         $stmt->execute([$nuevaFin, $sub['ficha_id']]);
 
-        $this->audit($usuario['id'], 'renovar', "Suscripción #{$id} renovada {$meses} meses — Ficha: {$sub['ficha_nombre']}", (int)$id);
+        $this->audit($usuario['id'], 'renovar', 'cambios', "Suscripción #{$id} renovada {$meses} meses — Ficha: {$sub['ficha_nombre']}", (int)$id);
 
         $this->redirect('/admin/renovaciones', ['success' => "Suscripción renovada hasta {$nuevaFin}"]);
     }
@@ -276,7 +276,7 @@ class AdminCambioController extends Controller
         $stmt = $this->db->prepare("UPDATE fichas SET plan_id = NULL, plan_expira = NULL WHERE id = ?");
         $stmt->execute([$sub['ficha_id']]);
 
-        $this->audit($usuario['id'], 'expirar', "Suscripción #{$id} marcada expirada — Ficha: {$sub['ficha_nombre']}", (int)$id);
+        $this->audit($usuario['id'], 'expirar', 'cambios', "Suscripción #{$id} marcada expirada — Ficha: {$sub['ficha_nombre']}", (int)$id);
 
         $this->redirect('/admin/renovaciones', ['success' => 'Suscripción marcada como expirada']);
     }
@@ -295,19 +295,4 @@ class AdminCambioController extends Controller
         ];
     }
 
-    private function audit(int $usuarioId, string $accion, string $detalle, ?int $registroId = null): void
-    {
-        $stmt = $this->db->prepare(
-            "INSERT INTO audit_log (usuario_id, accion, modulo, registro_id, registro_tipo, datos_despues, ip, user_agent)
-             VALUES (?, ?, 'cambios', ?, 'cambio_pendiente', ?, ?, ?)"
-        );
-        $stmt->execute([
-            $usuarioId,
-            $accion,
-            $registroId,
-            json_encode(['detalle' => $detalle], JSON_UNESCAPED_UNICODE),
-            $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0',
-            $_SERVER['HTTP_USER_AGENT'] ?? '',
-        ]);
-    }
 }

@@ -86,7 +86,7 @@ class AdminBannerController extends Controller
         $data['activo'] = isset($_POST['activo']) ? 1 : 0;
 
         $id = $this->banner->create($data);
-        $this->audit($usuario['id'], 'crear', "Banner #{$id}: {$data['titulo']}", $id);
+        $this->audit($usuario['id'], 'crear', 'banners', "Banner #{$id}: {$data['titulo']}", $id);
 
         $this->redirect('/admin/banners', ['success' => 'Banner creado correctamente']);
     }
@@ -154,7 +154,7 @@ class AdminBannerController extends Controller
         $data['activo'] = isset($_POST['activo']) ? 1 : 0;
 
         $this->banner->update((int)$id, $data);
-        $this->audit($usuario['id'], 'editar', "Banner #{$id}: {$data['titulo']}", (int)$id);
+        $this->audit($usuario['id'], 'editar', 'banners', "Banner #{$id}: {$data['titulo']}", (int)$id);
 
         $this->redirect('/admin/banners', ['success' => 'Banner actualizado correctamente']);
     }
@@ -179,7 +179,7 @@ class AdminBannerController extends Controller
         }
 
         $this->banner->delete((int)$id);
-        $this->audit($usuario['id'], 'eliminar', "Banner #{$id}: {$banner['titulo']}", (int)$id);
+        $this->audit($usuario['id'], 'eliminar', 'banners', "Banner #{$id}: {$banner['titulo']}", (int)$id);
 
         $this->redirect('/admin/banners', ['success' => 'Banner eliminado correctamente']);
     }
@@ -200,7 +200,7 @@ class AdminBannerController extends Controller
 
         $this->banner->toggleActivo((int)$id);
         $nuevoEstado = $banner['activo'] ? 'desactivado' : 'activado';
-        $this->audit($usuario['id'], 'toggle', "Banner #{$id} {$nuevoEstado}", (int)$id);
+        $this->audit($usuario['id'], 'toggle', 'banners', "Banner #{$id} {$nuevoEstado}", (int)$id);
 
         $this->redirect('/admin/banners', ['success' => "Banner {$nuevoEstado}"]);
     }
@@ -220,7 +220,7 @@ class AdminBannerController extends Controller
         }
 
         $this->banner->resetStats((int)$id);
-        $this->audit($usuario['id'], 'reset_stats', "Banner #{$id}: stats reseteadas", (int)$id);
+        $this->audit($usuario['id'], 'reset_stats', 'banners', "Banner #{$id}: stats reseteadas", (int)$id);
 
         $this->redirect("/admin/banners/{$id}/editar", ['success' => 'Estadísticas reseteadas']);
     }
@@ -314,19 +314,4 @@ class AdminBannerController extends Controller
         ];
     }
 
-    private function audit(int $usuarioId, string $accion, string $detalle, ?int $registroId = null): void
-    {
-        $stmt = $this->db->prepare(
-            "INSERT INTO audit_log (usuario_id, accion, modulo, registro_id, registro_tipo, datos_despues, ip, user_agent)
-             VALUES (?, ?, 'banners', ?, 'banner', ?, ?, ?)"
-        );
-        $stmt->execute([
-            $usuarioId,
-            $accion,
-            $registroId,
-            json_encode(['detalle' => $detalle], JSON_UNESCAPED_UNICODE),
-            $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0',
-            $_SERVER['HTTP_USER_AGENT'] ?? '',
-        ]);
-    }
 }

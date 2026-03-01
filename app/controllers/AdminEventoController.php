@@ -98,7 +98,7 @@ class AdminEventoController extends Controller
         }
 
         $id = $this->evento->create($data);
-        $this->audit($usuario['id'], 'crear', "Evento #{$id}: {$data['titulo']}", $id);
+        $this->audit($usuario['id'], 'crear', 'eventos', "Evento #{$id}: {$data['titulo']}", $id);
 
         $this->redirect('/admin/eventos', ['success' => 'Evento creado correctamente']);
     }
@@ -172,7 +172,7 @@ class AdminEventoController extends Controller
         }
 
         $this->evento->update((int)$id, $data);
-        $this->audit($usuario['id'], 'editar', "Evento #{$id}: {$data['titulo']}", (int)$id);
+        $this->audit($usuario['id'], 'editar', 'eventos', "Evento #{$id}: {$data['titulo']}", (int)$id);
 
         $this->redirect('/admin/eventos', ['success' => 'Evento actualizado correctamente']);
     }
@@ -192,7 +192,7 @@ class AdminEventoController extends Controller
         }
 
         $this->evento->softDelete((int)$id);
-        $this->audit($usuario['id'], 'eliminar', "Evento #{$id}: {$evento['titulo']}", (int)$id);
+        $this->audit($usuario['id'], 'eliminar', 'eventos', "Evento #{$id}: {$evento['titulo']}", (int)$id);
 
         $this->redirect('/admin/eventos', ['success' => 'Evento eliminado correctamente']);
     }
@@ -213,7 +213,7 @@ class AdminEventoController extends Controller
 
         $this->evento->toggleActivo((int)$id);
         $nuevoEstado = $evento['activo'] ? 'desactivado' : 'activado';
-        $this->audit($usuario['id'], 'toggle', "Evento #{$id} {$nuevoEstado}", (int)$id);
+        $this->audit($usuario['id'], 'toggle', 'eventos', "Evento #{$id} {$nuevoEstado}", (int)$id);
 
         $this->redirect('/admin/eventos', [
             'success' => "Evento {$nuevoEstado} correctamente",
@@ -313,19 +313,4 @@ class AdminEventoController extends Controller
         ];
     }
 
-    private function audit(int $usuarioId, string $accion, string $detalle, ?int $registroId = null): void
-    {
-        $stmt = $this->db->prepare(
-            "INSERT INTO audit_log (usuario_id, accion, modulo, registro_id, registro_tipo, datos_despues, ip, user_agent)
-             VALUES (?, ?, 'eventos', ?, 'evento', ?, ?, ?)"
-        );
-        $stmt->execute([
-            $usuarioId,
-            $accion,
-            $registroId,
-            json_encode(['detalle' => $detalle], JSON_UNESCAPED_UNICODE),
-            $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0',
-            $_SERVER['HTTP_USER_AGENT'] ?? '',
-        ]);
-    }
 }

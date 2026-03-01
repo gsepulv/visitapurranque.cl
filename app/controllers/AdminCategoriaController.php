@@ -85,7 +85,7 @@ class AdminCategoriaController extends Controller
         $data['activo'] = isset($_POST['activo']) ? 1 : 0;
 
         $id = $this->categoria->create($data);
-        $this->audit($usuario['id'], 'crear', "Categoría #{$id}: {$data['nombre']}");
+        $this->audit($usuario['id'], 'crear', 'categorias', "Categoría #{$id}: {$data['nombre']}");
 
         $this->redirect('/admin/categorias', ['success' => 'Categoría creada correctamente']);
     }
@@ -157,7 +157,7 @@ class AdminCategoriaController extends Controller
         $data['activo'] = isset($_POST['activo']) ? 1 : 0;
 
         $this->categoria->update((int)$id, $data);
-        $this->audit($usuario['id'], 'editar', "Categoría #{$id}: {$data['nombre']}");
+        $this->audit($usuario['id'], 'editar', 'categorias', "Categoría #{$id}: {$data['nombre']}");
 
         $this->redirect('/admin/categorias', ['success' => 'Categoría actualizada correctamente']);
     }
@@ -182,7 +182,7 @@ class AdminCategoriaController extends Controller
             ]);
         }
 
-        $this->audit($usuario['id'], 'eliminar', "Categoría #{$id}: {$cat['nombre']}");
+        $this->audit($usuario['id'], 'eliminar', 'categorias', "Categoría #{$id}: {$cat['nombre']}");
 
         $this->redirect('/admin/categorias', ['success' => 'Categoría eliminada correctamente']);
     }
@@ -203,7 +203,7 @@ class AdminCategoriaController extends Controller
 
         $this->categoria->toggleActivo((int)$id);
         $nuevoEstado = $cat['activo'] ? 'desactivada' : 'activada';
-        $this->audit($usuario['id'], 'toggle', "Categoría #{$id} {$nuevoEstado}");
+        $this->audit($usuario['id'], 'toggle', 'categorias', "Categoría #{$id} {$nuevoEstado}");
 
         $this->redirect('/admin/categorias', [
             'success' => "Categoría {$nuevoEstado} correctamente",
@@ -247,7 +247,7 @@ class AdminCategoriaController extends Controller
             'activo'       => isset($_POST['sub_activo']) ? 1 : 0,
         ]);
 
-        $this->audit($usuario['id'], 'crear', "Subcategoría #{$subId}: {$nombre} (en {$cat['nombre']})");
+        $this->audit($usuario['id'], 'crear', 'categorias', "Subcategoría #{$subId}: {$nombre} (en {$cat['nombre']})");
 
         $this->redirect("/admin/categorias/{$id}/editar", ['success' => 'Subcategoría creada correctamente']);
     }
@@ -272,7 +272,7 @@ class AdminCategoriaController extends Controller
             ]);
         }
 
-        $this->audit($usuario['id'], 'eliminar', "Subcategoría #{$subId}: {$sub['nombre']}");
+        $this->audit($usuario['id'], 'eliminar', 'categorias', "Subcategoría #{$subId}: {$sub['nombre']}");
 
         $this->redirect("/admin/categorias/{$catId}/editar", ['success' => 'Subcategoría eliminada correctamente']);
     }
@@ -353,19 +353,4 @@ class AdminCategoriaController extends Controller
         ];
     }
 
-    private function audit(int $usuarioId, string $accion, string $detalle, ?int $registroId = null): void
-    {
-        $stmt = $this->db->prepare(
-            "INSERT INTO audit_log (usuario_id, accion, modulo, registro_id, registro_tipo, datos_despues, ip, user_agent)
-             VALUES (?, ?, 'categorias', ?, 'categoria', ?, ?, ?)"
-        );
-        $stmt->execute([
-            $usuarioId,
-            $accion,
-            $registroId,
-            json_encode(['detalle' => $detalle], JSON_UNESCAPED_UNICODE),
-            $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0',
-            $_SERVER['HTTP_USER_AGENT'] ?? '',
-        ]);
-    }
 }

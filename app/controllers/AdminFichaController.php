@@ -110,7 +110,7 @@ class AdminFichaController extends Controller
         $id = $this->ficha->create($data);
 
         // Audit log
-        $this->audit($usuario['id'], 'crear', "Ficha #{$id}: {$data['nombre']}");
+        $this->audit($usuario['id'], 'crear', 'fichas', "Ficha #{$id}: {$data['nombre']}");
 
         $this->redirect('/admin/fichas', ['success' => 'Ficha creada correctamente']);
     }
@@ -193,7 +193,7 @@ class AdminFichaController extends Controller
 
         $this->ficha->update((int)$id, $data);
 
-        $this->audit($usuario['id'], 'editar', "Ficha #{$id}: {$data['nombre']}");
+        $this->audit($usuario['id'], 'editar', 'fichas', "Ficha #{$id}: {$data['nombre']}");
 
         $this->redirect('/admin/fichas', ['success' => 'Ficha actualizada correctamente']);
     }
@@ -213,7 +213,7 @@ class AdminFichaController extends Controller
         }
 
         $this->ficha->softDelete((int)$id);
-        $this->audit($usuario['id'], 'eliminar', "Ficha #{$id}: {$ficha['nombre']}");
+        $this->audit($usuario['id'], 'eliminar', 'fichas', "Ficha #{$id}: {$ficha['nombre']}");
 
         $this->redirect('/admin/fichas', ['success' => 'Ficha eliminada correctamente']);
     }
@@ -234,7 +234,7 @@ class AdminFichaController extends Controller
 
         $this->ficha->toggleActivo((int)$id);
         $nuevoEstado = $ficha['activo'] ? 'desactivada' : 'activada';
-        $this->audit($usuario['id'], 'toggle', "Ficha #{$id} {$nuevoEstado}");
+        $this->audit($usuario['id'], 'toggle', 'fichas', "Ficha #{$id} {$nuevoEstado}");
 
         $this->redirect('/admin/fichas', [
             'success' => "Ficha {$nuevoEstado} correctamente",
@@ -358,19 +358,4 @@ class AdminFichaController extends Controller
         ];
     }
 
-    private function audit(int $usuarioId, string $accion, string $detalle, ?int $registroId = null): void
-    {
-        $stmt = $this->db->prepare(
-            "INSERT INTO audit_log (usuario_id, accion, modulo, registro_id, registro_tipo, datos_despues, ip, user_agent)
-             VALUES (?, ?, 'fichas', ?, 'ficha', ?, ?, ?)"
-        );
-        $stmt->execute([
-            $usuarioId,
-            $accion,
-            $registroId,
-            json_encode(['detalle' => $detalle], JSON_UNESCAPED_UNICODE),
-            $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0',
-            $_SERVER['HTTP_USER_AGENT'] ?? '',
-        ]);
-    }
 }

@@ -58,7 +58,7 @@ class AdminAparienciaController extends Controller
             }
         }
 
-        $this->audit($usuario['id'], 'guardar_apariencia', "Actualizados {$count} campos de apariencia");
+        $this->audit($usuario['id'], 'guardar_apariencia', 'apariencia', "Actualizados {$count} campos de apariencia");
 
         $this->redirect('/admin/apariencia', ['success' => "Apariencia guardada ({$count} campos)"]);
     }
@@ -128,18 +128,4 @@ class AdminAparienciaController extends Controller
         ];
     }
 
-    private function audit(int $usuarioId, string $accion, string $detalle): void
-    {
-        $stmt = $this->db->prepare(
-            "INSERT INTO audit_log (usuario_id, accion, modulo, datos_despues, ip, user_agent)
-             VALUES (?, ?, 'apariencia', ?, ?, ?)"
-        );
-        $stmt->execute([
-            $usuarioId,
-            $accion,
-            json_encode(['detalle' => $detalle], JSON_UNESCAPED_UNICODE),
-            $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0',
-            $_SERVER['HTTP_USER_AGENT'] ?? '',
-        ]);
-    }
 }

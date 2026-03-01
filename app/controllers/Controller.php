@@ -83,4 +83,31 @@ class Controller
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         exit;
     }
+
+    /**
+     * Registrar acción en audit_log
+     */
+    protected function audit(
+        int     $usuarioId,
+        string  $accion,
+        string  $modulo,
+        string  $detalle,
+        ?int    $registroId   = null,
+        ?string $registroTipo = null
+    ): void {
+        $stmt = $this->db->prepare(
+            "INSERT INTO audit_log (usuario_id, accion, modulo, registro_id, registro_tipo, datos_despues, ip, user_agent)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+        );
+        $stmt->execute([
+            $usuarioId,
+            $accion,
+            $modulo,
+            $registroId,
+            $registroTipo,
+            json_encode(['detalle' => $detalle], JSON_UNESCAPED_UNICODE),
+            $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0',
+            $_SERVER['HTTP_USER_AGENT'] ?? '',
+        ]);
+    }
 }

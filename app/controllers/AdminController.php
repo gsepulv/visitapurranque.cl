@@ -83,11 +83,7 @@ class AdminController extends Controller
         $stmt = $this->db->prepare("UPDATE usuarios SET ultimo_login = NOW() WHERE id = ?");
         $stmt->execute([$usuario['id']]);
 
-        // Audit log
-        $stmt = $this->db->prepare(
-            "INSERT INTO audit_log (usuario_id, accion, modulo, ip, user_agent) VALUES (?, 'login', 'auth', ?, ?)"
-        );
-        $stmt->execute([$usuario['id'], $ip, $ua]);
+        $this->audit($usuario['id'], 'login', 'auth', 'Inicio de sesión');
 
         $this->redirect('/admin/dashboard', [
             'success' => 'Bienvenido, ' . $usuario['nombre'],
@@ -100,12 +96,7 @@ class AdminController extends Controller
         $usuarioId = $_SESSION['usuario_id'] ?? null;
 
         if ($usuarioId) {
-            $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
-            $ua = $_SERVER['HTTP_USER_AGENT'] ?? '';
-            $stmt = $this->db->prepare(
-                "INSERT INTO audit_log (usuario_id, accion, modulo, ip, user_agent) VALUES (?, 'logout', 'auth', ?, ?)"
-            );
-            $stmt->execute([$usuarioId, $ip, $ua]);
+            $this->audit($usuarioId, 'logout', 'auth', 'Cierre de sesión');
         }
 
         $_SESSION = [];

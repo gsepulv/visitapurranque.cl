@@ -90,7 +90,7 @@ class AdminReporteController extends Controller
         }
 
         // Audit
-        $this->audit($usuario['id'], 'exportar_csv', "Exportación CSV: {$tipo}");
+        $this->audit($usuario['id'], 'exportar_csv', 'reportes', "Exportación CSV: {$tipo}");
 
         // Output CSV
         header('Content-Type: text/csv; charset=utf-8');
@@ -124,18 +124,4 @@ class AdminReporteController extends Controller
         ];
     }
 
-    private function audit(int $usuarioId, string $accion, string $detalle): void
-    {
-        $stmt = $this->db->prepare(
-            "INSERT INTO audit_log (usuario_id, accion, modulo, datos_despues, ip, user_agent)
-             VALUES (?, ?, 'reportes', ?, ?, ?)"
-        );
-        $stmt->execute([
-            $usuarioId,
-            $accion,
-            json_encode(['detalle' => $detalle], JSON_UNESCAPED_UNICODE),
-            $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0',
-            $_SERVER['HTTP_USER_AGENT'] ?? '',
-        ]);
-    }
 }

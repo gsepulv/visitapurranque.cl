@@ -89,7 +89,7 @@ class AdminResenaController extends Controller
         }
 
         $this->resena->cambiarEstado((int)$id, $estado);
-        $this->audit($usuario['id'], 'moderar', "Reseña #{$id} → {$estado}", (int)$id);
+        $this->audit($usuario['id'], 'moderar', 'resenas', "Reseña #{$id} → {$estado}", (int)$id);
 
         $labels = ['aprobada' => 'aprobada', 'rechazada' => 'rechazada', 'spam' => 'marcada como spam', 'pendiente' => 'devuelta a pendiente'];
         $this->redirect('/admin/resenas', ['success' => "Reseña {$labels[$estado]}"]);
@@ -121,7 +121,7 @@ class AdminResenaController extends Controller
             $this->resena->cambiarEstado((int)$id, 'aprobada');
         }
 
-        $this->audit($usuario['id'], 'responder', "Reseña #{$id}: respuesta admin", (int)$id);
+        $this->audit($usuario['id'], 'responder', 'resenas', "Reseña #{$id}: respuesta admin", (int)$id);
 
         $this->redirect("/admin/resenas/{$id}", ['success' => 'Respuesta guardada']);
     }
@@ -141,7 +141,7 @@ class AdminResenaController extends Controller
         }
 
         $this->resena->delete((int)$id);
-        $this->audit($usuario['id'], 'eliminar', "Reseña #{$id} de {$resena['nombre']}", (int)$id);
+        $this->audit($usuario['id'], 'eliminar', 'resenas', "Reseña #{$id} de {$resena['nombre']}", (int)$id);
 
         $this->redirect('/admin/resenas', ['success' => 'Reseña eliminada permanentemente']);
     }
@@ -167,19 +167,4 @@ class AdminResenaController extends Controller
         ];
     }
 
-    private function audit(int $usuarioId, string $accion, string $detalle, ?int $registroId = null): void
-    {
-        $stmt = $this->db->prepare(
-            "INSERT INTO audit_log (usuario_id, accion, modulo, registro_id, registro_tipo, datos_despues, ip, user_agent)
-             VALUES (?, ?, 'resenas', ?, 'resena', ?, ?, ?)"
-        );
-        $stmt->execute([
-            $usuarioId,
-            $accion,
-            $registroId,
-            json_encode(['detalle' => $detalle], JSON_UNESCAPED_UNICODE),
-            $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0',
-            $_SERVER['HTTP_USER_AGENT'] ?? '',
-        ]);
-    }
 }

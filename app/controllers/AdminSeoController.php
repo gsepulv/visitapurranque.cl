@@ -69,7 +69,7 @@ class AdminSeoController extends Controller
             }
         }
 
-        $this->audit($usuario['id'], 'guardar_seo', "Actualizadas {$count} configuraciones SEO/redes");
+        $this->audit($usuario['id'], 'guardar_seo', 'seo', "Actualizadas {$count} configuraciones SEO/redes");
 
         $this->redirect('/admin/seo', ['success' => "Configuración guardada ({$count} campos actualizados)"]);
     }
@@ -114,18 +114,4 @@ class AdminSeoController extends Controller
         ];
     }
 
-    private function audit(int $usuarioId, string $accion, string $detalle): void
-    {
-        $stmt = $this->db->prepare(
-            "INSERT INTO audit_log (usuario_id, accion, modulo, datos_despues, ip, user_agent)
-             VALUES (?, ?, 'seo', ?, ?, ?)"
-        );
-        $stmt->execute([
-            $usuarioId,
-            $accion,
-            json_encode(['detalle' => $detalle], JSON_UNESCAPED_UNICODE),
-            $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0',
-            $_SERVER['HTTP_USER_AGENT'] ?? '',
-        ]);
-    }
 }
