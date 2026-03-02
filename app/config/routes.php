@@ -32,6 +32,9 @@ return [
     ['GET',  '/contacto',         'ContactoController@index'],
     ['POST', '/contacto',         'ContactoController@send'],
 
+    // API pública
+    ['POST', '/api/compartir',    'FichaController@compartir'],
+
     // Buscador
     ['GET', '/buscar',            'BuscadorController@index'],
 

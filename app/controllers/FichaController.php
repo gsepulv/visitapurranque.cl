@@ -80,6 +80,45 @@ class FichaController extends Controller
         ]);
     }
 
+    public function compartir(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->json(['error' => 'Método no permitido'], 405);
+            return;
+        }
+
+        $input = json_decode(file_get_contents('php://input'), true);
+        $tipo       = $input['tipo'] ?? '';
+        $registroId = (int)($input['registro_id'] ?? 0);
+        $redSocial  = $input['red_social'] ?? '';
+
+        $tiposValidos = ['ficha', 'evento', 'blog_post'];
+        $redesValidas = ['facebook', 'whatsapp', 'copiar'];
+
+        if (!in_array($tipo, $tiposValidos) || $registroId < 1 || !in_array($redSocial, $redesValidas)) {
+            $this->json(['error' => 'Datos inválidos'], 400);
+            return;
+        }
+
+        try {
+            $this->db->prepare(
+                "INSERT INTO compartidos (tipo, registro_id, red_social, ip) VALUES (?, ?, ?, ?)"
+            )->execute([$tipo, $registroId, $redSocial, $_SERVER['REMOTE_ADDR'] ?? null]);
+
+            // Incrementar contador en la tabla correspondiente
+            $tablas = ['ficha' => 'fichas', 'evento' => 'eventos', 'blog_post' => 'blog_posts'];
+            if (isset($tablas[$tipo])) {
+                $this->db->prepare(
+                    "UPDATE {$tablas[$tipo]} SET compartidos = compartidos + 1 WHERE id = ?"
+                )->execute([$registroId]);
+            }
+
+            $this->json(['ok' => true]);
+        } catch (\Throwable $e) {
+            $this->json(['error' => 'Error interno'], 500);
+        }
+    }
+
     private function registrarVista(int $fichaId): void
     {
         try {

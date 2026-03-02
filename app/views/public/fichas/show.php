@@ -151,18 +151,52 @@ $currentUrl = url('/atractivo/' . e($ficha['slug']));
             </div>
         </div>
 
+        <!-- Estadísticas -->
+        <div class="ficha-stats">
+            <span class="ficha-stat">&#128065; <?= number_format($ficha['vistas'] ?? 0) ?> <?= ($ficha['vistas'] ?? 0) == 1 ? 'visita' : 'visitas' ?></span>
+            <?php if (($ficha['compartidos'] ?? 0) > 0): ?>
+                <span class="ficha-stat">&#128228; <?= number_format($ficha['compartidos']) ?> <?= $ficha['compartidos'] == 1 ? 'compartido' : 'compartidos' ?></span>
+            <?php endif; ?>
+        </div>
+
         <!-- Compartir -->
         <div class="share-buttons">
-            <a href="https://wa.me/?text=<?= urlencode($ficha['nombre'] . ' — ' . $currentUrl) ?>" target="_blank" rel="noopener" class="share-btn share-btn--wa">
+            <a href="https://wa.me/?text=<?= urlencode($ficha['nombre'] . ' — ' . $currentUrl) ?>" target="_blank" rel="noopener" class="share-btn share-btn--wa" data-share="whatsapp">
                 &#128172; WhatsApp
             </a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode($currentUrl) ?>" target="_blank" rel="noopener" class="share-btn share-btn--fb">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode($currentUrl) ?>" target="_blank" rel="noopener" class="share-btn share-btn--fb" data-share="facebook">
                 f Facebook
             </a>
-            <button type="button" class="share-btn share-btn--copy" onclick="navigator.clipboard.writeText('<?= $currentUrl ?>').then(function(){this.textContent='Copiado!'}.bind(this))">
+            <button type="button" class="share-btn share-btn--copy" data-share="copiar">
                 &#128203; Copiar enlace
             </button>
         </div>
+        <script>
+        (function(){
+            var fichaId = <?= (int)$ficha['id'] ?>;
+            function trackShare(red) {
+                fetch('<?= url('/api/compartir') ?>', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ tipo: 'ficha', registro_id: fichaId, red_social: red })
+                }).catch(function(){});
+            }
+            document.querySelectorAll('[data-share]').forEach(function(btn){
+                btn.addEventListener('click', function(e){
+                    var red = this.dataset.share;
+                    trackShare(red);
+                    if (red === 'copiar') {
+                        e.preventDefault();
+                        var b = this;
+                        navigator.clipboard.writeText('<?= $currentUrl ?>').then(function(){
+                            b.textContent = '\u2705 Copiado!';
+                            setTimeout(function(){ b.innerHTML = '&#128203; Copiar enlace'; }, 2000);
+                        });
+                    }
+                });
+            });
+        })();
+        </script>
 
         <!-- Resenas -->
         <div class="resenas-section" id="resenas">
