@@ -1584,6 +1584,16 @@ ul, ol { list-style: none; }
 .share-btn--fb { background: #1877f2; color: #fff; }
 .share-btn--copy { background: var(--bg-alt); color: var(--text); border: 1px solid var(--border); cursor: pointer; }
 
+/* ── Estadísticas ficha ── */
+.ficha-stats {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+.ficha-stat {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
 
 /* ── Relacionadas ────────────────────────────────────── */
 
@@ -1685,7 +1695,27 @@ ul, ol { list-style: none; }
     align-items: center;
     justify-content: space-between;
     padding: 14px 16px;
+    border-bottom: none;
+}
+.mapa-sidebar__search-wrap {
+    padding: 0 16px 12px;
     border-bottom: 1px solid var(--border);
+}
+.mapa-sidebar__search {
+    width: 100%;
+    padding: 8px 12px 8px 34px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--text);
+    background: var(--bg-alt) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") 10px center no-repeat;
+    transition: border-color var(--transition);
+}
+.mapa-sidebar__search:focus {
+    outline: none;
+    border-color: var(--green);
+    background-color: var(--white);
 }
 .mapa-sidebar__title {
     font-family: var(--font-body);
@@ -1761,6 +1791,7 @@ ul, ol { list-style: none; }
 .mapa-main {
     flex: 1;
     min-width: 0;
+    position: relative;
 }
 
 /* ── Marker custom ── */
@@ -1814,6 +1845,109 @@ ul, ol { list-style: none; }
 }
 .mapa-popup__link:hover {
     text-decoration: underline;
+}
+
+/* ── Evento marker ── */
+.mapa-marker__pin--evento {
+    background: #e11d48;
+    box-shadow: 0 2px 6px #e11d4866;
+    border: 3px solid var(--white);
+    position: relative;
+}
+.mapa-marker__pin--evento::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 10px;
+    height: 10px;
+    background: var(--white);
+    border-radius: 50%;
+    opacity: .35;
+}
+.mapa-sidebar__badge-evento {
+    color: #e11d48;
+    font-weight: 500;
+}
+.mapa-filter--eventos {
+    margin-left: auto;
+}
+
+/* ── Geolocation button ── */
+.mapa-geoloc-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 12px;
+    z-index: 800;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--white);
+    border: 2px solid rgba(0,0,0,.15);
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text);
+    box-shadow: var(--shadow);
+    transition: all var(--transition);
+}
+.mapa-geoloc-btn:hover {
+    background: var(--green);
+    color: var(--white);
+    border-color: var(--green);
+}
+.mapa-geoloc-btn.loading {
+    opacity: .6;
+    pointer-events: none;
+}
+
+/* ── User location marker ── */
+.mapa-user-marker {
+    background: none !important;
+    border: none !important;
+}
+.mapa-user-marker__dot {
+    width: 16px;
+    height: 16px;
+    background: #3b82f6;
+    border: 3px solid var(--white);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(59,130,246,.25);
+    animation: mapa-pulse 2s ease-in-out infinite;
+}
+@keyframes mapa-pulse {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(59,130,246,.25); }
+    50% { box-shadow: 0 0 0 10px rgba(59,130,246,.08); }
+}
+
+/* ── MarkerCluster overrides ── */
+.marker-cluster-small {
+    background-color: rgba(34,197,94,.25);
+}
+.marker-cluster-small div {
+    background-color: var(--green);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-weight: 600;
+}
+.marker-cluster-medium {
+    background-color: rgba(34,197,94,.35);
+}
+.marker-cluster-medium div {
+    background-color: #16a34a;
+    color: var(--white);
+    font-family: var(--font-body);
+    font-weight: 600;
+}
+.marker-cluster-large {
+    background-color: rgba(34,197,94,.45);
+}
+.marker-cluster-large div {
+    background-color: #15803d;
+    color: var(--white);
+    font-family: var(--font-body);
+    font-weight: 600;
 }
 
 /* ── FAB mobile ── */

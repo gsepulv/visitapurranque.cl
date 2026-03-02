@@ -243,6 +243,21 @@ class Evento
         )->fetchColumn();
     }
 
+    /**
+     * Eventos activos con coordenadas para el mapa interactivo
+     */
+    public function getAllParaMapa(): array
+    {
+        return $this->db->query(
+            "SELECT e.id, e.titulo, e.slug, e.descripcion_corta, e.latitud, e.longitud,
+                    e.fecha_inicio, e.fecha_fin, e.lugar
+             FROM eventos e
+             WHERE e.activo = 1 AND e.eliminado = 0
+               AND e.latitud IS NOT NULL AND e.longitud IS NOT NULL
+               AND e.fecha_fin >= NOW()"
+        )->fetchAll();
+    }
+
     // ── Métodos frontend público ─────────────────────────
 
     public function getProximos(int $limit = 6): array
