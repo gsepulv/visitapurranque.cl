@@ -179,6 +179,24 @@ return [
     ['GET',  '/admin/estadisticas',       'AdminReporteController@index'],
     ['GET',  '/admin/estadisticas/csv',   'AdminReporteController@csv'],
 
+    // Admin — Medios
+    ['GET',  '/admin/medios',                    'AdminMedioController@index'],
+    ['GET',  '/admin/medios/crear',              'AdminMedioController@create'],
+    ['POST', '/admin/medios/crear',              'AdminMedioController@store'],
+    ['GET',  '/admin/medios/api/buscar',         'AdminMedioController@apiBuscar'],
+    ['GET',  '/admin/medios/{id}/editar',        'AdminMedioController@edit'],
+    ['POST', '/admin/medios/{id}/editar',        'AdminMedioController@update'],
+    ['POST', '/admin/medios/{id}/eliminar',      'AdminMedioController@delete'],
+
+    // Admin — Usuarios
+    ['GET',  '/admin/usuarios',                  'AdminUsuarioController@index'],
+    ['GET',  '/admin/usuarios/crear',            'AdminUsuarioController@create'],
+    ['POST', '/admin/usuarios/crear',            'AdminUsuarioController@store'],
+    ['GET',  '/admin/usuarios/{id}/editar',      'AdminUsuarioController@edit'],
+    ['POST', '/admin/usuarios/{id}/editar',      'AdminUsuarioController@update'],
+    ['POST', '/admin/usuarios/{id}/eliminar',    'AdminUsuarioController@delete'],
+    ['POST', '/admin/usuarios/{id}/toggle',      'AdminUsuarioController@toggle'],
+
     // Admin — Fichas
     ['GET',  '/admin/fichas',                'AdminFichaController@index'],
     ['GET',  '/admin/fichas/crear',          'AdminFichaController@create'],

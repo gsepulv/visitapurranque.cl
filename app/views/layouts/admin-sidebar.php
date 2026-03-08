@@ -15,6 +15,7 @@ $adminNav = [
     ['url' => '/admin/estadisticas',    'icon' => '&#128200;', 'label' => 'Estadísticas',    'count' => null],
     ['url' => '/admin/mensajes',        'icon' => '&#128231;', 'label' => 'Mensajes',        'count' => $counts['mensajes'] ?? null],
     ['url' => '/admin/banners',         'icon' => '&#127912;', 'label' => 'Banners',         'count' => null],
+    ['url' => '/admin/medios',          'icon' => '&#128444;', 'label' => 'Medios',          'count' => null],
     ['url' => '/admin/planes',          'icon' => '&#128176;', 'label' => 'Planes',          'count' => null],
     ['url' => '/admin/cambios',         'icon' => '&#128260;', 'label' => 'Cambios',         'count' => $counts['cambios'] ?? null],
     ['url' => '/admin/seo',             'icon' => '&#128269;', 'label' => 'SEO',             'count' => null],
