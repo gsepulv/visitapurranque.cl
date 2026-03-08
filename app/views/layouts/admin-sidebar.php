@@ -53,6 +53,10 @@ $adminNav = [
             <span class="sidebar-icon">&#8599;</span>
             <span class="sidebar-label">Ver sitio</span>
         </a>
+        <a href="<?= url('/admin/cambiar-password') ?>" class="sidebar-link<?= is_active('/admin/cambiar-password') ? ' active' : '' ?>">
+            <span class="sidebar-icon">&#128274;</span>
+            <span class="sidebar-label">Cambiar contraseña</span>
+        </a>
         <div class="sidebar-user">
             <div class="sidebar-user-info">
                 <span class="sidebar-user-name"><?= e($usuario['nombre'] ?? '') ?></span>

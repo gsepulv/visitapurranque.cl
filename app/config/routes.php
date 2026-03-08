@@ -47,6 +47,8 @@ return [
     ['POST', '/admin/login',              'AdminController@login'],
     ['GET',  '/admin/logout',             'AdminController@logout'],
     ['GET',  '/admin/dashboard',          'AdminController@dashboard'],
+    ['GET',  '/admin/cambiar-password',  'AdminController@cambiarPassword'],
+    ['POST', '/admin/cambiar-password',  'AdminController@cambiarPasswordPost'],
 
     // Admin — Categorías
     ['GET',  '/admin/categorias',                              'AdminCategoriaController@index'],

@@ -172,4 +172,94 @@ class AdminController extends Controller
             'sidebarCounts' => $sidebarCounts,
         ]);
     }
+
+    /** GET /admin/cambiar-password */
+    public function cambiarPassword(): void
+    {
+        $usuario = AuthMiddleware::check($this->db);
+
+        $this->renderAdmin('admin/cambiar-password', [
+            'pageTitle'     => 'Cambiar contraseña',
+            'usuario'       => $usuario,
+            'sidebarCounts' => $this->getSidebarCounts(),
+        ]);
+    }
+
+    /** POST /admin/cambiar-password */
+    public function cambiarPasswordPost(): void
+    {
+        $usuario = AuthMiddleware::check($this->db);
+
+        // CSRF
+        if (!hash_equals($_SESSION['csrf_token'] ?? '', $_POST['csrf_token'] ?? '')) {
+            $this->redirect('/admin/cambiar-password', [
+                'error' => 'Token de seguridad inválido. Intenta de nuevo.',
+            ]);
+        }
+
+        $actual    = $_POST['password_actual'] ?? '';
+        $nueva     = $_POST['password_nueva'] ?? '';
+        $confirmar = $_POST['password_confirmar'] ?? '';
+
+        // Verificar contraseña actual
+        $stmt = $this->db->prepare("SELECT password FROM usuarios WHERE id = ?");
+        $stmt->execute([$usuario['id']]);
+        $hashActual = $stmt->fetchColumn();
+
+        if (!password_verify($actual, $hashActual)) {
+            $this->redirect('/admin/cambiar-password', [
+                'error' => 'La contraseña actual es incorrecta.',
+            ]);
+        }
+
+        // Validar nueva contraseña
+        if (strlen($nueva) < 8) {
+            $this->redirect('/admin/cambiar-password', [
+                'error' => 'La nueva contraseña debe tener al menos 8 caracteres.',
+            ]);
+        }
+
+        if (!preg_match('/[A-Z]/', $nueva) || !preg_match('/[a-z]/', $nueva) || !preg_match('/[0-9]/', $nueva)) {
+            $this->redirect('/admin/cambiar-password', [
+                'error' => 'La contraseña debe incluir al menos 1 mayúscula, 1 minúscula y 1 número.',
+            ]);
+        }
+
+        if ($nueva !== $confirmar) {
+            $this->redirect('/admin/cambiar-password', [
+                'error' => 'La confirmación no coincide con la nueva contraseña.',
+            ]);
+        }
+
+        if (password_verify($nueva, $hashActual)) {
+            $this->redirect('/admin/cambiar-password', [
+                'error' => 'La nueva contraseña no puede ser igual a la actual.',
+            ]);
+        }
+
+        // Guardar nueva contraseña
+        $hash = password_hash($nueva, PASSWORD_BCRYPT, ['cost' => 12]);
+        $stmt = $this->db->prepare(
+            "UPDATE usuarios SET password = ?, password_changed_at = NOW() WHERE id = ?"
+        );
+        $stmt->execute([$hash, $usuario['id']]);
+
+        $this->audit($usuario['id'], 'cambio_password', 'auth', 'Contraseña actualizada');
+
+        $this->redirect('/admin/dashboard', [
+            'success' => 'Contraseña actualizada correctamente.',
+        ]);
+    }
+
+    private function getSidebarCounts(): array
+    {
+        return [
+            'fichas' => (int)$this->db->query(
+                "SELECT COUNT(*) FROM fichas WHERE activo = 1 AND eliminado = 0"
+            )->fetchColumn(),
+            'categorias' => (int)$this->db->query(
+                "SELECT COUNT(*) FROM categorias WHERE activo = 1"
+            )->fetchColumn(),
+        ];
+    }
 }
