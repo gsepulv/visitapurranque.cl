@@ -31,6 +31,7 @@ $adminNav = [
     ['url' => '/admin/papelera',       'icon' => '&#128465;', 'label' => 'Papelera',        'count' => $counts['papelera'] ?? null],
     ['url' => '/admin/logs',           'icon' => '&#128220;', 'label' => 'Logs',            'count' => null],
     ['url' => '/admin/emails',         'icon' => '&#9993;',   'label' => 'Email',           'count' => null],
+    ['url' => '/admin/backups',        'icon' => '&#128190;', 'label' => 'Backups',         'count' => null],
     ['url' => '/admin/configuracion',   'icon' => '&#9881;',   'label' => 'Configuración',   'count' => null],
 ];
 ?>

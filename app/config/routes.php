@@ -209,6 +209,13 @@ return [
     ['POST', '/admin/redirecciones/{id}/eliminar',           'AdminRedireccionController@delete'],
     ['POST', '/admin/redirecciones/{id}/toggle',             'AdminRedireccionController@toggle'],
 
+    // Admin — Backups
+    ['GET',  '/admin/backups',                   'AdminBackupController@index'],
+    ['POST', '/admin/backups/crear',             'AdminBackupController@crear'],
+    ['POST', '/admin/backups/subir-drive',       'AdminBackupController@subirDrive'],
+    ['GET',  '/admin/backups/descargar',         'AdminBackupController@descargar'],
+    ['POST', '/admin/backups/eliminar',          'AdminBackupController@eliminar'],
+
     // Admin — Búsqueda global
     ['GET',  '/admin/api/buscar',                'AdminBusquedaController@apiBuscar'],
 
