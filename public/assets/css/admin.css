@@ -1874,3 +1874,37 @@ h1, h2, h3 {
     flex-wrap: wrap;
     gap: 12px;
 }
+
+/* Pagination */
+.admin-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 12px 0;
+}
+
+/* Stats grid (Salud del Sistema) */
+.admin-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+}
+.admin-stat-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+.admin-stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--admin-green);
+}
+.admin-stat-label {
+    font-size: .85rem;
+    color: var(--text-light);
+    margin-top: 4px;
+}

@@ -209,6 +209,19 @@ return [
     ['POST', '/admin/redirecciones/{id}/eliminar',           'AdminRedireccionController@delete'],
     ['POST', '/admin/redirecciones/{id}/toggle',             'AdminRedireccionController@toggle'],
 
+    // Admin — Logs
+    ['GET',  '/admin/logs',                      'AdminLogController@index'],
+    ['GET',  '/admin/logs/salud',                'AdminLogController@salud'],
+
+    // Admin — Email Templates
+    ['GET',  '/admin/emails',                    'AdminEmailController@index'],
+    ['GET',  '/admin/emails/crear',              'AdminEmailController@create'],
+    ['POST', '/admin/emails/crear',              'AdminEmailController@store'],
+    ['GET',  '/admin/emails/{id}/editar',        'AdminEmailController@edit'],
+    ['POST', '/admin/emails/{id}/editar',        'AdminEmailController@update'],
+    ['POST', '/admin/emails/{id}/eliminar',      'AdminEmailController@delete'],
+    ['GET',  '/admin/emails/{id}/preview',       'AdminEmailController@preview'],
+
     // Admin — Roles
     ['GET',  '/admin/roles',                     'AdminRolController@index'],
     ['GET',  '/admin/roles/crear',               'AdminRolController@create'],
