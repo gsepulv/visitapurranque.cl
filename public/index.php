@@ -69,6 +69,22 @@ if ($uri !== '/') {
 
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
+// ── Verificar redirecciones ──────────────────────────
+try {
+    $stmtRedir = $pdo->prepare(
+        "SELECT url_destino, tipo FROM redirecciones WHERE url_origen = ? AND activo = 1 LIMIT 1"
+    );
+    $stmtRedir->execute([$uri]);
+    $redir = $stmtRedir->fetch();
+    if ($redir) {
+        $pdo->prepare("UPDATE redirecciones SET hits = hits + 1 WHERE url_origen = ?")->execute([$uri]);
+        header('Location: ' . $redir['url_destino'], true, (int)$redir['tipo']);
+        exit;
+    }
+} catch (Throwable $e) {
+    // Ignorar errores de redirecciones
+}
+
 // ── Cargar y matchear rutas ────────────────────────────
 
 $routes = require BASE_PATH . '/app/config/routes.php';

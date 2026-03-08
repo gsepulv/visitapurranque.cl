@@ -197,6 +197,18 @@ return [
     ['POST', '/admin/usuarios/{id}/eliminar',    'AdminUsuarioController@delete'],
     ['POST', '/admin/usuarios/{id}/toggle',      'AdminUsuarioController@toggle'],
 
+    // Admin — Papelera
+    ['GET',  '/admin/papelera',                              'AdminPapeleraController@index'],
+    ['POST', '/admin/papelera/restaurar/{tipo}/{id}',        'AdminPapeleraController@restaurar'],
+    ['POST', '/admin/papelera/eliminar/{tipo}/{id}',         'AdminPapeleraController@eliminarPermanente'],
+    ['POST', '/admin/papelera/vaciar',                       'AdminPapeleraController@vaciar'],
+
+    // Admin — Redirecciones
+    ['GET',  '/admin/redirecciones',                         'AdminRedireccionController@index'],
+    ['POST', '/admin/redirecciones/crear',                   'AdminRedireccionController@store'],
+    ['POST', '/admin/redirecciones/{id}/eliminar',           'AdminRedireccionController@delete'],
+    ['POST', '/admin/redirecciones/{id}/toggle',             'AdminRedireccionController@toggle'],
+
     // Admin — Roles
     ['GET',  '/admin/roles',                     'AdminRolController@index'],
     ['GET',  '/admin/roles/crear',               'AdminRolController@create'],

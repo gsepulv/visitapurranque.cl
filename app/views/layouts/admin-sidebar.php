@@ -25,6 +25,8 @@ $adminNav = [
     ['url' => '/admin/menu',            'icon' => '&#9776;',   'label' => 'Menú',            'count' => null],
     ['url' => '/admin/usuarios',        'icon' => '&#128101;', 'label' => 'Usuarios',        'count' => null],
     ['url' => '/admin/roles',           'icon' => '&#128737;', 'label' => 'Roles',           'count' => null],
+    ['url' => '/admin/redirecciones',  'icon' => '&#8618;',   'label' => 'Redirecciones',   'count' => null],
+    ['url' => '/admin/papelera',       'icon' => '&#128465;', 'label' => 'Papelera',        'count' => $counts['papelera'] ?? null],
     ['url' => '/admin/configuracion',   'icon' => '&#9881;',   'label' => 'Configuración',   'count' => null],
 ];
 ?>
