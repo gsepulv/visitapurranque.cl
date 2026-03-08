@@ -80,5 +80,6 @@
     ?>
 
     <script src="<?= asset('js/app.js?v=' . APP_VERSION) ?>"></script>
+    <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(function(){});}</script>
 </body>
 </html>

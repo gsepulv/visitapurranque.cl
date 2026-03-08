@@ -76,8 +76,13 @@ if (!empty($_SESSION['usuario_id'])) {
     <!-- RSS -->
     <link rel="alternate" type="application/rss+xml" title="Blog — <?= e(SITE_NAME) ?>" href="<?= url('/blog/feed') ?>">
 
-    <!-- Favicon -->
+    <!-- Favicon & PWA -->
     <link rel="icon" href="<?= asset('img/favicon.ico') ?>" type="image/x-icon">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#1a3c34">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/assets/img/icon-192.png">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
