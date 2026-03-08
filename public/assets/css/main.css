@@ -2453,3 +2453,63 @@ body.has-session-bar .site-header {
     }
 }
 
+/* ── Cookie Banner ── */
+.cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #1a1a2e;
+    color: #fff;
+    padding: 15px 20px;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 -2px 10px rgba(0,0,0,.3);
+}
+.cookie-banner__content {
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.cookie-banner__content p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+.cookie-banner__content a {
+    color: #4ade80;
+    text-decoration: underline;
+}
+.cookie-banner__actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+}
+.cookie-btn {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: opacity .2s;
+}
+.cookie-btn:hover { opacity: .85; }
+.cookie-btn--accept {
+    background: #22c55e;
+    color: #fff;
+}
+.cookie-btn--reject {
+    background: transparent;
+    color: #9ca3af;
+    border: 1px solid #9ca3af;
+}
+@media (max-width: 600px) {
+    .cookie-banner__content { flex-direction: column; text-align: center; }
+    .cookie-banner__actions { justify-content: center; }
+}
+

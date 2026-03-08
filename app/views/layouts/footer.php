@@ -79,7 +79,32 @@
     }
     ?>
 
+    <!-- Cookie banner -->
+    <div id="cookie-banner" class="cookie-banner" style="display:none;">
+        <div class="cookie-banner__content">
+            <p>Usamos cookies para mejorar tu experiencia. Al continuar navegando, aceptas nuestra
+                <a href="<?= url('/privacidad') ?>">política de privacidad</a>.</p>
+            <div class="cookie-banner__actions">
+                <button id="cookie-accept" class="cookie-btn cookie-btn--accept">Aceptar</button>
+                <button id="cookie-reject" class="cookie-btn cookie-btn--reject">Rechazar</button>
+            </div>
+        </div>
+    </div>
+
     <script src="<?= asset('js/app.js?v=' . APP_VERSION) ?>"></script>
     <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(function(){});}</script>
+    <script>
+    (function(){
+        var b=document.getElementById('cookie-banner');
+        if(!b)return;
+        if(localStorage.getItem('cookies-accepted')===null){b.style.display='flex';}
+        document.getElementById('cookie-accept').addEventListener('click',function(){
+            localStorage.setItem('cookies-accepted','true');b.style.display='none';
+        });
+        document.getElementById('cookie-reject').addEventListener('click',function(){
+            localStorage.setItem('cookies-accepted','false');b.style.display='none';
+        });
+    })();
+    </script>
 </body>
 </html>
