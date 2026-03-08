@@ -41,6 +41,10 @@ return [
     // FAQ
     ['GET', '/faq',               'FaqController@index'],
 
+    // SEO
+    ['GET', '/sitemap.xml',       'SeoController@sitemap'],
+    ['GET', '/feed.xml',          'SeoController@rss'],
+
     // Admin
     ['GET',  '/admin',                     'AdminController@index'],
     ['GET',  '/admin/login',              'AdminController@loginForm'],

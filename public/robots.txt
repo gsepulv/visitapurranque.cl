@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /api/
+Disallow: /buscar
+Disallow: /proyecto/
+Disallow: /storage/
+
+Sitemap: https://visitapurranque.cl/sitemap.xml

@@ -46,11 +46,27 @@ if (!empty($_SESSION['usuario_id'])) {
     <title><?= e($pageTitle ?? SITE_NAME) ?></title>
     <meta name="description" content="<?= e($pageDescription ?? SITE_DESCRIPTION) ?>">
 
+    <!-- Canonical -->
+    <link rel="canonical" href="<?= e($canonicalUrl ?? SITE_URL . ($_SERVER['REQUEST_URI'] ?? '/')) ?>">
+
     <!-- Open Graph -->
     <meta property="og:title" content="<?= e($pageTitle ?? SITE_NAME) ?>">
     <meta property="og:description" content="<?= e($pageDescription ?? SITE_DESCRIPTION) ?>">
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="<?= e($ogType ?? 'website') ?>">
     <meta property="og:locale" content="es_CL">
+    <meta property="og:url" content="<?= e($canonicalUrl ?? SITE_URL . ($_SERVER['REQUEST_URI'] ?? '/')) ?>">
+    <meta property="og:site_name" content="<?= e(SITE_NAME) ?>">
+    <?php if (!empty($ogImage)): ?>
+    <meta property="og:image" content="<?= e($ogImage) ?>">
+    <?php endif; ?>
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?= e($pageTitle ?? SITE_NAME) ?>">
+    <meta name="twitter:description" content="<?= e($pageDescription ?? SITE_DESCRIPTION) ?>">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/rss+xml" title="<?= e(SITE_NAME) ?> — Blog" href="<?= url('/feed.xml') ?>">
 
     <!-- Favicon -->
     <link rel="icon" href="<?= asset('img/favicon.ico') ?>" type="image/x-icon">
