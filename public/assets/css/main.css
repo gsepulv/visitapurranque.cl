@@ -2400,3 +2400,56 @@ ul, ol { list-style: none; }
     }
 }
 
+/* ── Barra de sesión admin ─────────────────────────────── */
+.admin-session-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    background: #1a1a2e;
+    color: #fff;
+    font-size: 13px;
+    padding: 5px 15px;
+}
+
+.session-bar-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.session-bar-info {
+    opacity: .9;
+}
+
+.session-bar-links a {
+    color: #7dd3fc;
+    text-decoration: none;
+    margin-left: 16px;
+    font-weight: 500;
+}
+
+.session-bar-links a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+body.has-session-bar {
+    padding-top: 35px;
+}
+
+body.has-session-bar .site-header {
+    top: 35px;
+}
+
+@media (max-width: 600px) {
+    .session-bar-inner {
+        flex-direction: column;
+        gap: 2px;
+        text-align: center;
+    }
+}
+

@@ -110,7 +110,7 @@ class AdminController extends Controller
 
         // Re-start session for flash
         session_start();
-        $this->redirect('/admin/login', [
+        $this->redirect('/', [
             'success' => 'Sesión cerrada correctamente',
         ]);
     }

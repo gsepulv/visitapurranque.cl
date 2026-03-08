@@ -19,6 +19,24 @@ try {
 } catch (Throwable $e) {
     // Sin menu si BD no disponible
 }
+
+// Datos de sesión admin para barra superior
+$sessionBar = null;
+if (!empty($_SESSION['usuario_id'])) {
+    try {
+        global $pdo;
+        $stmtU = $pdo->prepare(
+            "SELECT u.nombre, r.nombre AS rol_nombre
+             FROM usuarios u
+             JOIN roles r ON r.id = u.rol_id
+             WHERE u.id = ? AND u.activo = 1 LIMIT 1"
+        );
+        $stmtU->execute([$_SESSION['usuario_id']]);
+        $sessionBar = $stmtU->fetch();
+    } catch (Throwable $e) {
+        // Sin barra si falla
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="es-CL">
@@ -45,7 +63,19 @@ try {
     <!-- CSS -->
     <link rel="stylesheet" href="<?= asset('css/main.css?v=' . APP_VERSION) ?>">
 </head>
-<body>
+<body<?= $sessionBar ? ' class="has-session-bar"' : '' ?>>
+    <?php if ($sessionBar): ?>
+    <div class="admin-session-bar">
+        <div class="session-bar-inner">
+            <span class="session-bar-info">Sesión activa: <?= e($sessionBar['nombre']) ?> — <?= e($sessionBar['rol_nombre']) ?></span>
+            <span class="session-bar-links">
+                <a href="<?= url('/admin/dashboard') ?>">Panel admin</a>
+                <a href="<?= url('/admin/logout') ?>">Cerrar sesión</a>
+            </span>
+        </div>
+    </div>
+    <?php endif; ?>
+
     <!-- Skip to content (accesibilidad) -->
     <a href="#main-content" class="sr-only sr-only-focusable">Saltar al contenido</a>
 
