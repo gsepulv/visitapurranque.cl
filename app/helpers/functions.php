@@ -145,3 +145,14 @@ function strftime_es(int $timestamp): string
     $meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
     return $meses[(int)date('n', $timestamp) - 1];
 }
+
+function tiempoRelativo(string $fecha): string
+{
+    $ts = strtotime($fecha);
+    $diff = time() - $ts;
+    if ($diff < 60) return 'hace un momento';
+    if ($diff < 3600) return 'hace ' . (int)($diff / 60) . ' min';
+    if ($diff < 86400) return 'hace ' . (int)($diff / 3600) . ' h';
+    if ($diff < 604800) return 'hace ' . (int)($diff / 86400) . ' d';
+    return date('d/m/Y', $ts);
+}

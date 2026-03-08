@@ -83,6 +83,17 @@ class FichaController extends Controller
             'estado'           => 'pendiente',
         ]);
 
+        // Notificar a admins
+        try {
+            $notif = new Notificacion($this->db);
+            $notif->notificarAdmins(
+                'resena',
+                "Nueva reseña en: {$ficha['nombre']}",
+                "{$nombre} dejó una reseña ({$rating} estrellas)",
+                '/admin/resenas'
+            );
+        } catch (Throwable $e) {}
+
         $this->redirect('/atractivo/' . $slug, [
             'success' => 'Gracias por tu reseña. Será publicada después de revisión.'
         ]);

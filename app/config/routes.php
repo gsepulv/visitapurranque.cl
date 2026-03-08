@@ -209,6 +209,12 @@ return [
     ['POST', '/admin/redirecciones/{id}/eliminar',           'AdminRedireccionController@delete'],
     ['POST', '/admin/redirecciones/{id}/toggle',             'AdminRedireccionController@toggle'],
 
+    // Admin — Notificaciones
+    ['GET',  '/admin/notificaciones',                'AdminNotificacionController@index'],
+    ['POST', '/admin/notificaciones/leer-todas',     'AdminNotificacionController@marcarTodasLeidas'],
+    ['GET',  '/admin/notificaciones/api',            'AdminNotificacionController@api'],
+    ['POST', '/admin/notificaciones/leer/{id}',      'AdminNotificacionController@marcarLeida'],
+
     // Admin — Popups
     ['GET',  '/admin/popups',                    'AdminPopupController@index'],
     ['GET',  '/admin/popups/crear',              'AdminPopupController@create'],

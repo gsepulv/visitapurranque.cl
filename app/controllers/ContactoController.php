@@ -54,6 +54,17 @@ class ContactoController extends Controller
             'ip'      => $_SERVER['REMOTE_ADDR'] ?? null,
         ]);
 
+        // Notificar a admins
+        try {
+            $notif = new Notificacion($this->db);
+            $notif->notificarAdmins(
+                'contacto',
+                "Nuevo mensaje de contacto: {$asunto}",
+                "De: {$nombre} ({$email})",
+                '/admin/mensajes'
+            );
+        } catch (Throwable $e) {}
+
         $_SESSION['flash_success'] = 'Mensaje enviado correctamente. Te responderemos pronto.';
         $this->redirect('/contacto');
     }
