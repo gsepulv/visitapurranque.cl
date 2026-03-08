@@ -21,8 +21,10 @@ class EventoController extends Controller
         $eventos = $eventoModel->getAllPublicos($tiempo, $porPagina, $offset);
 
         $this->render('public/eventos/index', [
-            'pageTitle'       => 'Eventos y Actividades — ' . SITE_NAME,
-            'pageDescription' => 'Descubre los eventos, fiestas y actividades turísticas en Purranque y alrededores.',
+            'meta' => [
+                'title'       => 'Eventos — ' . SITE_NAME,
+                'description' => 'Descubre los eventos, fiestas y actividades turísticas en Purranque y alrededores.',
+            ],
             'eventos'         => $eventos,
             'tiempo'          => $tiempo,
             'pagina'          => $pagina,
@@ -39,14 +41,17 @@ class EventoController extends Controller
         if (!$evento) {
             http_response_code(404);
             $this->render('public/404', [
-                'pageTitle' => 'Evento no encontrado — ' . SITE_NAME,
+                'meta' => ['title' => 'Evento no encontrado — ' . SITE_NAME],
             ]);
             return;
         }
 
         $this->render('public/eventos/show', [
-            'pageTitle'       => e($evento['titulo']) . ' — ' . SITE_NAME,
-            'pageDescription' => mb_strimwidth($evento['descripcion_corta'] ?? $evento['titulo'], 0, 160, '...'),
+            'meta' => [
+                'title'       => $evento['titulo'] . ' — ' . SITE_NAME,
+                'description' => mb_strimwidth($evento['descripcion_corta'] ?? $evento['titulo'], 0, 160, '...'),
+                'url'         => SITE_URL . '/evento/' . $evento['slug'],
+            ],
             'evento'          => $evento,
         ]);
     }

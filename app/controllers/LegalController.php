@@ -13,15 +13,18 @@ class LegalController extends Controller
 
         if (!$pagina) {
             http_response_code(404);
-            $pageTitle = 'Pagina no encontrada — ' . SITE_NAME;
-            require BASE_PATH . '/app/views/layouts/header.php';
-            require BASE_PATH . '/app/views/public/404.php';
-            require BASE_PATH . '/app/views/layouts/footer.php';
+            $this->render('public/404', [
+                'meta' => ['title' => 'Página no encontrada — ' . SITE_NAME],
+            ]);
             return;
         }
 
         $this->render('public/placeholder', [
-            'pageTitle'   => e($pagina['titulo']) . ' — ' . SITE_NAME,
+            'meta' => [
+                'title'       => $pagina['titulo'] . ' — ' . SITE_NAME,
+                'description' => mb_strimwidth(strip_tags($pagina['contenido']), 0, 160, '...'),
+                'url'         => SITE_URL . '/' . $slug,
+            ],
             'sectionName' => $pagina['titulo'],
         ]);
     }

@@ -16,8 +16,10 @@ class BlogController extends Controller
         $posts = $blogModel->getAllPublicados($porPagina, $offset);
 
         $this->render('public/blog/index', [
-            'pageTitle'       => 'Blog — ' . SITE_NAME,
-            'pageDescription' => 'Noticias, guías y artículos sobre turismo, cultura y gastronomía en Purranque.',
+            'meta' => [
+                'title'       => 'Blog — ' . SITE_NAME,
+                'description' => 'Noticias, guías y artículos sobre turismo, cultura y gastronomía en Purranque.',
+            ],
             'posts'           => $posts,
             'pagina'          => $pagina,
             'totalPaginas'    => $totalPaginas,
@@ -33,7 +35,7 @@ class BlogController extends Controller
         if (!$post) {
             http_response_code(404);
             $this->render('public/404', [
-                'pageTitle' => 'Artículo no encontrado — ' . SITE_NAME,
+                'meta' => ['title' => 'Artículo no encontrado — ' . SITE_NAME],
             ]);
             return;
         }
@@ -41,9 +43,18 @@ class BlogController extends Controller
         $blogModel->registrarVista((int)$post['id']);
         $relacionados = $blogModel->getRelacionados((int)$post['id'], $post['categoria_id'] ? (int)$post['categoria_id'] : null);
 
+        $postImg = !empty($post['imagen_portada'])
+            ? SITE_URL . '/uploads/' . $post['imagen_portada']
+            : null;
+
         $this->render('public/blog/show', [
-            'pageTitle'       => e($post['titulo']) . ' — ' . SITE_NAME,
-            'pageDescription' => mb_strimwidth($post['extracto'] ?? $post['titulo'], 0, 160, '...'),
+            'meta' => [
+                'title'       => $post['titulo'] . ' — ' . SITE_NAME,
+                'description' => mb_strimwidth($post['extracto'] ?? $post['titulo'], 0, 160, '...'),
+                'url'         => SITE_URL . '/blog/' . $post['slug'],
+                'type'        => 'article',
+                'image'       => $postImg,
+            ],
             'post'            => $post,
             'relacionados'    => $relacionados,
         ]);

@@ -7,8 +7,10 @@ class CategoriaController extends Controller
         $categoriaModel = new Categoria($this->db);
 
         $this->render('public/categorias/index', [
-            'pageTitle'       => 'Categorías — ' . SITE_NAME,
-            'pageDescription' => 'Explora todas las categorías de atractivos turísticos de Purranque.',
+            'meta' => [
+                'title'       => 'Categorías — ' . SITE_NAME,
+                'description' => 'Explora todas las categorías de atractivos turísticos de Purranque.',
+            ],
             'categorias'      => $categoriaModel->getAllConContador(),
         ]);
     }
@@ -21,7 +23,7 @@ class CategoriaController extends Controller
         $categoria = $categoriaModel->getBySlugPublico($slug);
         if (!$categoria) {
             http_response_code(404);
-            $this->render('public/404', ['pageTitle' => 'No encontrado — ' . SITE_NAME]);
+            $this->render('public/404', ['meta' => ['title' => 'No encontrado — ' . SITE_NAME]]);
             return;
         }
 
@@ -32,8 +34,11 @@ class CategoriaController extends Controller
         $totalPages = max(1, (int)ceil($total / $perPage));
 
         $this->render('public/categorias/show', [
-            'pageTitle'       => e($categoria['nombre']) . ' — ' . SITE_NAME,
-            'pageDescription' => 'Atractivos turísticos en la categoría ' . $categoria['nombre'] . ' en Purranque.',
+            'meta' => [
+                'title'       => $categoria['nombre'] . ' — ' . SITE_NAME,
+                'description' => 'Atractivos turísticos en la categoría ' . $categoria['nombre'] . ' en Purranque.',
+                'url'         => SITE_URL . '/categoria/' . $categoria['slug'],
+            ],
             'categoria'       => $categoria,
             'fichas'          => $fichaModel->getByCategoria($categoria['id'], $perPage, $offset),
             'page'            => $page,

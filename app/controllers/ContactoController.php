@@ -5,8 +5,10 @@ class ContactoController extends Controller
     public function index(): void
     {
         $this->render('public/contacto', [
-            'pageTitle'       => 'Contacto — ' . SITE_NAME,
-            'pageDescription' => 'Contáctanos para consultas sobre turismo en Purranque, sugerencias o para agregar tu negocio al directorio.',
+            'meta' => [
+                'title'       => 'Contacto — ' . SITE_NAME,
+                'description' => 'Contáctanos para consultas sobre turismo en Purranque, sugerencias o para agregar tu negocio al directorio.',
+            ],
         ]);
     }
 

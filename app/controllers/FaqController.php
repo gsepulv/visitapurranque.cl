@@ -21,8 +21,10 @@ class FaqController extends Controller
         }
 
         $this->render('public/faq', [
-            'pageTitle'       => 'Preguntas Frecuentes — ' . SITE_NAME,
-            'pageDescription' => 'Respuestas a las preguntas más comunes sobre turismo en Purranque.',
+            'meta' => [
+                'title'       => 'Preguntas Frecuentes — ' . SITE_NAME,
+                'description' => 'Respuestas a las preguntas más comunes sobre turismo en Purranque.',
+            ],
             'grupos'          => $grupos,
             'totalFaqs'       => count($faqs),
         ]);

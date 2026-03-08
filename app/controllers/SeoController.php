@@ -100,7 +100,7 @@ class SeoController extends Controller
         exit;
     }
 
-    /** GET /feed.xml */
+    /** GET /blog/feed */
     public function rss(): void
     {
         header('Content-Type: application/rss+xml; charset=UTF-8');
@@ -125,7 +125,7 @@ class SeoController extends Controller
         echo "  <description>" . htmlspecialchars(SITE_DESCRIPTION) . "</description>\n";
         echo "  <language>es-cl</language>\n";
         echo "  <lastBuildDate>" . date('r') . "</lastBuildDate>\n";
-        echo '  <atom:link href="' . htmlspecialchars($base . '/feed.xml') . '" rel="self" type="application/rss+xml"/>' . "\n";
+        echo '  <atom:link href="' . htmlspecialchars($base . '/blog/feed') . '" rel="self" type="application/rss+xml"/>' . "\n";
 
         foreach ($posts as $p) {
             $pubDate = date('r', strtotime($p['publicado_at']));

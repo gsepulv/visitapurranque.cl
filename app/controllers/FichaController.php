@@ -10,7 +10,7 @@ class FichaController extends Controller
         $ficha = $fichaModel->getBySlugPublico($slug);
         if (!$ficha) {
             http_response_code(404);
-            $this->render('public/404', ['pageTitle' => 'No encontrado — ' . SITE_NAME]);
+            $this->render('public/404', ['meta' => ['title' => 'No encontrado — ' . SITE_NAME]]);
             return;
         }
 
@@ -21,9 +21,17 @@ class FichaController extends Controller
         // Incrementar vistas
         $this->registrarVista($ficha['id']);
 
+        $imgUrl = !empty($ficha['imagen_principal'])
+            ? SITE_URL . '/uploads/' . $ficha['imagen_principal']
+            : null;
+
         $this->render('public/fichas/show', [
-            'pageTitle'       => e($ficha['nombre']) . ' — ' . SITE_NAME,
-            'pageDescription' => $ficha['descripcion_corta'] ?? $ficha['nombre'] . ' en Purranque',
+            'meta' => [
+                'title'       => $ficha['nombre'] . ' — ' . SITE_NAME,
+                'description' => $ficha['descripcion_corta'] ?? $ficha['nombre'] . ' en Purranque',
+                'url'         => SITE_URL . '/atractivo/' . $ficha['slug'],
+                'image'       => $imgUrl,
+            ],
             'ficha'           => $ficha,
             'rating'          => $rating,
             'resenas'         => $resenas,
@@ -42,7 +50,7 @@ class FichaController extends Controller
         $ficha = $fichaModel->getBySlugPublico($slug);
         if (!$ficha) {
             http_response_code(404);
-            $this->render('public/404', ['pageTitle' => 'No encontrado — ' . SITE_NAME]);
+            $this->render('public/404', ['meta' => ['title' => 'No encontrado — ' . SITE_NAME]]);
             return;
         }
 

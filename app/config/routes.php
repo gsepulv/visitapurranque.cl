@@ -26,6 +26,7 @@ return [
 
     // Blog
     ['GET', '/blog',              'BlogController@index'],
+    ['GET', '/blog/feed',         'SeoController@rss'],
     ['GET', '/blog/{slug}',       'BlogController@show'],
 
     // Contacto
@@ -43,7 +44,6 @@ return [
 
     // SEO
     ['GET', '/sitemap.xml',       'SeoController@sitemap'],
-    ['GET', '/feed.xml',          'SeoController@rss'],
 
     // Admin
     ['GET',  '/admin',                     'AdminController@index'],

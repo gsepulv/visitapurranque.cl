@@ -1,8 +1,17 @@
 <?php
 /**
  * Header layout — visitapurranque.cl
- * Variables disponibles: $pageTitle, $pageDescription, $csrf, $flash
+ * Variables disponibles: $meta (array), $csrf, $flash
+ * $meta keys: title, description, image, url, type
  */
+
+// Construir $meta desde variables legacy o array directo
+$meta = $meta ?? [];
+if (empty($meta['title']))       $meta['title']       = $pageTitle ?? SITE_NAME;
+if (empty($meta['description'])) $meta['description'] = $pageDescription ?? SITE_DESCRIPTION;
+if (empty($meta['url']))         $meta['url']         = SITE_URL . strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
+if (empty($meta['type']))        $meta['type']        = $ogType ?? 'website';
+if (empty($meta['image']))       $meta['image']       = $ogImage ?? SITE_URL . '/assets/img/og-default.jpg';
 
 // Menu items desde BD
 $menuItems = [];
@@ -43,30 +52,29 @@ if (!empty($_SESSION['usuario_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= e($pageTitle ?? SITE_NAME) ?></title>
-    <meta name="description" content="<?= e($pageDescription ?? SITE_DESCRIPTION) ?>">
+    <title><?= e($meta['title']) ?></title>
+    <meta name="description" content="<?= e($meta['description']) ?>">
 
     <!-- Canonical -->
-    <link rel="canonical" href="<?= e($canonicalUrl ?? SITE_URL . ($_SERVER['REQUEST_URI'] ?? '/')) ?>">
+    <link rel="canonical" href="<?= e($meta['url']) ?>">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="<?= e($pageTitle ?? SITE_NAME) ?>">
-    <meta property="og:description" content="<?= e($pageDescription ?? SITE_DESCRIPTION) ?>">
-    <meta property="og:type" content="<?= e($ogType ?? 'website') ?>">
-    <meta property="og:locale" content="es_CL">
-    <meta property="og:url" content="<?= e($canonicalUrl ?? SITE_URL . ($_SERVER['REQUEST_URI'] ?? '/')) ?>">
+    <meta property="og:type" content="<?= e($meta['type']) ?>">
+    <meta property="og:title" content="<?= e($meta['title']) ?>">
+    <meta property="og:description" content="<?= e($meta['description']) ?>">
+    <meta property="og:image" content="<?= e($meta['image']) ?>">
+    <meta property="og:url" content="<?= e($meta['url']) ?>">
     <meta property="og:site_name" content="<?= e(SITE_NAME) ?>">
-    <?php if (!empty($ogImage)): ?>
-    <meta property="og:image" content="<?= e($ogImage) ?>">
-    <?php endif; ?>
+    <meta property="og:locale" content="es_CL">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="<?= e($pageTitle ?? SITE_NAME) ?>">
-    <meta name="twitter:description" content="<?= e($pageDescription ?? SITE_DESCRIPTION) ?>">
+    <meta name="twitter:title" content="<?= e($meta['title']) ?>">
+    <meta name="twitter:description" content="<?= e($meta['description']) ?>">
+    <meta name="twitter:image" content="<?= e($meta['image']) ?>">
 
     <!-- RSS -->
-    <link rel="alternate" type="application/rss+xml" title="<?= e(SITE_NAME) ?> — Blog" href="<?= url('/feed.xml') ?>">
+    <link rel="alternate" type="application/rss+xml" title="Blog — <?= e(SITE_NAME) ?>" href="<?= url('/blog/feed') ?>">
 
     <!-- Favicon -->
     <link rel="icon" href="<?= asset('img/favicon.ico') ?>" type="image/x-icon">
