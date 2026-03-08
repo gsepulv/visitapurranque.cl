@@ -66,6 +66,19 @@
     <!-- Scroll to top -->
     <button class="back-to-top" id="backToTop" aria-label="Volver arriba">&#8593;</button>
 
+    <?php
+    // Popup activo
+    try {
+        $popupModel = new Popup($GLOBALS['pdo'] ?? $pdo);
+        $popupActivo = $popupModel->getActivo();
+        if ($popupActivo) {
+            require BASE_PATH . '/app/views/partials/popup.php';
+        }
+    } catch (Throwable $e) {
+        // Silenciar si la tabla no existe o hay error
+    }
+    ?>
+
     <script src="<?= asset('js/app.js?v=' . APP_VERSION) ?>"></script>
 </body>
 </html>

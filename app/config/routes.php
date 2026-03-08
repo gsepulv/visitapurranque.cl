@@ -209,6 +209,14 @@ return [
     ['POST', '/admin/redirecciones/{id}/eliminar',           'AdminRedireccionController@delete'],
     ['POST', '/admin/redirecciones/{id}/toggle',             'AdminRedireccionController@toggle'],
 
+    // Admin — Popups
+    ['GET',  '/admin/popups',                    'AdminPopupController@index'],
+    ['GET',  '/admin/popups/crear',              'AdminPopupController@create'],
+    ['POST', '/admin/popups/crear',              'AdminPopupController@store'],
+    ['GET',  '/admin/popups/{id}/editar',        'AdminPopupController@edit'],
+    ['POST', '/admin/popups/{id}/editar',        'AdminPopupController@update'],
+    ['POST', '/admin/popups/{id}/eliminar',      'AdminPopupController@delete'],
+
     // Admin — Tags
     ['GET',  '/admin/tags',                      'AdminTagController@index'],
     ['POST', '/admin/tags/crear',                'AdminTagController@store'],
