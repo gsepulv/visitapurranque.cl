@@ -209,6 +209,9 @@ return [
     ['POST', '/admin/redirecciones/{id}/eliminar',           'AdminRedireccionController@delete'],
     ['POST', '/admin/redirecciones/{id}/toggle',             'AdminRedireccionController@toggle'],
 
+    // Admin — Búsqueda global
+    ['GET',  '/admin/api/buscar',                'AdminBusquedaController@apiBuscar'],
+
     // Admin — Notificaciones
     ['GET',  '/admin/notificaciones',                'AdminNotificacionController@index'],
     ['POST', '/admin/notificaciones/leer-todas',     'AdminNotificacionController@marcarTodasLeidas'],

@@ -5,7 +5,7 @@
  */
 ?>
 <!DOCTYPE html>
-<html lang="es-CL">
+<html lang="es-CL" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +16,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= asset('css/admin.css?v=' . APP_VERSION) ?>">
+    <script>
+    // Apply saved theme before render to prevent flash
+    (function(){var t=localStorage.getItem('admin-theme');if(t)document.documentElement.setAttribute('data-theme',t);})();
+    </script>
 </head>
 <body class="admin-body">
 
@@ -26,6 +30,12 @@
         </button>
         <span class="admin-topbar-title">VP Admin</span>
         <div class="admin-topbar-actions">
+            <!-- Búsqueda Ctrl+K -->
+            <button type="button" class="topbar-action-btn" id="searchOpenBtn" title="Buscar (Ctrl+K)">&#128269;</button>
+            <!-- Dark mode toggle -->
+            <button type="button" class="topbar-action-btn" id="themeToggle" title="Modo oscuro">
+                <span id="themeIcon">&#127769;</span>
+            </button>
             <!-- Notificaciones -->
             <div class="notif-bell" id="notifBell">
                 <button type="button" class="notif-bell__btn" id="notifBellBtn" aria-label="Notificaciones">
@@ -50,7 +60,127 @@
     <!-- Overlay mobile -->
     <div class="admin-overlay" id="adminOverlay"></div>
 
+    <!-- Search Modal (Ctrl+K) -->
+    <div class="search-modal" id="searchModal" style="display:none;">
+        <div class="search-modal__overlay" onclick="closeSearch()"></div>
+        <div class="search-modal__content">
+            <div class="search-modal__input-wrap">
+                <span class="search-modal__icon">&#128269;</span>
+                <input type="text" id="searchInput" class="search-modal__input"
+                       placeholder="Buscar fichas, eventos, posts, usuarios..." autocomplete="off">
+                <kbd class="search-modal__kbd">Esc</kbd>
+            </div>
+            <div class="search-modal__results" id="searchResults">
+                <div class="search-modal__hint">Escribe al menos 2 caracteres para buscar...</div>
+            </div>
+        </div>
+    </div>
+
     <script>
+    // ── Dark Mode ──
+    (function() {
+        var toggle = document.getElementById('themeToggle');
+        var icon = document.getElementById('themeIcon');
+        function updateIcon() {
+            var t = document.documentElement.getAttribute('data-theme');
+            icon.innerHTML = t === 'dark' ? '&#9728;' : '&#127769;';
+        }
+        updateIcon();
+        toggle.addEventListener('click', function() {
+            var current = document.documentElement.getAttribute('data-theme');
+            var next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('admin-theme', next);
+            updateIcon();
+        });
+    })();
+
+    // ── Ctrl+K Search ──
+    (function() {
+        var modal = document.getElementById('searchModal');
+        var input = document.getElementById('searchInput');
+        var results = document.getElementById('searchResults');
+        var timer = null;
+        var selectedIdx = -1;
+
+        function openSearch() {
+            modal.style.display = 'flex';
+            input.value = '';
+            results.innerHTML = '<div class="search-modal__hint">Escribe al menos 2 caracteres para buscar...</div>';
+            selectedIdx = -1;
+            setTimeout(function() { input.focus(); }, 50);
+        }
+        function closeSearch() {
+            modal.style.display = 'none';
+        }
+        window.closeSearch = closeSearch;
+
+        document.getElementById('searchOpenBtn').addEventListener('click', openSearch);
+
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                openSearch();
+            }
+            if (e.key === 'Escape' && modal.style.display !== 'none') {
+                closeSearch();
+            }
+        });
+
+        input.addEventListener('input', function() {
+            clearTimeout(timer);
+            var q = this.value.trim();
+            if (q.length < 2) {
+                results.innerHTML = '<div class="search-modal__hint">Escribe al menos 2 caracteres para buscar...</div>';
+                return;
+            }
+            timer = setTimeout(function() {
+                fetch('<?= url('/admin/api/buscar') ?>?q=' + encodeURIComponent(q))
+                    .then(function(r) { return r.json(); })
+                    .then(function(data) {
+                        if (data.length === 0) {
+                            results.innerHTML = '<div class="search-modal__hint">No se encontraron resultados.</div>';
+                            return;
+                        }
+                        var html = '';
+                        data.forEach(function(item, i) {
+                            html += '<a href="<?= url('') ?>' + item.url + '" class="search-result" data-idx="' + i + '">';
+                            html += '<span class="search-result__icon">' + item.icon + '</span>';
+                            html += '<span class="search-result__text">' + item.titulo + '</span>';
+                            html += '<span class="search-result__type">' + item.tipo + '</span>';
+                            html += '</a>';
+                        });
+                        results.innerHTML = html;
+                        selectedIdx = -1;
+                    });
+            }, 300);
+        });
+
+        input.addEventListener('keydown', function(e) {
+            var items = results.querySelectorAll('.search-result');
+            if (!items.length) return;
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                selectedIdx = Math.min(selectedIdx + 1, items.length - 1);
+                updateSelection(items);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                selectedIdx = Math.max(selectedIdx - 1, 0);
+                updateSelection(items);
+            } else if (e.key === 'Enter' && selectedIdx >= 0) {
+                e.preventDefault();
+                items[selectedIdx].click();
+            }
+        });
+
+        function updateSelection(items) {
+            items.forEach(function(el, i) {
+                el.classList.toggle('search-result--active', i === selectedIdx);
+            });
+        }
+    })();
+
+    // ── Notifications ──
     (function() {
         var bell = document.getElementById('notifBellBtn');
         var dropdown = document.getElementById('notifDropdown');
