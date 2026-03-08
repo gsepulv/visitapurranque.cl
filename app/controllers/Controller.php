@@ -85,6 +85,32 @@ class Controller
     }
 
     /**
+     * Verificar si el usuario actual tiene un permiso
+     */
+    protected function tienePermiso(string $slug): bool
+    {
+        $rolId = $_SESSION['usuario_rol_id'] ?? null;
+        if (!$rolId) {
+            // Cargar rol del usuario
+            $stmt = $this->db->prepare("SELECT rol_id FROM usuarios WHERE id = ?");
+            $stmt->execute([$_SESSION['usuario_id'] ?? 0]);
+            $rolId = (int)$stmt->fetchColumn();
+            $_SESSION['usuario_rol_id'] = $rolId;
+        }
+
+        // Admin (rol_id=1) siempre tiene todo
+        if ((int)$rolId === 1) return true;
+
+        $stmt = $this->db->prepare(
+            "SELECT COUNT(*) FROM rol_permisos rp
+             JOIN permisos p ON p.id = rp.permiso_id
+             WHERE rp.rol_id = ? AND p.slug = ?"
+        );
+        $stmt->execute([$rolId, $slug]);
+        return (int)$stmt->fetchColumn() > 0;
+    }
+
+    /**
      * Registrar acción en audit_log
      */
     protected function audit(

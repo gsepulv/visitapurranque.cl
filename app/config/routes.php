@@ -197,6 +197,14 @@ return [
     ['POST', '/admin/usuarios/{id}/eliminar',    'AdminUsuarioController@delete'],
     ['POST', '/admin/usuarios/{id}/toggle',      'AdminUsuarioController@toggle'],
 
+    // Admin — Roles
+    ['GET',  '/admin/roles',                     'AdminRolController@index'],
+    ['GET',  '/admin/roles/crear',               'AdminRolController@create'],
+    ['POST', '/admin/roles/crear',               'AdminRolController@store'],
+    ['GET',  '/admin/roles/{id}/editar',         'AdminRolController@edit'],
+    ['POST', '/admin/roles/{id}/editar',         'AdminRolController@update'],
+    ['POST', '/admin/roles/{id}/eliminar',       'AdminRolController@delete'],
+
     // Admin — Fichas
     ['GET',  '/admin/fichas',                'AdminFichaController@index'],
     ['GET',  '/admin/fichas/crear',          'AdminFichaController@create'],
