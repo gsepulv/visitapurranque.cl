@@ -209,6 +209,13 @@ return [
     ['POST', '/admin/redirecciones/{id}/eliminar',           'AdminRedireccionController@delete'],
     ['POST', '/admin/redirecciones/{id}/toggle',             'AdminRedireccionController@toggle'],
 
+    // Admin — Tags
+    ['GET',  '/admin/tags',                      'AdminTagController@index'],
+    ['POST', '/admin/tags/crear',                'AdminTagController@store'],
+    ['POST', '/admin/tags/editar/{id}',          'AdminTagController@update'],
+    ['POST', '/admin/tags/eliminar/{id}',        'AdminTagController@eliminar'],
+    ['GET',  '/admin/tags/api/buscar',           'AdminTagController@apiBuscar'],
+
     // Admin — Logs
     ['GET',  '/admin/logs',                      'AdminLogController@index'],
     ['GET',  '/admin/logs/salud',                'AdminLogController@salud'],

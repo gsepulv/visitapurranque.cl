@@ -6,15 +6,18 @@
 
 require_once BASE_PATH . '/app/middleware/AuthMiddleware.php';
 require_once BASE_PATH . '/app/models/Ficha.php';
+require_once BASE_PATH . '/app/models/Tag.php';
 
 class AdminFichaController extends Controller
 {
     private Ficha $ficha;
+    private Tag $tagModel;
 
     public function __construct(PDO $pdo)
     {
         parent::__construct($pdo);
         $this->ficha = new Ficha($pdo);
+        $this->tagModel = new Tag($pdo);
     }
 
     /** GET /admin/fichas */
@@ -60,6 +63,7 @@ class AdminFichaController extends Controller
             'pageTitle'     => 'Nueva Ficha',
             'usuario'       => $usuario,
             'ficha'         => null,
+            'entidadTags'   => [],
             'categorias'    => $this->getCategorias(),
             'subcategorias' => $this->getSubcategorias(),
             'planes'        => $this->getPlanes(),
@@ -109,6 +113,10 @@ class AdminFichaController extends Controller
 
         $id = $this->ficha->create($data);
 
+        // Sincronizar tags
+        $tagIds = array_map('intval', $_POST['tag_ids'] ?? []);
+        $this->tagModel->sincronizar('fichas', $id, $tagIds);
+
         // Audit log
         $this->audit($usuario['id'], 'crear', 'fichas', "Ficha #{$id}: {$data['nombre']}");
 
@@ -129,6 +137,7 @@ class AdminFichaController extends Controller
             'pageTitle'     => 'Editar: ' . $ficha['nombre'],
             'usuario'       => $usuario,
             'ficha'         => $ficha,
+            'entidadTags'   => $this->tagModel->getByEntidad('fichas', (int)$id),
             'categorias'    => $this->getCategorias(),
             'subcategorias' => $this->getSubcategorias(),
             'planes'        => $this->getPlanes(),
@@ -192,6 +201,10 @@ class AdminFichaController extends Controller
         }
 
         $this->ficha->update((int)$id, $data);
+
+        // Sincronizar tags
+        $tagIds = array_map('intval', $_POST['tag_ids'] ?? []);
+        $this->tagModel->sincronizar('fichas', (int)$id, $tagIds);
 
         $this->audit($usuario['id'], 'editar', 'fichas', "Ficha #{$id}: {$data['nombre']}");
 

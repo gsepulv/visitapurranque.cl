@@ -203,6 +203,9 @@ $v = fn(string $key, string $default = '') => e($evento[$key] ?? $default);
         </div>
     </fieldset>
 
+    <!-- ── Tags ── -->
+    <?php $entidadTags = $entidadTags ?? []; require BASE_PATH . '/app/views/partials/tag-input.php'; ?>
+
     <!-- ── Botones ── -->
     <div class="form-actions">
         <button type="submit" class="btn btn--primary btn--lg">

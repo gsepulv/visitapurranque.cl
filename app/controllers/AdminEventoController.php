@@ -6,15 +6,18 @@
 
 require_once BASE_PATH . '/app/middleware/AuthMiddleware.php';
 require_once BASE_PATH . '/app/models/Evento.php';
+require_once BASE_PATH . '/app/models/Tag.php';
 
 class AdminEventoController extends Controller
 {
     private Evento $evento;
+    private Tag $tagModel;
 
     public function __construct(PDO $pdo)
     {
         parent::__construct($pdo);
         $this->evento = new Evento($pdo);
+        $this->tagModel = new Tag($pdo);
     }
 
     /** GET /admin/eventos */
@@ -60,6 +63,7 @@ class AdminEventoController extends Controller
             'pageTitle'     => 'Nuevo Evento',
             'usuario'       => $usuario,
             'evento'        => null,
+            'entidadTags'   => [],
             'categorias'    => $this->getCategorias(),
             'sidebarCounts' => $this->getSidebarCounts(),
         ]);
@@ -98,6 +102,10 @@ class AdminEventoController extends Controller
         }
 
         $id = $this->evento->create($data);
+
+        $tagIds = array_map('intval', $_POST['tag_ids'] ?? []);
+        $this->tagModel->sincronizar('eventos', $id, $tagIds);
+
         $this->audit($usuario['id'], 'crear', 'eventos', "Evento #{$id}: {$data['titulo']}", $id);
 
         $this->redirect('/admin/eventos', ['success' => 'Evento creado correctamente']);
@@ -117,6 +125,7 @@ class AdminEventoController extends Controller
             'pageTitle'     => 'Editar: ' . $evento['titulo'],
             'usuario'       => $usuario,
             'evento'        => $evento,
+            'entidadTags'   => $this->tagModel->getByEntidad('eventos', (int)$id),
             'categorias'    => $this->getCategorias(),
             'sidebarCounts' => $this->getSidebarCounts(),
         ]);
@@ -172,6 +181,10 @@ class AdminEventoController extends Controller
         }
 
         $this->evento->update((int)$id, $data);
+
+        $tagIds = array_map('intval', $_POST['tag_ids'] ?? []);
+        $this->tagModel->sincronizar('eventos', (int)$id, $tagIds);
+
         $this->audit($usuario['id'], 'editar', 'eventos', "Evento #{$id}: {$data['titulo']}", (int)$id);
 
         $this->redirect('/admin/eventos', ['success' => 'Evento actualizado correctamente']);

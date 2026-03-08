@@ -6,15 +6,18 @@
 
 require_once BASE_PATH . '/app/middleware/AuthMiddleware.php';
 require_once BASE_PATH . '/app/models/BlogPost.php';
+require_once BASE_PATH . '/app/models/Tag.php';
 
 class AdminBlogController extends Controller
 {
     private BlogPost $post;
+    private Tag $tagModel;
 
     public function __construct(PDO $pdo)
     {
         parent::__construct($pdo);
         $this->post = new BlogPost($pdo);
+        $this->tagModel = new Tag($pdo);
     }
 
     /** GET /admin/blog */
@@ -58,6 +61,7 @@ class AdminBlogController extends Controller
             'pageTitle'     => 'Nuevo Post',
             'usuario'       => $usuario,
             'post'          => null,
+            'entidadTags'   => [],
             'categorias'    => $this->getCategorias(),
             'autores'       => $this->getAutores(),
             'sidebarCounts' => $this->getSidebarCounts(),
@@ -95,6 +99,10 @@ class AdminBlogController extends Controller
         if (empty($data['autor_id'])) $data['autor_id'] = null;
 
         $id = $this->post->create($data);
+
+        $tagIds = array_map('intval', $_POST['tag_ids'] ?? []);
+        $this->tagModel->sincronizar('blog_posts', $id, $tagIds);
+
         $this->audit($usuario['id'], 'crear', 'blog', "Post #{$id}: {$data['titulo']}", $id);
 
         $this->redirect('/admin/blog', ['success' => 'Post creado correctamente']);
@@ -114,6 +122,7 @@ class AdminBlogController extends Controller
             'pageTitle'     => 'Editar: ' . $post['titulo'],
             'usuario'       => $usuario,
             'post'          => $post,
+            'entidadTags'   => $this->tagModel->getByEntidad('blog_posts', (int)$id),
             'categorias'    => $this->getCategorias(),
             'autores'       => $this->getAutores(),
             'sidebarCounts' => $this->getSidebarCounts(),
@@ -168,6 +177,10 @@ class AdminBlogController extends Controller
         if (empty($data['autor_id'])) $data['autor_id'] = null;
 
         $this->post->update((int)$id, $data);
+
+        $tagIds = array_map('intval', $_POST['tag_ids'] ?? []);
+        $this->tagModel->sincronizar('blog_posts', (int)$id, $tagIds);
+
         $this->audit($usuario['id'], 'editar', 'blog', "Post #{$id}: {$data['titulo']}", (int)$id);
 
         $this->redirect('/admin/blog', ['success' => 'Post actualizado correctamente']);
